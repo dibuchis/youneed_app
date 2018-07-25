@@ -1,0 +1,1 @@
+<div class="alert alert-success"><h1 style="color: #3c763d!important;"><?php echo $mensaje; ?></h1></div>

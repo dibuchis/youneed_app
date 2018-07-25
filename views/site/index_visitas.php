@@ -1,0 +1,1 @@
+<h2>Visitas para el <?php echo date('Y-m-d'); ?></h2>

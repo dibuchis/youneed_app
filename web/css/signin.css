@@ -1,0 +1,56 @@
+/* maki */
+[class*="maki-"]:before {
+    font-family:'maki', sans-serif;
+}
+/* entypo */
+[class*="entypo-"]:before {
+    font-family:'entypo', sans-serif;
+}
+/* fontawesome */
+[class*="fontawesome-"]:before {
+    font-family:'FontAwesome', sans-serif;
+}
+body {
+    background-image: url(../images/bg-login.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    padding-top: 50px;
+    color: #fff;
+}
+
+.panel-default > .panel-heading {
+    background-color: transparent!important;
+    border-color: transparent!important;
+    color: #333;
+}
+
+.login-panel{
+   background-color: transparent;
+   border:none;
+}
+
+.login-logo{
+    width: 220px;
+    text-align: center;
+}
+
+.form-control {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #bfc0c1;
+    box-shadow: none;
+    font-size: 15px;
+    height: 45px;
+}
+.input-group-addon{
+    background-color: #205196!important;
+    color: #FFF!important;
+    border: transparent;
+}
+.has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label{
+    color: #FFF;
+}
