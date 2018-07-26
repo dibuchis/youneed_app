@@ -70,6 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
           <div class="footer">
               <div class="col-sm-offset-0">
                 <center>
+                  Desarrollado por:
                 <a style="color: #FFF;" target="_blank" href="http://www.abitmedia.com">
                   <?= Html::img( Url::to('@web/images/logo_abitmedia.png'), ['class'=> 'center-block']);?>
                 </a>

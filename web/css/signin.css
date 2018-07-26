@@ -20,7 +20,7 @@ body {
     -o-background-size: cover;
     background-size: cover;
     padding-top: 50px;
-    color: #fff;
+    color: #666666;
 }
 
 .panel-default > .panel-heading {
@@ -47,10 +47,10 @@ body {
     height: 45px;
 }
 .input-group-addon{
-    background-color: #205196!important;
+    background-color: #178b89!important;
     color: #FFF!important;
     border: transparent;
 }
 .has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label{
-    color: #FFF;
+    color: #e6a13e;
 }
