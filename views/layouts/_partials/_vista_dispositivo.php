@@ -6,20 +6,11 @@ use app\models\Usuarios;
 <div class="dispositivo-panel" id="dispositivo-<?php echo $model->traccar_id; ?>" traccar_id="<?php echo $model->traccar_id; ?>">
 	<div class="dispositivo-nombre">
 		<?php 
-			if( $model->utim_app_tipo == 'Doctor' ){
-				$usuario = Usuarios::find()->andWhere(['dispositivo_id'=>$model->id, 'tipo'=>'Doctor'])->one();
-				if( is_object( $usuario ) ){
-					echo 'Dr(a). '.$usuario->nombres.' '.$usuario->apellidos;
-				}else{
-					echo $model->nombre;	
-				}
-			}else{
-				echo $model->nombre;
-			}
+			echo $model->nombres.' '.$model->apellidos;
 		?>	
 	</div>
 	<div class="dispositivo-info-content">
-		<div class="dispositivo-alias"><?php echo $model->alias; ?><?php echo ( !empty( $model->placa) ) ? '/'.$model->placa : ''; ?></div>
+		<div class="dispositivo-alias"><?php echo $model->identificacion; ?></div>
 		<div class="dispositivo-imei"><?php echo $model->imei; ?></div>
 		<div class="row">
 			<!-- Bateria -->

@@ -18,8 +18,8 @@ class UsuariosSearch extends Usuarios
     public function rules()
     {
         return [
-            [['id', 'cuenta_id', 'estado_id'], 'integer'],
-            [['nombres', 'apellidos', 'email', 'clave', 'tipo', 'fecha_creacion', 'identificacion', 'numero_celular'], 'safe'],
+            [['id', 'tipo_identificacion', 'estado', 'habilitar_rastreo', 'ciudad_id', 'categoria_id', 'plan_id', 'banco_id', 'preferencias_deposito', 'dias_trabajo', 'horarios_trabajo', 'estado_validacion_documentos', 'traccar_id'], 'integer'],
+            [['identificacion', 'imagen', 'nombres', 'apellidos', 'email', 'numero_celular', 'telefono_domicilio', 'clave', 'tipo', 'token_push', 'token', 'fecha_creacion', 'fecha_activacion', 'fecha_desactivacion', 'causas_desactivacion', 'fecha_cambio_plan', 'tipo_cuenta', 'numero_cuenta', 'observaciones', 'imei'], 'safe'],
         ];
     }
 
@@ -57,93 +57,41 @@ class UsuariosSearch extends Usuarios
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'cuenta_id' => $this->cuenta_id,
+            'tipo_identificacion' => $this->tipo_identificacion,
+            'estado' => $this->estado,
+            'habilitar_rastreo' => $this->habilitar_rastreo,
+            'ciudad_id' => $this->ciudad_id,
+            'categoria_id' => $this->categoria_id,
             'fecha_creacion' => $this->fecha_creacion,
-            'estado_id' => $this->estado_id,
-            'tipo_usuario' => 0,
+            'fecha_activacion' => $this->fecha_activacion,
+            'fecha_desactivacion' => $this->fecha_desactivacion,
+            'plan_id' => $this->plan_id,
+            'fecha_cambio_plan' => $this->fecha_cambio_plan,
+            'banco_id' => $this->banco_id,
+            'preferencias_deposito' => $this->preferencias_deposito,
+            'dias_trabajo' => $this->dias_trabajo,
+            'horarios_trabajo' => $this->horarios_trabajo,
+            'estado_validacion_documentos' => $this->estado_validacion_documentos,
+            'traccar_id' => $this->traccar_id,
         ]);
 
-        $query->andFilterWhere(['like', 'nombres', $this->nombres])
+        $query->andFilterWhere(['like', 'identificacion', $this->identificacion])
+            ->andFilterWhere(['like', 'imagen', $this->imagen])
+            ->andFilterWhere(['like', 'nombres', $this->nombres])
             ->andFilterWhere(['like', 'apellidos', $this->apellidos])
             ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'clave', $this->clave])
-            ->andFilterWhere(['like', 'identificacion', $this->identificacion])
             ->andFilterWhere(['like', 'numero_celular', $this->numero_celular])
-            ->andFilterWhere(['like', 'tipo', $this->tipo]);
+            ->andFilterWhere(['like', 'telefono_domicilio', $this->telefono_domicilio])
+            ->andFilterWhere(['like', 'clave', $this->clave])
+            ->andFilterWhere(['like', 'tipo', $this->tipo])
+            ->andFilterWhere(['like', 'token_push', $this->token_push])
+            ->andFilterWhere(['like', 'token', $this->token])
+            ->andFilterWhere(['like', 'causas_desactivacion', $this->causas_desactivacion])
+            ->andFilterWhere(['like', 'tipo_cuenta', $this->tipo_cuenta])
+            ->andFilterWhere(['like', 'numero_cuenta', $this->numero_cuenta])
+            ->andFilterWhere(['like', 'observaciones', $this->observaciones])
+            ->andFilterWhere(['like', 'imei', $this->imei]);
 
         return $dataProvider;
     }
-
-    public function pacientes($params)
-    {
-        $query = Usuarios::find();
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'cuenta_id' => $this->cuenta_id,
-            'fecha_creacion' => $this->fecha_creacion,
-            'estado_id' => $this->estado_id,
-            'tipo_usuario' => 1,
-            'tipo' => 'Paciente',
-        ]);
-
-        $query->andFilterWhere(['like', 'nombres', $this->nombres])
-            ->andFilterWhere(['like', 'apellidos', $this->apellidos])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'clave', $this->clave])
-            ->andFilterWhere(['like', 'identificacion', $this->identificacion])
-            ->andFilterWhere(['like', 'numero_celular', $this->numero_celular])
-            ->andFilterWhere(['like', 'tipo', $this->tipo]);
-
-        return $dataProvider;
-    }
-
-    public function doctores($params)
-    {
-        $query = Usuarios::find();
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'cuenta_id' => $this->cuenta_id,
-            'fecha_creacion' => $this->fecha_creacion,
-            'estado_id' => $this->estado_id,
-            'tipo_usuario' => 1,
-            'tipo' => 'Doctor',
-        ]);
-
-        $query->andFilterWhere(['like', 'nombres', $this->nombres])
-            ->andFilterWhere(['like', 'apellidos', $this->apellidos])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'clave', $this->clave])
-            ->andFilterWhere(['like', 'identificacion', $this->identificacion])
-            ->andFilterWhere(['like', 'numero_celular', $this->numero_celular])
-            ->andFilterWhere(['like', 'tipo', $this->tipo]);
-
-        return $dataProvider;
-    }
-
 }

@@ -3,53 +3,63 @@
 namespace app\models\base;
 
 use Yii;
-use app\models\Atenciones;
-use app\models\Eventos;
-use app\models\Alianzas;
+use app\models\Calificaciones;
+use app\models\Documentos;
+use app\models\Pedidos;
+use app\models\Tarjetas;
+use app\models\Bancos;
+use app\models\Categorias;
 use app\models\Ciudades;
-use app\models\Cuentas;
-use app\models\Dispositivos;
-use app\models\Estados;
-use app\models\Usuarios;
+use app\models\Planes;
+use app\models\UsuariosServicios;
 
 /**
  * This is the model class for table "usuarios".
 *
     * @property integer $id
-    * @property integer $cuenta_id
+    * @property integer $tipo_identificacion
+    * @property string $identificacion
+    * @property string $imagen
     * @property string $nombres
     * @property string $apellidos
     * @property string $email
+    * @property string $numero_celular
+    * @property string $telefono_domicilio
     * @property string $clave
     * @property string $tipo
-    * @property string $fecha_creacion
-    * @property integer $estado_id
-    * @property integer $dispositivo_id
-    * @property string $codigo_familiar
-    * @property string $numero_celular
-    * @property string $fecha_nacimiento
+    * @property integer $estado
     * @property string $token_push
-    * @property string $identificacion
-    * @property string $registro_medico
-    * @property integer $alianza_id
     * @property integer $habilitar_rastreo
-    * @property integer $estado_doctor
-    * @property integer $ciudad_id
     * @property string $token
-    * @property integer $usuario_id
-    * @property integer $tipo_usuario
-    * @property string $imagen
+    * @property integer $ciudad_id
+    * @property integer $categoria_id
+    * @property string $fecha_creacion
+    * @property string $fecha_activacion
+    * @property string $fecha_desactivacion
+    * @property string $causas_desactivacion
+    * @property integer $plan_id
+    * @property string $fecha_cambio_plan
+    * @property integer $banco_id
+    * @property string $tipo_cuenta
+    * @property string $numero_cuenta
+    * @property integer $preferencias_deposito
+    * @property string $observaciones
+    * @property integer $dias_trabajo
+    * @property integer $horarios_trabajo
+    * @property integer $estado_validacion_documentos
+    * @property integer $traccar_id
+    * @property string $imei
     *
-            * @property Atenciones[] $atenciones
-            * @property Atenciones[] $atenciones0
-            * @property Eventos[] $eventos
-            * @property Alianzas $alianza
+            * @property Calificaciones[] $calificaciones
+            * @property Documentos[] $documentos
+            * @property Pedidos[] $pedidos
+            * @property Pedidos[] $pedidos0
+            * @property Tarjetas[] $tarjetas
+            * @property Bancos $banco
+            * @property Categorias $categoria
             * @property Ciudades $ciudad
-            * @property Cuentas $cuenta
-            * @property Dispositivos $dispositivo
-            * @property Estados $estado
-            * @property Usuarios $usuario
-            * @property Usuarios[] $usuarios
+            * @property Planes $plan
+            * @property UsuariosServicios[] $usuariosServicios
     */
 class UsuariosBase extends \yii\db\ActiveRecord
 {
@@ -67,20 +77,18 @@ return 'usuarios';
 public function rules()
 {
         return [
-            [['cuenta_id', 'estado_id', 'dispositivo_id', 'alianza_id', 'habilitar_rastreo', 'estado_doctor', 'ciudad_id', 'usuario_id', 'tipo_usuario'], 'integer'],
-            [['tipo', 'token_push', 'token', 'imagen'], 'string'],
-            [['fecha_creacion', 'fecha_nacimiento'], 'safe'],
-            [['nombres', 'apellidos', 'email', 'clave'], 'string', 'max' => 200],
-            [['codigo_familiar'], 'string', 'max' => 10],
-            [['numero_celular'], 'string', 'max' => 45],
+            [['tipo_identificacion', 'estado', 'habilitar_rastreo', 'ciudad_id', 'categoria_id', 'plan_id', 'banco_id', 'preferencias_deposito', 'dias_trabajo', 'horarios_trabajo', 'estado_validacion_documentos', 'traccar_id'], 'integer'],
+            [['imagen', 'tipo', 'token_push', 'token', 'causas_desactivacion', 'tipo_cuenta', 'observaciones'], 'string'],
+            [['fecha_creacion', 'fecha_activacion', 'fecha_desactivacion', 'fecha_cambio_plan'], 'safe'],
             [['identificacion'], 'string', 'max' => 80],
-            [['registro_medico'], 'string', 'max' => 100],
-            [['alianza_id'], 'exist', 'skipOnError' => true, 'targetClass' => Alianzas::className(), 'targetAttribute' => ['alianza_id' => 'id']],
+            [['nombres', 'apellidos', 'email', 'clave'], 'string', 'max' => 200],
+            [['numero_celular', 'telefono_domicilio'], 'string', 'max' => 45],
+            [['numero_cuenta'], 'string', 'max' => 450],
+            [['imei'], 'string', 'max' => 150],
+            [['banco_id'], 'exist', 'skipOnError' => true, 'targetClass' => Bancos::className(), 'targetAttribute' => ['banco_id' => 'id']],
+            [['categoria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::className(), 'targetAttribute' => ['categoria_id' => 'id']],
             [['ciudad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ciudades::className(), 'targetAttribute' => ['ciudad_id' => 'id']],
-            [['cuenta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cuentas::className(), 'targetAttribute' => ['cuenta_id' => 'id']],
-            [['dispositivo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Dispositivos::className(), 'targetAttribute' => ['dispositivo_id' => 'id']],
-            [['estado_id'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado_id' => 'id']],
-            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
+            [['plan_id'], 'exist', 'skipOnError' => true, 'targetClass' => Planes::className(), 'targetAttribute' => ['plan_id' => 'id']],
         ];
 }
 
@@ -91,62 +99,95 @@ public function attributeLabels()
 {
 return [
     'id' => 'ID',
-    'cuenta_id' => 'Cuenta ID',
+    'tipo_identificacion' => 'Tipo Identificacion',
+    'identificacion' => 'Identificacion',
+    'imagen' => 'Imagen',
     'nombres' => 'Nombres',
     'apellidos' => 'Apellidos',
     'email' => 'Email',
+    'numero_celular' => 'Numero Celular',
+    'telefono_domicilio' => 'Telefono Domicilio',
     'clave' => 'Clave',
     'tipo' => 'Tipo',
-    'fecha_creacion' => 'Fecha Creacion',
-    'estado_id' => 'Estado ID',
-    'dispositivo_id' => 'Dispositivo ID',
-    'codigo_familiar' => 'Codigo Familiar',
-    'numero_celular' => 'Numero Celular',
-    'fecha_nacimiento' => 'Fecha Nacimiento',
+    'estado' => 'Estado',
     'token_push' => 'Token Push',
-    'identificacion' => 'Identificacion',
-    'registro_medico' => 'Registro Medico',
-    'alianza_id' => 'Alianza ID',
     'habilitar_rastreo' => 'Habilitar Rastreo',
-    'estado_doctor' => 'Estado Doctor',
-    'ciudad_id' => 'Ciudad ID',
     'token' => 'Token',
-    'usuario_id' => 'Usuario ID',
-    'tipo_usuario' => 'Tipo Usuario',
-    'imagen' => 'Imagen',
+    'ciudad_id' => 'Ciudad ID',
+    'categoria_id' => 'Categoria ID',
+    'fecha_creacion' => 'Fecha Creacion',
+    'fecha_activacion' => 'Fecha Activacion',
+    'fecha_desactivacion' => 'Fecha Desactivacion',
+    'causas_desactivacion' => 'Causas Desactivacion',
+    'plan_id' => 'Plan ID',
+    'fecha_cambio_plan' => 'Fecha Cambio Plan',
+    'banco_id' => 'Banco ID',
+    'tipo_cuenta' => 'Tipo Cuenta',
+    'numero_cuenta' => 'Numero Cuenta',
+    'preferencias_deposito' => 'Preferencias Deposito',
+    'observaciones' => 'Observaciones',
+    'dias_trabajo' => 'Dias Trabajo',
+    'horarios_trabajo' => 'Horarios Trabajo',
+    'estado_validacion_documentos' => 'Estado Validacion Documentos',
+    'traccar_id' => 'Traccar ID',
+    'imei' => 'Imei',
 ];
 }
 
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getAtenciones()
+    public function getCalificaciones()
     {
-    return $this->hasMany(Atenciones::className(), ['paciente_id' => 'id']);
+    return $this->hasMany(Calificaciones::className(), ['usuario_id' => 'id']);
     }
 
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getAtenciones0()
+    public function getDocumentos()
     {
-    return $this->hasMany(Atenciones::className(), ['doctor_id' => 'id']);
+    return $this->hasMany(Documentos::className(), ['usuario_id' => 'id']);
     }
 
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getEventos()
+    public function getPedidos()
     {
-    return $this->hasMany(Eventos::className(), ['usuario_id' => 'id']);
+    return $this->hasMany(Pedidos::className(), ['cliente_id' => 'id']);
     }
 
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getAlianza()
+    public function getPedidos0()
     {
-    return $this->hasOne(Alianzas::className(), ['id' => 'alianza_id']);
+    return $this->hasMany(Pedidos::className(), ['asociado_id' => 'id']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getTarjetas()
+    {
+    return $this->hasMany(Tarjetas::className(), ['usuario_id' => 'id']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getBanco()
+    {
+    return $this->hasOne(Bancos::className(), ['id' => 'banco_id']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getCategoria()
+    {
+    return $this->hasOne(Categorias::className(), ['id' => 'categoria_id']);
     }
 
     /**
@@ -160,40 +201,16 @@ return [
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getCuenta()
+    public function getPlan()
     {
-    return $this->hasOne(Cuentas::className(), ['id' => 'cuenta_id']);
+    return $this->hasOne(Planes::className(), ['id' => 'plan_id']);
     }
 
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getDispositivo()
+    public function getUsuariosServicios()
     {
-    return $this->hasOne(Dispositivos::className(), ['id' => 'dispositivo_id']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getEstado()
-    {
-    return $this->hasOne(Estados::className(), ['id' => 'estado_id']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getUsuario()
-    {
-    return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getUsuarios()
-    {
-    return $this->hasMany(Usuarios::className(), ['usuario_id' => 'id']);
+    return $this->hasMany(UsuariosServicios::className(), ['usuario_id' => 'id']);
     }
 }

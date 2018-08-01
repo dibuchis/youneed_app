@@ -3,16 +3,21 @@
 namespace app\models\base;
 
 use Yii;
-use app\models\Dispositivos;
+use app\models\CategoriasServicios;
+use app\models\Usuarios;
 
 /**
  * This is the model class for table "categorias".
 *
     * @property integer $id
     * @property string $nombre
-    * @property string $icono
+    * @property string $slug
+    * @property string $descripcion
+    * @property string $imagen
+    * @property string $fecha_creacion
     *
-            * @property Dispositivos[] $dispositivos
+            * @property CategoriasServicios[] $categoriasServicios
+            * @property Usuarios[] $usuarios
     */
 class CategoriasBase extends \yii\db\ActiveRecord
 {
@@ -30,8 +35,10 @@ return 'categorias';
 public function rules()
 {
         return [
-            [['nombre'], 'string', 'max' => 200],
-            [['icono'], 'string', 'max' => 45],
+            [['descripcion', 'imagen'], 'string'],
+            [['fecha_creacion'], 'safe'],
+            [['nombre'], 'string', 'max' => 450],
+            [['slug'], 'string', 'max' => 2000],
         ];
 }
 
@@ -41,17 +48,28 @@ public function rules()
 public function attributeLabels()
 {
 return [
-    'id' => Yii::t('app', 'ID'),
-    'nombre' => Yii::t('app', 'Nombre'),
-    'icono' => Yii::t('app', 'Icono'),
+    'id' => 'ID',
+    'nombre' => 'Nombre',
+    'slug' => 'Slug',
+    'descripcion' => 'Descripcion',
+    'imagen' => 'Imagen',
+    'fecha_creacion' => 'Fecha Creacion',
 ];
 }
 
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getDispositivos()
+    public function getCategoriasServicios()
     {
-    return $this->hasMany(Dispositivos::className(), ['categoria_id' => 'id']);
+    return $this->hasMany(CategoriasServicios::className(), ['categoria_id' => 'id']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getUsuarios()
+    {
+    return $this->hasMany(Usuarios::className(), ['categoria_id' => 'id']);
     }
 }

@@ -27,53 +27,47 @@ if( !Yii::$app->user->isGuest ){
                     [
                         'label' => 'Administración',
                         'items' => [
-                            '<li class="dropdown-header">Monitoreo y Rutas</li>',
-                            ['label' => 'Grupos / Flotas', 'url' => ['grupos/index']],
-                            ['label' => 'Dispositivos GPS', 'url' => ['dispositivos/index']],
-                            ['label' => 'Conductores', 'url' => ['conductores/index']],
-                            // ['label' => 'Carreteras', 'url' => '#'],
-                            // ['label' => 'Lugares', 'url' => ['lugares/index']],
-                            // ['label' => 'Rutas', 'url' => '#'],
-                            // ['label' => 'Catálogo de incidencias', 'url' => '#'],
+                            '<li class="dropdown-header">Catálogos generales</li>',
+                            ['label' => 'Países', 'url' => ['paises/index']],
+                            ['label' => 'Provincias', 'url' => ['provincias/index']],
+                            ['label' => 'Cantones', 'url' => ['cantones/index']],
+                            ['label' => 'Ciudades', 'url' => ['ciudades/index']],
+                            ['label' => 'Tipos de Documentos', 'url' => ['tipos-documentos/index']],
+                            ['label' => 'Bancos', 'url' => ['bancos/index']],
+                            ['label' => 'Catálogos de servicios', 'url' => ['categorias/index']],
+                            ['label' => 'Servicios', 'url' => ['servicios/index']],
+                            ['label' => 'Planes', 'url' => ['planes/index']],
                             '<li class="divider"></li>',
                             '<li class="dropdown-header">Plataforma</li>',
                             ['label' => 'Usuarios', 'url' => ['usuarios/index']],
-                            '<li class="dropdown-header">UTIMAPP</li>',
-                            ['label' => 'Alianzas', 'url' => ['alianzas/index']],
-                            ['label' => 'Ciudades', 'url' => ['ciudades/index']],
-                            // ['label' => 'Calificaciones', 'url' => ['calificaciones/index']],
+                            ['label' => 'Configuración Global', 'url' => ['configuraciones/index']],
                         ],
                     ],
                     [
-                        'label' => 'Pacientes',
+                        'label' => 'Clientes',
                         'url' => ['usuarios/pacientes'],
                         // 'linkOptions' => [],
                     ],
                     [
-                        'label' => 'Doctores',
+                        'label' => 'Asociados',
                         'url' => ['usuarios/doctores'],
                         // 'linkOptions' => [],
                     ],
                     [
-                        'label' => 'Atenciones',
-                        'url' => ['atenciones/index'],
-                        // 'linkOptions' => [],
-                    ],
-                    [
-                        'label' => 'Turnos',
-                        'url' => ['turnos/index'],
+                        'label' => 'Pedidos',
+                        'url' => ['pedidos/index'],
                         // 'linkOptions' => [],
                     ],
                     [
                         'label' => 'Reportes',
                         'items' => [
-                            ['label' => 'Historico', 'url' => ['reportes/historico']],
+                            ['label' => 'Historico Asociados', 'url' => ['reportes/historico']],
                         ],
                     ],
                     '<li class="dropdown usuario-panel"><a href="#" class="dropdown-toggle" data-toggle="dropdown">'.Html::img( Url::to('@web/images/usuario-icono.png'), ['class'=> 'usuario-icono']).' '.Yii::$app->user->identity->nombres.' <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a data-toggle="modal" href="javascript:;" data-target="#modal_licencia"><i class="icon-user"></i> Suscripción</a></li>
-                            <li><a target="_blank" href="http://soporte.abitmedia.com/"><i class="icon-envelope"></i> Soporte técnico</a></li>
+                            <li class="dropdown-header">Bienvenido</li>
+                            <li><a href="'.Url::to('@web/site/micuenta').'"><i class="icon-user"></i> Mi cuenta</a></li>
                             <li class="divider"></li>
                             <li>'
                             . Html::beginForm(['/site/logout'], 'post')
@@ -90,28 +84,19 @@ if( !Yii::$app->user->isGuest ){
                 'activateParents' => true,
                 'encodeLabels' => false
             ]);
-    }elseif( Yii::$app->user->identity->tipo == 'Operador' ){
+    }elseif( Yii::$app->user->identity->tipo == 'Asociado' ){
         echo NavX::widget([
             'items' => [
                 [
-                    'label' => 'Monitoreo',
+                    'label' => 'Mis documentos',
                     'url' => ['site/index'],
                     // 'linkOptions' => [],
                 ],
-                // [
-                //     'label' => 'Turnos',
-                //     'url' => ['site/index'],
-                //     // 'linkOptions' => [],
-                // ],
-                [
-                    'label' => 'Reportes',
-                    'items' => [
-                        ['label' => 'Historico', 'url' => ['reportes/historico']],
-                    ],
-                ],
                 '<li class="dropdown usuario-panel"><a href="#" class="dropdown-toggle" data-toggle="dropdown">'.Html::img( Url::to('@web/images/usuario-icono.png'), ['class'=> 'usuario-icono']).' '.Yii::$app->user->identity->nombres.' <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a data-toggle="modal" href="javascript:;" data-target="#modal_licencia"><i class="icon-user"></i> Suscripción</a></li>
+                        <li class="dropdown-header">Bienvenido</li>
+                        <li><a href="'.Url::to('@web/site/micuenta').'"><i class="icon-user"></i> Mi cuenta</a></li>
+                        <li class="divider"></li>
                         <li><a target="_blank" href="http://soporte.abitmedia.com/"><i class="icon-envelope"></i> Soporte técnico</a></li>
                         <li class="divider"></li>
                         <li>'
@@ -129,23 +114,7 @@ if( !Yii::$app->user->isGuest ){
             'activateParents' => true,
             'encodeLabels' => false
         ]);
-    }elseif( Yii::$app->user->identity->tipo == 'Personal' ){
-        echo NavX::widget([
-            'items' => [
-                '<li>'
-                        . Html::beginForm(['/site/logout'], 'post')
-                        . Html::submitButton(
-                            'Cerrar sesión',
-                            ['class' => 'btn btn-link logout']
-                        )
-                        . Html::endForm()
-                        . '</li>'
-            ],
-            'options' => ['class' => 'nav-pills navbar-right'],
-            'activateParents' => true,
-            'encodeLabels' => false
-        ]);
-    }    
+    } 
 
 }
 

@@ -6,51 +6,57 @@ use yii\base\Model;
 
 class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\IdentityInterface
 {
-
-    public $doctor_id;
-    public $tiempo_atencion;
-    public $latitude_inicial_doctor;
-    public $longitude_inicial_doctor;
-
     public function rules()
     {
         return array_merge(parent::rules(),
         [
             [['nombres', 'apellidos', 'email', 'clave', 'tipo', 'estado_id', 'dispositivo_id'], 'required', 'on' => 'webapp'],
-            [['alianza_id', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email'], 'required', 'on' => 'paciente'],
-            [['registro_medico', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email'], 'required', 'on' => 'doctor'],
-            [['alianza_id', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'doctor_id', 'tiempo_atencion'], 'required', 'on' => 'asignacion_doctor'],
+            [['alianza_id', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email'], 'required', 'on' => 'cliente'],
+            [['registro_medico', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email'], 'required', 'on' => 'asociado'],
             ['email', 'unique'],
             ['email', 'email'],
-            [['latitude_inicial_doctor', 'longitude_inicial_doctor'],'number'],
             ['numero_celular', 'unique'],
             ['identificacion', 'unique'],
-            ['registro_medico', 'unique'],
         ]);
     }
 
     public function attributeLabels()
-    {
-    return [
-        'id' => Yii::t('app', 'ID'),
-        'alianza_id' => Yii::t('app', 'Alianza'),
-        'identificacion' => Yii::t('app', 'Identificación'),
-        'numero_celular' => Yii::t('app', 'Número de celular'),
-        'cuenta_id' => Yii::t('app', 'Cuenta ID'),
-        'nombres' => Yii::t('app', 'Nombres'),
-        'apellidos' => Yii::t('app', 'Apellidos'),
-        'email' => Yii::t('app', 'Email'),
-        'clave' => Yii::t('app', 'Clave'),
-        'tipo' => Yii::t('app', 'Tipo'),
-        'fecha_creacion' => Yii::t('app', 'Fecha Creacion'),
-        'fecha_nacimiento' => Yii::t('app', 'Fecha de Nacimiento'),
-        'ciudad_id' => Yii::t('app', 'Ciudad'),
-        'estado_id' => Yii::t('app', 'Estado'),
-        'dispositivo_id' => Yii::t('app', 'Dispositivo GPS'),
-        'tiempo_atencion' => Yii::t('app', 'Tiempo de Atención'),
-        'doctor_id' => Yii::t('app', 'Doctor'),
-    ];
-    }
+	{
+		return [
+		    'id' => 'ID',
+		    'tipo_identificacion' => 'Tipo Identificación',
+		    'identificacion' => 'Identificación',
+		    'imagen' => 'Imagen',
+		    'nombres' => 'Nombres',
+		    'apellidos' => 'Apellidos',
+		    'email' => 'Email',
+		    'numero_celular' => 'Número Celular',
+		    'telefono_domicilio' => 'Teléfono del Domicilio',
+		    'clave' => 'Clave',
+		    'tipo' => 'Tipo',
+		    'estado' => 'Estado',
+		    'token_push' => 'Token Push',
+		    'habilitar_rastreo' => 'Habilitar Rastreo',
+		    'token' => 'Token',
+		    'ciudad_id' => 'Ciudad',
+		    'categoria_id' => 'Categoría actividad',
+		    'fecha_creacion' => 'Fecha Creación',
+		    'fecha_activacion' => 'Fecha Activación',
+		    'fecha_desactivacion' => 'Fecha Desactivación',
+		    'causas_desactivacion' => 'Causas Desactivación',
+		    'plan_id' => 'Plan',
+		    'fecha_cambio_plan' => 'Fecha Cambio de Plan',
+		    'banco_id' => 'Banco',
+		    'tipo_cuenta' => 'Tipo de Cuenta',
+		    'numero_cuenta' => 'Número de Cuenta',
+		    'preferencias_deposito' => 'Preferencia para Depósito',
+		    'observaciones' => 'Observaciones',
+		    'dias_trabajo' => 'Días de Trabajo',
+		    'horarios_trabajo' => 'Horarios de Trabajo',
+		    'estado_validacion_documentos' => 'Estado Validación Documentos',
+		    'traccar_id' => 'Traccar ID',
+		];
+	}
 
     public function getAuthKey()
     {
@@ -92,4 +98,5 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
     {
         return \Yii::$app->getSecurity()->validatePassword($password, $this->clave);
     }
+
 }

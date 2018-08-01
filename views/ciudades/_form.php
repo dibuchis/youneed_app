@@ -11,6 +11,15 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'canton_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\app\models\Cantones::find()->orderBy('nombre')->asArray()->all(), 'id', 'nombre'
+            ),
+        'options' => ['placeholder' => Yii::t('app', 'Seleccione')],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
+
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
   

@@ -10,9 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
-use app\models\Util;
 use yii\filters\AccessControl;
-use app\models\Traccar;
 
 /**
  * UsuariosController implements the CRUD actions for Usuarios model.
@@ -27,7 +25,7 @@ class UsuariosController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'view', 'create', 'update', 'delete', 'bulkdelete', 'pacientes', 'doctores'],
+                'only' => ['index', 'view', 'create', 'update', 'delete', 'bulkdelete'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -55,28 +53,6 @@ class UsuariosController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    public function actionPacientes()
-    {    
-        $searchModel = new UsuariosSearch();
-        $dataProvider = $searchModel->pacientes(Yii::$app->request->queryParams);
-
-        return $this->render('index_utim_app', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    public function actionDoctores()
-    {    
-        $searchModel = new UsuariosSearch();
-        $dataProvider = $searchModel->doctores(Yii::$app->request->queryParams);
-
-        return $this->render('index_utim_app', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -117,9 +93,8 @@ class UsuariosController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new Usuarios();
-        $model->scenario = 'webapp';
-        $model->fecha_creacion = date('Y-m-d H:i:s');
+        $model = new Usuarios();  
+
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -127,33 +102,31 @@ class UsuariosController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Crear nuevo Usuarios",
+                    'title'=> "Create new Usuarios",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Guardar',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
-                $model->clave = Yii::$app->getSecurity()->generatePasswordHash( $model->clave );
-                $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Crear nuevo Usuarios",
+                    'title'=> "Create new Usuarios",
                     'content'=>'<span class="text-success">Create Usuarios success</span>',
-                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Crear más',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Crear nuevo Usuarios",
+                    'title'=> "Create new Usuarios",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Guardar',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }
@@ -182,15 +155,8 @@ class UsuariosController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);
-        if( $model->tipo == 'Doctor' ){
-            $model->scenario = 'doctor';
-        }elseif ( $model->tipo == 'Paciente' ) {
-            $model->scenario = 'paciente';
-        }else{
-            $model->scenario = 'webapp';
-        }       
-        $modelOld = $this->findModel($id);
+        $model = $this->findModel($id);       
+
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -198,41 +164,31 @@ class UsuariosController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Actualizar Usuarios #".$id,
+                    'title'=> "Update Usuarios #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Guardar',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
-
-                if( $model->tipo == 'Doctor' && $model->estado_id == 1 ){
-                    // Se debe enviar un push o se debe enviar un SMS
-                    // $push_doctor = Util::Sendpush( $atencion->doctor->token_push, Yii::$app->params['mensajes_push']['doctor_atencion_asignada'] );
-                }
-
-                if( $modelOld->clave != $model->clave ){
-                    $model->clave = Yii::$app->getSecurity()->generatePasswordHash( $model->clave );
-                    $model->save();
-                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Usuarios #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['Actualizar','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
-                    'title'=> "Actualizar Usuarios #".$id,
+                    'title'=> "Update Usuarios #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Cerrar',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Guardar',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
         }else{
@@ -259,16 +215,7 @@ class UsuariosController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);
-        if( is_object($model->dispositivo) ){
-            if( !is_null( $model->dispositivo->utim_app_tipo ) ){
-                $dispositivo = $model->dispositivo;
-                $response = Traccar::deleteDevice( $dispositivo->traccar_id );
-                \app\models\Util::borrarRegistrosRecursivos( $dispositivo );
-            }
-        }else{
-            \app\models\Util::borrarRegistrosRecursivos( $model );
-        }
+        $this->findModel($id)->delete();
 
         if($request->isAjax){
             /*

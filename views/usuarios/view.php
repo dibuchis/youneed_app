@@ -10,24 +10,39 @@ use yii\widgets\DetailView;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            // 'id',
-            // 'cuenta_id',
-            [
-                'attribute'=>'imagen',
-                'value'=>function ($model) {
-                    if( !is_null( $model->imagen ) ){
-                        return '<img width="100%" src="'.$model->imagen.'">';   
-                    }
-                },
-                'format'=>['raw'],
-            ],
+            'id',
+            'tipo_identificacion',
+            'identificacion',
+            'imagen:ntext',
             'nombres',
             'apellidos',
             'email:email',
-            // 'clave',
+            'numero_celular',
+            'telefono_domicilio',
+            'clave',
             'tipo',
+            'estado',
+            'token_push:ntext',
+            'habilitar_rastreo',
+            'token:ntext',
+            'ciudad_id',
+            'categoria_id',
             'fecha_creacion',
-            // 'estado_id',
+            'fecha_activacion',
+            'fecha_desactivacion',
+            'causas_desactivacion:ntext',
+            'plan_id',
+            'fecha_cambio_plan',
+            'banco_id',
+            'tipo_cuenta',
+            'numero_cuenta',
+            'preferencias_deposito',
+            'observaciones:ntext',
+            'dias_trabajo',
+            'horarios_trabajo',
+            'estado_validacion_documentos',
+            'traccar_id',
+            'imei',
         ],
     ]) ?>
 

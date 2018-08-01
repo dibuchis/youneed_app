@@ -5,7 +5,6 @@ use yii\bootstrap\Modal;
 use kartik\grid\GridView;
 use johnitvn\ajaxcrud\CrudAsset; 
 use johnitvn\ajaxcrud\BulkButtonWidget;
-use app\models\Traccar;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuariosSearch */
@@ -28,9 +27,9 @@ CrudAsset::register($this);
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Crear nuevos Usuarios','class'=>'btn btn-default']).
+                    ['role'=>'modal-remote','title'=> 'Create new Usuarios','class'=>'btn btn-default']).
                     Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
-                    ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Recargar']).
+                    ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
                     '{toggleData}'.
                     '{export}'
                 ],
@@ -40,8 +39,7 @@ CrudAsset::register($this);
             'responsive' => true,          
             'panel' => [
                 'type' => 'primary', 
-                'heading' => '<i class="glyphicon glyphicon-list"></i> Usuarios Listado',                        
-                        '<div class="clearfix"></div>',
+                'heading' => '<i class="glyphicon glyphicon-list"></i> Listado de Usuarios Superadmin',
             ]
         ])?>
     </div>

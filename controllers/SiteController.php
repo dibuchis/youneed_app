@@ -14,7 +14,7 @@ use \yii\web\Response;
 use yii\helpers\Html;
 use app\models\Atenciones;
 use app\models\Usuarios;
-use app\models\AtencionesSearch;
+use app\models\UsuariosSearch;
 
 
 class SiteController extends Controller
@@ -303,7 +303,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if( Yii::$app->user->identity->tipo == 'Personal' ){
+        if( Yii::$app->user->identity->tipo == 'Asociado' ){
             // $this->layout = 'main_movil';
             // return $this->render('index_visitas', [
             //     // 'searchModel' => $searchModel,
@@ -311,9 +311,6 @@ class SiteController extends Controller
             // ]);
             return $this->redirect(['visitas/index']);
         }else{
-            if( Yii::$app->user->identity->tipo == 'Operador' ){
-                $this->layout = 'main_operador';
-            }
             Yii::$app->getSession()->setFlash('success', [
                 'type' => 'success',
                 'duration' => 5000,
@@ -323,16 +320,11 @@ class SiteController extends Controller
                 'positonY' => 'top',
                 'positonX' => 'right'
             ]);
-            $this->searchModelDispositivos = new DispositivosSearch();
+            $this->searchModelDispositivos = new UsuariosSearch();
             $this->dataProviderDispositivos = $this->searchModelDispositivos->search(Yii::$app->request->queryParams);
 
-            $searchModel = new AtencionesSearch();
-            $dataProvider = $searchModel->monitoreo(Yii::$app->request->queryParams);
-            $dataProvider->pagination = ['pageSize' => 4];
-
             return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+                
             ]);
         }
     }

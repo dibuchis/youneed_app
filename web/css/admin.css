@@ -120,13 +120,13 @@ h1{
     padding: 5px;
 }
 .panel-primary > .panel-heading{
-  background-color: #205196!important;
+  background-color: #11616E!important;
 }
 .admin-container{
   padding-top: 20px;
 }
 .modal-header{
-  background-color: #205196!important;
+  background-color: #11616E!important;
   color: #FFF;
 }
 .modal-header .close{
@@ -258,11 +258,11 @@ h2{
 }
 .breadcrumb li{
   padding: 10px;
-  background-color: #2995F1;
+  background-color: #178B89;
   color: #FFF!important;
 }
 .breadcrumb li.active{
-  background-color: #205196;
+  background-color: #11616E;
 }
 .breadcrumb li a{
   color: #FFF;

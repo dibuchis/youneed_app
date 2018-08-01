@@ -9,7 +9,7 @@ use yii\grid\GridView;
       <span class="input-group-addon" id="basic-addon1">
           <span class="glyphicon glyphicon-search"></span>
       </span>
-      <input type="text" id="kwd_search" class="form-control" placeholder="Buscar dispositivo" aria-describedby="basic-addon1">
+      <input type="text" id="kwd_search" class="form-control" placeholder="Buscar asociado" aria-describedby="basic-addon1">
     </div>
 </div>
 

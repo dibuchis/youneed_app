@@ -7,18 +7,8 @@ use yii\helpers\Html;
 ?>
 <div class="usuarios-update">
 
-	<?php 
-	if( $model->tipo == 'Doctor' || $model->tipo == 'Paciente' ){
-		echo $this->render('_form_doctor', [
-	        'model' => $model,
-	    ]);
-	}else{
-		echo $this->render('_form', [
-	        'model' => $model,
-	    ]);
-	} 
-	?>
-
-
+    <?= $this->render('_form', [
+        'model' => $model,
+    ]) ?>
 
 </div>
