@@ -20,6 +20,7 @@ use app\models\UsuariosServicios;
     * @property integer $aplica_iva
     * @property integer $obligatorio_certificado
     * @property string $imagen
+    * @property integer $mostrar_app
     *
             * @property CategoriasServicios[] $categoriasServicios
             * @property Items[] $items
@@ -43,7 +44,7 @@ public function rules()
         return [
             [['incluye', 'no_incluye', 'imagen'], 'string'],
             [['tarifa_base', 'tarifa_dinamica'], 'number'],
-            [['aplica_iva', 'obligatorio_certificado'], 'integer'],
+            [['aplica_iva', 'obligatorio_certificado', 'mostrar_app'], 'integer'],
             [['nombre'], 'string', 'max' => 450],
             [['slug'], 'string', 'max' => 2000],
         ];
@@ -65,6 +66,7 @@ return [
     'aplica_iva' => 'Aplica Iva',
     'obligatorio_certificado' => 'Obligatorio Certificado',
     'imagen' => 'Imagen',
+    'mostrar_app' => 'Mostrar App',
 ];
 }
 

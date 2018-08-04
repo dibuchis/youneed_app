@@ -12,7 +12,10 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'provincia_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\app\models\Provincias::find()->orderBy('nombre')->asArray()->all(), 'id', 'nombre'
+        'data' => \yii\helpers\ArrayHelper::map(\app\models\Provincias::find()->orderBy('nombre')->asArray()->all(), 'id', function($model, $defaultValue) {
+                    $model = \app\models\Provincias::findOne($model['id']);
+                    return $model->pais->nombre.' - '.$model->nombre;
+                }
             ),
         'options' => ['placeholder' => Yii::t('app', 'Seleccione')],
         'pluginOptions' => [

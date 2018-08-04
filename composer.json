@@ -32,7 +32,8 @@
         "borales/yii2-phone-input": "*",
         "2amigos/yii2-file-upload-widget": "~1.0",
         "yiisoft/yii2-imagine": "*",
-        "janisto/yii2-timepicker": "*"
+        "janisto/yii2-timepicker": "*",
+        "yiidoc/yii2-redactor": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\fileupload\FileUpload;
 use yii\helpers\Url;
+use kartik\markdown\MarkdownEditor;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Categorias */
@@ -43,8 +44,8 @@ use yii\helpers\Url;
             ]); ?>
         </div>
         <div class="col-md-7">
-            <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>  
+            <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?> 
+            <?= $form->field($model, 'descripcion')->widget(\yii\redactor\widgets\Redactor::className()) ?>
         </div>
     </div>
   

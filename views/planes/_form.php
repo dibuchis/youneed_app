@@ -13,17 +13,41 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'descripcion')->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
-    <?= $form->field($model, 'pvp')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($model, 'pvp')->widget(\yii\widgets\MaskedInput::className(), [
+                'clientOptions' => [
+                        'alias' =>  'decimal',
+                        'groupSeparator' => '',
+                        'digits' => 2, 
+                        'autoGroup' => true
+                    ],
+            ]) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'descuento_1')->widget(\yii\widgets\MaskedInput::className(), [
+                'clientOptions' => [
+                        'alias' =>  'decimal',
+                        'groupSeparator' => '',
+                        'digits' => 2, 
+                        'autoGroup' => true
+                    ],
+            ]) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'descuento_2')->widget(\yii\widgets\MaskedInput::className(), [
+                'clientOptions' => [
+                        'alias' =>  'decimal',
+                        'groupSeparator' => '',
+                        'digits' => 2, 
+                        'autoGroup' => true
+                    ],
+            ]) ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'descuento_1')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'descuento_2')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'fecha_creacion')->textInput() ?>
-
-  
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

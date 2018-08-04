@@ -4,6 +4,15 @@ namespace app\models;
 
 class Planes extends \app\models\base\PlanesBase
 {
+
+	public function rules()
+    {
+        return array_merge(parent::rules(),
+        [
+            [['nombre', 'descripcion', 'pvp', 'descuento_1', 'descuento_2' ], 'required'],
+        ]);
+    }
+
 	public function attributeLabels()
 	{
 	return [

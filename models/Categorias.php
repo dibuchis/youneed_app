@@ -6,6 +6,14 @@ class Categorias extends \app\models\base\CategoriasBase
 {
 	public $imagen_upload;
 	
+	public function rules()
+    {
+        return array_merge(parent::rules(),
+        [
+            [['imagen', 'nombre', 'descripcion'], 'required'],
+        ]);
+    }
+
     public function attributeLabels()
 	{
 	return [

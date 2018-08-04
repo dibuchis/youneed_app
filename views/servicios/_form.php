@@ -13,22 +13,50 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'incluye')->widget(\yii\redactor\widgets\Redactor::className()) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'no_incluye')->widget(\yii\redactor\widgets\Redactor::className()) ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'incluye')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'no_incluye')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'tarifa_base')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'tarifa_dinamica')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'aplica_iva')->textInput() ?>
-
-    <?= $form->field($model, 'obligatorio_certificado')->textInput() ?>
-
-    <?= $form->field($model, 'imagen')->textarea(['rows' => 6]) ?>
-
+    <div class="row">
+        <div class="col-md-3">
+            <?= $form->field($model, 'tarifa_base')->widget(\yii\widgets\MaskedInput::className(), [
+                'clientOptions' => [
+                        'alias' =>  'decimal',
+                        'groupSeparator' => '',
+                        'digits' => 2, 
+                        'autoGroup' => true
+                    ],
+            ]) ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'tarifa_dinamica')->widget(\yii\widgets\MaskedInput::className(), [
+                'clientOptions' => [
+                        'alias' =>  'decimal',
+                        'groupSeparator' => '',
+                        'digits' => 2, 
+                        'autoGroup' => true
+                    ],
+            ]) ?>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4">
+                    <?= $form->field( $model, 'aplica_iva' )->checkbox(); ?>
+                </div>
+                <div class="col-md-4">
+                    <?= $form->field( $model, 'obligatorio_certificado' )->checkbox(); ?>
+                </div>
+                <div class="col-md-4">
+                    <?= $form->field( $model, 'mostrar_app' )->checkbox(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">

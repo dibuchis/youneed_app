@@ -55,6 +55,7 @@ $config = [
       'gridview' => [
           'class' => '\kartik\grid\Module',
       ],
+      'redactor' => 'yii\redactor\RedactorModule',
     ],
 ];
 
