@@ -177,11 +177,11 @@ class ApiController extends Controller
         }else{
           if( $model->save() ){
             $model->clave = Yii::$app->getSecurity()->generatePasswordHash( $model->clave );
-            // $model->imei = rand(pow(10, 4-1), pow(10, 4)-1).time();
-            // $model->save();
+            $model->imei = rand(pow(10, 4-1), pow(10, 4)-1).time();
+            $model->save();
 
-            // $response = Traccar::setDevice( $model, 'POST' );
-            // $dispositivo->traccar_id = $response['id'];
+            $response = Traccar::setDevice( $model, 'POST' );
+            $model->traccar_id = $response['id'];
             $model->save();
 
             $this->setHeader(200);

@@ -9,9 +9,9 @@ class Traccar extends Model {
 
     public static function setDevice($device, $method, $device_id=null){
         if( $method == 'POST' ){
-            $data='{"id":-1,"name":"'.$device->nombre.'","uniqueId":"'.$device->imei.'","status":"","lastUpdate":null,"groupId":0}';
+            $data='{"id":-1,"name":"'.$device->id.'","uniqueId":"'.$device->imei.'","status":"","lastUpdate":null,"groupId":0}';
         }else{
-            $data='{"id":'.$device->traccar_id.',"name":"'.$device->nombre.'","uniqueId":"'.$device->imei.'","status":"","lastUpdate":null,"groupId":0}';
+            $data='{"id":'.$device->traccar_id.',"name":"'.$device->id.'","uniqueId":"'.$device->imei.'","status":"","lastUpdate":null,"groupId":0}';
         }
         return self::curl($data, $method, $device_id);
     }
