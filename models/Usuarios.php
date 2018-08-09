@@ -12,7 +12,7 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
         [
             [['nombres', 'apellidos', 'email', 'clave', 'tipo', 'estado_id', 'dispositivo_id'], 'required', 'on' => 'Webapp'],
             [['identificacion', 'nombres', 'apellidos', 'numero_celular', 'email'], 'required', 'on' => 'Asociado'],
-            [['tipo_identificacion', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email'], 'required', 'on' => 'Cliente'],
+            [['nombres', 'apellidos', 'numero_celular', 'email'], 'required', 'on' => 'Cliente'],
             ['email', 'unique'],
             ['email', 'email'],
             ['numero_celular', 'unique'],

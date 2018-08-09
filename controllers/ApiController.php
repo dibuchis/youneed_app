@@ -191,7 +191,7 @@ class ApiController extends Controller
           }else{
             $this->setHeader(200);
             return [  'status'=>0, 
-                      'message'=>'Ocurrio un error al registrar doctor',
+                      'message'=>'Ocurrio un error al registrar usuario',
                       'data'=>[ 'errores'=>$model->getErrors() ],
                   ];
           }
@@ -200,7 +200,6 @@ class ApiController extends Controller
         $this->setHeader(200);
         return [  'status'=>0, 
                   'message'=>'Parámetros recibidos incorrectos',
-                  'data'=>[ 'errores'=>$model->getErrors() ],
               ];
       }
     }
