@@ -24,6 +24,7 @@ class ApiController extends Controller
         'verbs' => [
         'class' => VerbFilter::className(),
         'actions' => [
+            'getinfoapp'=>['get'],
             'login'=>['post'],
             'register'=>['post'],
         ],
@@ -56,6 +57,27 @@ class ApiController extends Controller
    
       }  
       return true;  
+    }
+
+    public function actionGetinfoapp( $token = null ){
+      if( is_null( $token ) ){
+        $this->setHeader(200);
+        return [  'status'=>0, 
+                  'message'=>'Error al recuperar información de conectividad GPS',
+              ];
+      }else{
+        $this->setHeader(200);
+        return [  'status'=>1, 
+                  'message'=>'Información de conectividad GPS',
+                  'data'=>[
+                    'traccar_user'=>Yii::$app->params['traccar']['usuario'],
+                    'traccar_pass'=>Yii::$app->params['traccar']['clave'],
+                    'traccar_server'=>Yii::$app->params['traccar']['transmision_url'],
+                    'traccar_server_rest'=>Yii::$app->params['traccar']['rest_url'],
+                  ]
+              ];
+        
+      }
     }
 
     public function actionLogin(){
