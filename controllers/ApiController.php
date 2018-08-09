@@ -129,8 +129,6 @@ class ApiController extends Controller
           }
 
           if( is_object( $usuario ) ){
-            $token = Util::getGenerarPermalink( Yii::$app->getSecurity()->generatePasswordHash('YOUNEEDAbitmedia'.date('Y-m-d H:i:s') ) );
-            $usuario->token = $token;
             
             if( $usuario->save() ){
               
@@ -206,6 +204,7 @@ class ApiController extends Controller
                 ];
         }else{
           if( $model->save() ){
+            $model->token = Util::getGenerarPermalink( Yii::$app->getSecurity()->generatePasswordHash('YOUNEEDAbitmedia'.date('Y-m-d H:i:s') ) );
             $model->clave = Yii::$app->getSecurity()->generatePasswordHash( $model->clave );
             $model->imei = rand(pow(10, 4-1), pow(10, 4)-1).time();
             $model->save();
