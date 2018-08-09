@@ -55,7 +55,7 @@ class AjaxController extends Controller
                     $white = Image::getImagine()->create(new Box(300, 300));
                     $thumbnail = $white->paste($thumbnail, new Point(300 / 2 - $size->getWidth() / 2, 300 / 2 - $size->getHeight() / 2));
                 // }
-                $thumbnail->save(Yii::getAlias($path), ['quality' => 90]);
+                $thumbnail->save(Yii::getAlias($path), ['quality' => 70]);
 
                 $imageData = base64_encode(file_get_contents($path));
 
