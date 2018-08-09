@@ -10,15 +10,13 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
     {
         return array_merge(parent::rules(),
         [
-            [['nombres', 'apellidos', 'email', 'clave', 'tipo', 'estado_id', 'dispositivo_id'], 'required', 'on' => 'webapp'],
-            [['alianza_id', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email'], 'required', 'on' => 'paciente'],
-            [['registro_medico', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email'], 'required', 'on' => 'doctor'],
+            [['nombres', 'apellidos', 'email', 'clave', 'tipo', 'estado_id', 'dispositivo_id'], 'required', 'on' => 'Webapp'],
+            [['identificacion', 'nombres', 'apellidos', 'numero_celular', 'email'], 'required', 'on' => 'Asociado'],
+            [['tipo_identificacion', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email'], 'required', 'on' => 'Cliente'],
             ['email', 'unique'],
             ['email', 'email'],
-            [['latitude_inicial_doctor', 'longitude_inicial_doctor'],'number'],
             ['numero_celular', 'unique'],
             ['identificacion', 'unique'],
-            ['registro_medico', 'unique'],
         ]);
     }
 

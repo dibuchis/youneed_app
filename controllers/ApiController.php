@@ -68,7 +68,7 @@ class ApiController extends Controller
       }else{
         $this->setHeader(200);
         return [  'status'=>1, 
-                  'message'=>'Información de conectividad GPS',
+                  'message'=>'Información global de APP',
                   'data'=>[
                     // 'traccar_user'=>Yii::$app->params['traccar']['usuario'],
                     // 'traccar_pass'=>Yii::$app->params['traccar']['clave'],
@@ -150,78 +150,56 @@ class ApiController extends Controller
     }
 
     public function actionRegister(){
-      if( isset( $_POST['tipo'] ) ){
-        $request = Yii::$app->request;
-        $model = new Usuarios();
-        $model->fecha_creacion = date('Y-m-d H:i:s');
-        $model->tipo_usuario = 1;
-        if( isset( $_POST['nombres'] ) && isset( $_POST['apellidos'] ) ){
-          $model->codigo_familiar = strtoupper( substr($_POST['nombres'], 0, 3).substr($_POST['apellidos'], 0, 3) ).substr(time(), -4, 4);
-        }
-        if( $_POST['tipo'] == 'Doctor' ){ //Doctor
-          $model->estado_id = 2;
-          $model->scenario = 'doctor';
-        }elseif( $_POST['tipo'] == 'Paciente' ){
-          $model->estado_id = 1;
-          $model->scenario = 'paciente';
-        }
-
-        if( $model->load($request->post(), '') ){
-          
-          if( isset( $_POST['validar'] ) && $_POST['validar'] == 1 ){
-            $model->validate();
-
-            $this->setHeader(200);
-            return [  'status'=>( count($model->getErrors()) == 0 ) ? 1 : 0, 
-                      'message'=>'Información de validación',
-                      'data'=>[ 'errores'=>$model->getErrors() ],
-                  ];
-          }else{
-            if( $model->save() ){
-              $model->clave = Yii::$app->getSecurity()->generatePasswordHash( $model->clave );
-              $model->save();
-              $dispositivo = new Dispositivos;
-              $dispositivo->nombre = $model->identificacion;
-              $dispositivo->placa = $model->codigo_familiar;
-              $dispositivo->alias = $model->codigo_familiar;
-              $dispositivo->imei = strtotime( date('Y-m-d H:i:s') );
-              $dispositivo->imei = rand(pow(10, 4-1), pow(10, 4)-1).time();
-              $dispositivo->tipo = 'Verde';
-              $dispositivo->utim_app_tipo = $_POST['tipo'];
-              $dispositivo->tipo_dispositivo = 1;
-              $dispositivo->save();
-              $response = Traccar::setDevice( $dispositivo, 'POST' );
-              $dispositivo->traccar_id = $response['id'];
-              $dispositivo->save();
-
-              $model->dispositivo_id = $dispositivo->id;
-              $model->save();
-
-              $this->setHeader(200);
-              return [  'status'=>1, 
-                        'message'=>'Registrado exitosamente',
-                    ];
-            }else{
-              $this->setHeader(200);
-              return [  'status'=>0, 
-                        'message'=>'Ocurrio un error al registrar doctor',
-                        'data'=>[ 'errores'=>$model->getErrors() ],
-                    ];
-            }
-          }
-          
-
+      $request = Yii::$app->request;
+      $model = new Usuarios();
+      
+      if( $model->load($request->post(), '') ){
+        
+        if( Yii::$app->request->post('tipo') == 'Asociado' ){
+          $model->scenario = 'Asociado';
+        }elseif( Yii::$app->request->post('tipo') == 'Cliente' ){
+          $model->scenario = 'Cliente';
         }else{
           $this->setHeader(200);
           return [  'status'=>0, 
-                    'message'=>'El valor del parámetro tipo no es correcto, verificar documentación de API',
+                    'message'=>'El parámetro tipo puede ser: Asociado o Cliente',
                 ];
         }
 
+        if( isset( $_POST['validate'] ) && $_POST['validate'] == 1 ){
+          $model->validate();
+
+          $this->setHeader(200);
+          return [  'status'=>( count($model->getErrors()) == 0 ) ? 1 : 0, 
+                    'message'=>'Información de validación',
+                    'data'=>[ 'errors'=>$model->getErrors() ],
+                ];
+        }else{
+          if( $model->save() ){
+            $model->clave = Yii::$app->getSecurity()->generatePasswordHash( $model->clave );
+            // $model->imei = rand(pow(10, 4-1), pow(10, 4)-1).time();
+            // $model->save();
+
+            // $response = Traccar::setDevice( $model, 'POST' );
+            // $dispositivo->traccar_id = $response['id'];
+            // $model->save();
+
+            $this->setHeader(200);
+            return [  'status'=>1, 
+                      'message'=>'Registrado exitosamente',
+                  ];
+          }else{
+            $this->setHeader(200);
+            return [  'status'=>0, 
+                      'message'=>'Ocurrio un error al registrar doctor',
+                      'data'=>[ 'errores'=>$model->getErrors() ],
+                  ];
+          }
+        }
       }else{
         $this->setHeader(200);
         return [  'status'=>0, 
-                  'message'=>'El parámetro tipo es requerido',
+                  'message'=>'Parámetros recibidos incorrectos',
               ];
       }
     }
