@@ -200,6 +200,7 @@ class ApiController extends Controller
         $this->setHeader(200);
         return [  'status'=>0, 
                   'message'=>'Parámetros recibidos incorrectos',
+                  'data'=>[ 'errores'=>$model->getErrors() ],
               ];
       }
     }
