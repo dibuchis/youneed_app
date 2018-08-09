@@ -70,10 +70,10 @@ class ApiController extends Controller
         return [  'status'=>1, 
                   'message'=>'Información de conectividad GPS',
                   'data'=>[
-                    'traccar_user'=>Yii::$app->params['traccar']['usuario'],
-                    'traccar_pass'=>Yii::$app->params['traccar']['clave'],
+                    // 'traccar_user'=>Yii::$app->params['traccar']['usuario'],
+                    // 'traccar_pass'=>Yii::$app->params['traccar']['clave'],
                     'traccar_server'=>Yii::$app->params['traccar']['transmision_url'],
-                    'traccar_server_rest'=>Yii::$app->params['traccar']['rest_url'],
+                    // 'traccar_server_rest'=>Yii::$app->params['traccar']['rest_url'],
                   ]
               ];
         
