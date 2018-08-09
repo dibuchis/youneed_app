@@ -182,7 +182,7 @@ class ApiController extends Controller
 
             // $response = Traccar::setDevice( $model, 'POST' );
             // $dispositivo->traccar_id = $response['id'];
-            // $model->save();
+            $model->save();
 
             $this->setHeader(200);
             return [  'status'=>1, 
