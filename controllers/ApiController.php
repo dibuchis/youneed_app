@@ -150,7 +150,7 @@ class ApiController extends Controller
                             'apellidos'=>$usuario->apellidos,
                             'numero_celular'=>$usuario->numero_celular,
                             'imagen'=>$usuario->imagen,
-                            'token'=>$token,
+                            'token'=>$usuario->token,
                             'traccar_id'=>$usuario->traccar_id,
                           ]
                         ]
