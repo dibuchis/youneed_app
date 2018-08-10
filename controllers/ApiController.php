@@ -7,6 +7,7 @@ use app\models\Geo;
 use app\models\Util;
 use app\models\Usuarios;
 use app\models\Traccar;
+use app\models\Configuraciones;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -28,6 +29,7 @@ class ApiController extends Controller
             'login'=>['post'],
             'register'=>['post'],
             'recoverpassword'=>['get'],
+            'termsconditions'=>['get'],
         ],
  
         ]
@@ -254,6 +256,15 @@ class ApiController extends Controller
                 ];
         }
       }
+    }
+
+    public function actionTermsconditions(){
+      $config = Configuraciones::findOne(1);
+      $this->setHeader(200);
+      return [  'status'=>1, 
+                'message'=>'Términos y condiciones',
+                'data'=>$config->politicas_condiciones,
+            ]; 
     }
 
 }
