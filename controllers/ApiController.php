@@ -27,6 +27,7 @@ class ApiController extends Controller
             'getinfoapp'=>['get'],
             'login'=>['post'],
             'register'=>['post'],
+            'recoverpassword'=>['get'],
         ],
  
         ]
@@ -230,6 +231,28 @@ class ApiController extends Controller
         return [  'status'=>0, 
                   'message'=>'Parámetros recibidos incorrectos',
               ];
+      }
+    }
+
+    public function actionRecoverpassword( $email = null ){
+      if( is_null( $email ) ){
+        $this->setHeader(200);
+        return [  'status'=>0, 
+                  'message'=>'Ingrese su email',
+              ];
+      }else{
+        $model = Usuarios::find()->andWhere( [ 'email'=>$email ] )->one();
+        if( is_object( $model ) ){
+          $this->setHeader(200);
+          return [  'status'=>1, 
+                    'message'=>'Se le envió un email con una clave temporal, le recomendamos cambiarla',
+                ];
+        }else{
+          $this->setHeader(200);
+          return [  'status'=>0, 
+                    'message'=>'No encontramos un usuario con el email ingresado',
+                ];
+        }
       }
     }
 
