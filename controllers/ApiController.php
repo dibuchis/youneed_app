@@ -141,7 +141,7 @@ class ApiController extends Controller
 
               $this->setHeader(200);
               return [  'status'=>1, 
-                        'message'=>'Bienvenido: '.$usuario->nombres,
+                        'message'=>'Bienvenid@: '.$usuario->nombres,
                         'data'=>[
                           'usuario'=>[
                             'tipo'=>$usuario->tipo,
