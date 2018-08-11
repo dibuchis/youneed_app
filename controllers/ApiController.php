@@ -212,9 +212,9 @@ class ApiController extends Controller
             $model->imei = rand(pow(10, 4-1), pow(10, 4)-1).time();
             $model->save();
 
-            $response = Traccar::setDevice( $model, 'POST' );
-            $model->traccar_id = $response['id'];
-            $model->save();
+            // $response = Traccar::setDevice( $model, 'POST' );
+            // $model->traccar_id = $response['id'];
+            // $model->save();
 
             $this->setHeader(200);
             return [  'status'=>1, 
