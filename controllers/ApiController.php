@@ -151,6 +151,7 @@ class ApiController extends Controller
                             'display_name'=>$usuario->nombres.' '.$usuario->apellidos,
                             'nombres'=>$usuario->nombres,
                             'apellidos'=>$usuario->apellidos,
+                            'email'=>$usuario->email,
                             'numero_celular'=>$usuario->numero_celular,
                             'imagen'=>$usuario->imagen,
                             'token'=>$usuario->token,
