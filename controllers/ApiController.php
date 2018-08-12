@@ -156,6 +156,8 @@ class ApiController extends Controller
                             'imagen'=>$usuario->imagen,
                             'token'=>$usuario->token,
                             'traccar_id'=>$usuario->traccar_id,
+                            'traccar_transmision'=>Yii::$app->params['traccar']['transmision_url'],
+                            'imei'=>$usuario->imei,
                           ]
                         ]
                     ];
