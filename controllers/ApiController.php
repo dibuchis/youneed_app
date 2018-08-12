@@ -224,7 +224,7 @@ class ApiController extends Controller
             $this->setHeader(200);
             return [  'status'=>0, 
                       'message'=>'Ocurrio un error al registrar usuario',
-                      'data'=>[ 'errores'=>$model->getErrors() ],
+                      'data'=>[ 'errors'=>$model->getErrors() ],
                   ];
           }
         }
