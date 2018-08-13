@@ -34,7 +34,7 @@ if( !Yii::$app->user->isGuest ){
                             ['label' => 'Ciudades', 'url' => ['ciudades/index']],
                             ['label' => 'Tipos de Documentos', 'url' => ['tipos-documentos/index']],
                             ['label' => 'Bancos', 'url' => ['bancos/index']],
-                            ['label' => 'Catálogos de servicios', 'url' => ['categorias/index']],
+                            ['label' => 'Categorías de servicios', 'url' => ['categorias/index']],
                             ['label' => 'Servicios', 'url' => ['servicios/index']],
                             ['label' => 'Planes', 'url' => ['planes/index']],
                             '<li class="divider"></li>',
