@@ -10,7 +10,7 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
     {
         return array_merge(parent::rules(),
         [
-            [['nombres', 'apellidos', 'email', 'clave', 'tipo', 'estado_id', 'dispositivo_id'], 'required', 'on' => 'Webapp'],
+            [['nombres', 'apellidos', 'email', 'numero_celular', 'clave', 'estado'], 'required', 'on' => 'Webapp'],
             [['identificacion', 'nombres', 'apellidos', 'numero_celular', 'email', 'clave'], 'required', 'on' => 'Asociado'],
             [['nombres', 'apellidos', 'numero_celular', 'email', 'clave'], 'required', 'on' => 'Cliente'],
             ['email', 'unique'],

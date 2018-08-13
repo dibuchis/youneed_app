@@ -40,7 +40,7 @@ if( !Yii::$app->user->isGuest ){
                             '<li class="divider"></li>',
                             '<li class="dropdown-header">Plataforma</li>',
                             ['label' => 'Usuarios', 'url' => ['usuarios/index']],
-                            ['label' => 'Configuración Global', 'url' => ['configuraciones/index']],
+                            ['label' => 'Configuración Global', 'url' => ['configuraciones/update']],
                         ],
                     ],
                     [

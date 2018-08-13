@@ -50,7 +50,7 @@ class UsuariosController extends Controller
     public function actionIndex()
     {    
         $searchModel = new UsuariosSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchSuperadmin(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -94,6 +94,8 @@ class UsuariosController extends Controller
     {
         $request = Yii::$app->request;
         $model = new Usuarios();  
+        $model->scenario = 'Webapp';
+        $model->tipo = 'Superadmin';
 
         if($request->isAjax){
             /*
@@ -111,6 +113,8 @@ class UsuariosController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
+                $model->clave = Yii::$app->getSecurity()->generatePasswordHash( $model->clave );
+
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new Usuarios",
@@ -155,7 +159,10 @@ class UsuariosController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel($id);
+        $model->scenario = 'Webapp';
+        $model->tipo = 'Superadmin';
+        $modelOld = $this->findModel($id);
 
         if($request->isAjax){
             /*
@@ -172,6 +179,10 @@ class UsuariosController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
+                if( $modelOld->clave != $model->clave ){
+                    $model->clave = Yii::$app->getSecurity()->generatePasswordHash( $model->clave );
+                    $model->save();
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Usuarios #".$id,

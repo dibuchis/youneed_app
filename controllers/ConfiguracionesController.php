@@ -152,10 +152,10 @@ class ConfiguracionesController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel(1);       
 
         if($request->isAjax){
             /*
@@ -196,7 +196,7 @@ class ConfiguracionesController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['update', 'id' => $model->id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,

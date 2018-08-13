@@ -11,12 +11,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'tipo_identificacion')->textInput() ?>
-
-    <?= $form->field($model, 'identificacion')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'imagen')->textarea(['rows' => 6]) ?>
-
     <?= $form->field($model, 'nombres')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'apellidos')->textInput(['maxlength' => true]) ?>
@@ -25,55 +19,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'numero_celular')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'telefono_domicilio')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'clave')->passwordInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'clave')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'tipo')->dropDownList([ 'Superadmin' => 'Superadmin', 'Operador' => 'Operador', 'Asociado' => 'Asociado', 'Cliente' => 'Cliente', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'estado')->textInput() ?>
-
-    <?= $form->field($model, 'token_push')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'habilitar_rastreo')->textInput() ?>
-
-    <?= $form->field($model, 'token')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'ciudad_id')->textInput() ?>
-
-    <?= $form->field($model, 'categoria_id')->textInput() ?>
-
-    <?= $form->field($model, 'fecha_creacion')->textInput() ?>
-
-    <?= $form->field($model, 'fecha_activacion')->textInput() ?>
-
-    <?= $form->field($model, 'fecha_desactivacion')->textInput() ?>
-
-    <?= $form->field($model, 'causas_desactivacion')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'plan_id')->textInput() ?>
-
-    <?= $form->field($model, 'fecha_cambio_plan')->textInput() ?>
-
-    <?= $form->field($model, 'banco_id')->textInput() ?>
-
-    <?= $form->field($model, 'tipo_cuenta')->dropDownList([ 'Corriente' => 'Corriente', 'Ahorros' => 'Ahorros', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'numero_cuenta')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'preferencias_deposito')->textInput() ?>
-
-    <?= $form->field($model, 'observaciones')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'dias_trabajo')->textInput() ?>
-
-    <?= $form->field($model, 'horarios_trabajo')->textInput() ?>
-
-    <?= $form->field($model, 'estado_validacion_documentos')->textInput() ?>
-
-    <?= $form->field($model, 'traccar_id')->textInput() ?>
-
-    <?= $form->field($model, 'imei')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'estado')->dropDownList(Yii::$app->params['estados_genericos'], ['prompt' => 'Seleccione']) ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

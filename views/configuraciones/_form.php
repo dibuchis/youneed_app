@@ -11,15 +11,22 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'politicas_condiciones')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'politicas_condiciones')->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
-    <?= $form->field($model, 'porcentaje_cancelacion_cliente')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'beneficios_ser_asociado')->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
-    <?= $form->field($model, 'beneficios_ser_asociado')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'promociones_asociados')->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
-    <?= $form->field($model, 'promociones_asociados')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'ayuda')->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
-    <?= $form->field($model, 'ayuda')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'porcentaje_cancelacion_cliente')->widget(\yii\widgets\MaskedInput::className(), [
+        'clientOptions' => [
+                'alias' =>  'decimal',
+                'groupSeparator' => '',
+                'digits' => 2, 
+                'autoGroup' => true
+            ],
+    ]) ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

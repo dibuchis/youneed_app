@@ -94,4 +94,175 @@ class UsuariosSearch extends Usuarios
 
         return $dataProvider;
     }
+
+    public function searchSuperadmin($params)
+    {
+        $query = Usuarios::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'tipo_identificacion' => $this->tipo_identificacion,
+            'estado' => $this->estado,
+            'habilitar_rastreo' => $this->habilitar_rastreo,
+            'ciudad_id' => $this->ciudad_id,
+            'categoria_id' => $this->categoria_id,
+            'fecha_creacion' => $this->fecha_creacion,
+            'fecha_activacion' => $this->fecha_activacion,
+            'fecha_desactivacion' => $this->fecha_desactivacion,
+            'plan_id' => $this->plan_id,
+            'fecha_cambio_plan' => $this->fecha_cambio_plan,
+            'banco_id' => $this->banco_id,
+            'preferencias_deposito' => $this->preferencias_deposito,
+            'dias_trabajo' => $this->dias_trabajo,
+            'horarios_trabajo' => $this->horarios_trabajo,
+            'estado_validacion_documentos' => $this->estado_validacion_documentos,
+            'traccar_id' => $this->traccar_id,
+            'tipo' => 'Superadmin',
+        ]);
+
+        $query->andFilterWhere(['like', 'identificacion', $this->identificacion])
+            ->andFilterWhere(['like', 'imagen', $this->imagen])
+            ->andFilterWhere(['like', 'nombres', $this->nombres])
+            ->andFilterWhere(['like', 'apellidos', $this->apellidos])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'numero_celular', $this->numero_celular])
+            ->andFilterWhere(['like', 'telefono_domicilio', $this->telefono_domicilio])
+            ->andFilterWhere(['like', 'clave', $this->clave])
+            ->andFilterWhere(['like', 'tipo', $this->tipo])
+            ->andFilterWhere(['like', 'token_push', $this->token_push])
+            ->andFilterWhere(['like', 'token', $this->token])
+            ->andFilterWhere(['like', 'causas_desactivacion', $this->causas_desactivacion])
+            ->andFilterWhere(['like', 'tipo_cuenta', $this->tipo_cuenta])
+            ->andFilterWhere(['like', 'numero_cuenta', $this->numero_cuenta])
+            ->andFilterWhere(['like', 'observaciones', $this->observaciones])
+            ->andFilterWhere(['like', 'imei', $this->imei]);
+
+        return $dataProvider;
+    }
+
+    public function searchClientes($params)
+    {
+        $query = Usuarios::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'tipo_identificacion' => $this->tipo_identificacion,
+            'estado' => $this->estado,
+            'habilitar_rastreo' => $this->habilitar_rastreo,
+            'ciudad_id' => $this->ciudad_id,
+            'categoria_id' => $this->categoria_id,
+            'fecha_creacion' => $this->fecha_creacion,
+            'fecha_activacion' => $this->fecha_activacion,
+            'fecha_desactivacion' => $this->fecha_desactivacion,
+            'plan_id' => $this->plan_id,
+            'fecha_cambio_plan' => $this->fecha_cambio_plan,
+            'banco_id' => $this->banco_id,
+            'preferencias_deposito' => $this->preferencias_deposito,
+            'dias_trabajo' => $this->dias_trabajo,
+            'horarios_trabajo' => $this->horarios_trabajo,
+            'estado_validacion_documentos' => $this->estado_validacion_documentos,
+            'traccar_id' => $this->traccar_id,
+            'tipo' => 'Cliente',
+        ]);
+
+        $query->andFilterWhere(['like', 'identificacion', $this->identificacion])
+            ->andFilterWhere(['like', 'imagen', $this->imagen])
+            ->andFilterWhere(['like', 'nombres', $this->nombres])
+            ->andFilterWhere(['like', 'apellidos', $this->apellidos])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'numero_celular', $this->numero_celular])
+            ->andFilterWhere(['like', 'telefono_domicilio', $this->telefono_domicilio])
+            ->andFilterWhere(['like', 'clave', $this->clave])
+            ->andFilterWhere(['like', 'tipo', $this->tipo])
+            ->andFilterWhere(['like', 'token_push', $this->token_push])
+            ->andFilterWhere(['like', 'token', $this->token])
+            ->andFilterWhere(['like', 'causas_desactivacion', $this->causas_desactivacion])
+            ->andFilterWhere(['like', 'tipo_cuenta', $this->tipo_cuenta])
+            ->andFilterWhere(['like', 'numero_cuenta', $this->numero_cuenta])
+            ->andFilterWhere(['like', 'observaciones', $this->observaciones])
+            ->andFilterWhere(['like', 'imei', $this->imei]);
+
+        return $dataProvider;
+    }
+
+    public function searchAsociados($params)
+    {
+        $query = Usuarios::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'tipo_identificacion' => $this->tipo_identificacion,
+            'estado' => $this->estado,
+            'habilitar_rastreo' => $this->habilitar_rastreo,
+            'ciudad_id' => $this->ciudad_id,
+            'categoria_id' => $this->categoria_id,
+            'fecha_creacion' => $this->fecha_creacion,
+            'fecha_activacion' => $this->fecha_activacion,
+            'fecha_desactivacion' => $this->fecha_desactivacion,
+            'plan_id' => $this->plan_id,
+            'fecha_cambio_plan' => $this->fecha_cambio_plan,
+            'banco_id' => $this->banco_id,
+            'preferencias_deposito' => $this->preferencias_deposito,
+            'dias_trabajo' => $this->dias_trabajo,
+            'horarios_trabajo' => $this->horarios_trabajo,
+            'estado_validacion_documentos' => $this->estado_validacion_documentos,
+            'traccar_id' => $this->traccar_id,
+            'tipo' => 'Asociado',
+        ]);
+
+        $query->andFilterWhere(['like', 'identificacion', $this->identificacion])
+            ->andFilterWhere(['like', 'imagen', $this->imagen])
+            ->andFilterWhere(['like', 'nombres', $this->nombres])
+            ->andFilterWhere(['like', 'apellidos', $this->apellidos])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'numero_celular', $this->numero_celular])
+            ->andFilterWhere(['like', 'telefono_domicilio', $this->telefono_domicilio])
+            ->andFilterWhere(['like', 'clave', $this->clave])
+            ->andFilterWhere(['like', 'tipo', $this->tipo])
+            ->andFilterWhere(['like', 'token_push', $this->token_push])
+            ->andFilterWhere(['like', 'token', $this->token])
+            ->andFilterWhere(['like', 'causas_desactivacion', $this->causas_desactivacion])
+            ->andFilterWhere(['like', 'tipo_cuenta', $this->tipo_cuenta])
+            ->andFilterWhere(['like', 'numero_cuenta', $this->numero_cuenta])
+            ->andFilterWhere(['like', 'observaciones', $this->observaciones])
+            ->andFilterWhere(['like', 'imei', $this->imei]);
+
+        return $dataProvider;
+    }
 }

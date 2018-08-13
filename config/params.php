@@ -7,6 +7,10 @@ return [
     'metros_redonda' => 6000, //6km
     'metros_redonda_movil' => 12500, //6km
     'metros_redonda_visita' => 100,
+    'estados_genericos' =>  [
+                                1 => 'Activo',
+                                0 => 'Inactivo',
+                            ],
     'api_utim' => 'http://utimedical.geomonitoreo.com/api/',
     'traccar' => array(	'socket_url' => 'ws://23.239.19.165:8082/api/socket',
     					'rest_url' => 'http://23.239.19.165:8082/api/',
