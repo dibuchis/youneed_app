@@ -45,12 +45,12 @@ if( !Yii::$app->user->isGuest ){
                     ],
                     [
                         'label' => 'Clientes',
-                        'url' => ['usuarios/pacientes'],
+                        'url' => ['usuarios/clientes'],
                         // 'linkOptions' => [],
                     ],
                     [
                         'label' => 'Asociados',
-                        'url' => ['usuarios/doctores'],
+                        'url' => ['usuarios/asociados'],
                         // 'linkOptions' => [],
                     ],
                     [

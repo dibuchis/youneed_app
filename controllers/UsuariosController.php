@@ -25,7 +25,7 @@ class UsuariosController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'view', 'create', 'update', 'delete', 'bulkdelete'],
+                'only' => ['index', 'view', 'create', 'update', 'delete', 'bulkdelete', 'clientes'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -53,6 +53,17 @@ class UsuariosController extends Controller
         $dataProvider = $searchModel->searchSuperadmin(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionClientes()
+    {    
+        $searchModel = new UsuariosSearch();
+        $dataProvider = $searchModel->searchClientes(Yii::$app->request->queryParams);
+
+        return $this->render('clientes', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
