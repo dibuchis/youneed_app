@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\CategoriasServicios;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Servicios */
@@ -12,6 +13,28 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
+
+    <?php 
+        $array_filtros = array();
+        if ($model->id > 0) {
+            $categorias = CategoriasServicios::find()->where(' servicio_id = '.$model->id)->all();
+            foreach ($categorias as $p) {
+                $array_filtros[ $p->categoria_id ] = [ 'selected' => true ];
+            }
+        }
+    ?>
+    <?= $form->field($model, 'categorias')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\app\models\Categorias::find()->orderBy('nombre')->asArray()->all(), 'id', 
+                function($model, $defaultValue) {
+                    return $model['nombre'];
+                }
+            ),
+        'options' => ['placeholder' => 'Seleccione categorías', 'options'=> $array_filtros],
+        'pluginOptions' => [
+            'allowClear' => true, 
+            'multiple' => true,
+        ],
+    ]); ?>
 
     <div class="row">
         <div class="col-md-6">

@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
+use app\models\CategoriasServicios;
 
 /**
  * ServiciosController implements the CRUD actions for Servicios model.
@@ -111,6 +112,17 @@ class ServiciosController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
+
+                if( is_array( Yii::$app->request->post()['Servicios']['categorias'] ) ){
+                    CategoriasServicios::deleteAll('servicio_id = '.$model->id);
+                    foreach ( Yii::$app->request->post()['Servicios']['categorias'] as $pc ) {
+                        $p = new CategoriasServicios();
+                        $p->categoria_id = $pc;
+                        $p->servicio_id = $model->id;
+                        $p->save();
+                    }
+                }
+
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new Servicios",
@@ -172,6 +184,17 @@ class ServiciosController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
+
+                if( is_array( Yii::$app->request->post()['Servicios']['categorias'] ) ){
+                    CategoriasServicios::deleteAll('servicio_id = '.$model->id);
+                    foreach ( Yii::$app->request->post()['Servicios']['categorias'] as $pc ) {
+                        $p = new CategoriasServicios();
+                        $p->categoria_id = $pc;
+                        $p->servicio_id = $model->id;
+                        $p->save();
+                    }
+                }
+                
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Servicios #".$id,
