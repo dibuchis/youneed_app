@@ -15,9 +15,11 @@ use app\models\UsuariosServicios;
     * @property string $slug
     * @property string $incluye
     * @property string $no_incluye
-    * @property string $tarifa_base
-    * @property string $tarifa_dinamica
+    * @property string $tarifa_proveedor
     * @property integer $aplica_iva
+    * @property string $subtotal
+    * @property string $iva
+    * @property string $total
     * @property integer $obligatorio_certificado
     * @property string $imagen
     * @property integer $mostrar_app
@@ -43,7 +45,7 @@ public function rules()
 {
         return [
             [['incluye', 'no_incluye', 'imagen'], 'string'],
-            [['tarifa_base', 'tarifa_dinamica'], 'number'],
+            [['tarifa_proveedor', 'subtotal', 'iva', 'total'], 'number'],
             [['aplica_iva', 'obligatorio_certificado', 'mostrar_app'], 'integer'],
             [['nombre'], 'string', 'max' => 450],
             [['slug'], 'string', 'max' => 2000],
@@ -61,9 +63,11 @@ return [
     'slug' => 'Slug',
     'incluye' => 'Incluye',
     'no_incluye' => 'No Incluye',
-    'tarifa_base' => 'Tarifa Base',
-    'tarifa_dinamica' => 'Tarifa Dinamica',
+    'tarifa_proveedor' => 'Tarifa Proveedor',
     'aplica_iva' => 'Aplica Iva',
+    'subtotal' => 'Subtotal',
+    'iva' => 'Iva',
+    'total' => 'Total',
     'obligatorio_certificado' => 'Obligatorio Certificado',
     'imagen' => 'Imagen',
     'mostrar_app' => 'Mostrar App',

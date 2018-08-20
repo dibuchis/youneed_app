@@ -18,9 +18,9 @@ class ServiciosSearch extends Servicios
     public function rules()
     {
         return [
-            [['id', 'aplica_iva', 'obligatorio_certificado'], 'integer'],
+            [['id', 'obligatorio_certificado'], 'integer'],
             [['nombre', 'slug', 'incluye', 'no_incluye', 'imagen'], 'safe'],
-            [['tarifa_base', 'tarifa_dinamica'], 'number'],
+            [['tarifa_proveedor', 'subtotal', 'iva', 'total'], 'number'],
         ];
     }
 
@@ -58,10 +58,10 @@ class ServiciosSearch extends Servicios
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'tarifa_base' => $this->tarifa_base,
-            'tarifa_dinamica' => $this->tarifa_dinamica,
-            'aplica_iva' => $this->aplica_iva,
-            'obligatorio_certificado' => $this->obligatorio_certificado,
+            // 'tarifa_base' => $this->tarifa_base,
+            // 'tarifa_dinamica' => $this->tarifa_dinamica,
+            // 'aplica_iva' => $this->aplica_iva,
+            // 'obligatorio_certificado' => $this->obligatorio_certificado,
         ]);
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre])

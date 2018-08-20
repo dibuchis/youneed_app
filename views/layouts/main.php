@@ -64,6 +64,9 @@ if( Yii::$app->controller->id == 'site' ){
 <input type="hidden" name="userSocket" id="userSocket" value="<?php echo Yii::$app->params['traccar']['usuario']; ?>">
 <input type="hidden" name="passSocket" id="passSocket" value="<?php echo Yii::$app->params['traccar']['clave']; ?>">
 <input type="hidden" name="base_url" id="base_url" value="<?php echo Url::home(true); ?>">
+<input type="hidden" name="valor_iva" id="valor_iva" value="<?php echo Yii::$app->params['parametros_globales']['iva_valor'] ?>">
+<input type="hidden" name="display_iva" id="display_iva" value="<?php echo Yii::$app->params['parametros_globales']['iva_display'] ?>">
+
 <?php $this->beginBody() ?>
     <?=$this->render('_partials/_menu_modulos.php')?>
 

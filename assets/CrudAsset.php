@@ -26,7 +26,7 @@ class CrudAsset extends AssetBundle
         // 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDfPWNknl2WNIxZWbbrNPIYPtHBWx84sI4',
         // 'js/gmaps.js',
         // 'js/split.min.js',
-        //'js/js.js'
+        'js/app.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -5,13 +5,13 @@ namespace app\models;
 class Servicios extends \app\models\base\ServiciosBase
 {
 
-	public $categorias;
+	public $categorias, $imagen_upload;
 
 	public function rules()
     {
         return array_merge(parent::rules(),
         [
-            [['nombre', 'incluye', 'no_incluye', 'tarifa_base', 'categorias'], 'required'],
+            [['imagen', 'nombre', 'incluye', 'no_incluye', 'categorias'], 'required'],
         ]);
     }
 
