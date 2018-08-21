@@ -23,7 +23,7 @@ class DibujadoAsset extends AssetBundle
         'css/admin.css',
     ];
     public $js = [
-        'https://maps.googleapis.com/maps/api/js?key=AIzaSyCWmnu8hgRqQzEIU3Sp35ygYoyq_WOIC6Q&libraries=drawing,places',
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAvnDL8PwDHrOivIbSY3vL4HRPVomgp0LU&libraries=drawing,places',
         'js/gmaps.js',
         // 'js/dibujado.js',
     ];

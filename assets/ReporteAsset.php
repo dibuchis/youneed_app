@@ -23,7 +23,7 @@ class ReporteAsset extends AssetBundle
         'css/admin.css',
     ];
     public $js = [
-        'https://maps.googleapis.com/maps/api/js?key=AIzaSyCWmnu8hgRqQzEIU3Sp35ygYoyq_WOIC6Q&libraries=places',
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAvnDL8PwDHrOivIbSY3vL4HRPVomgp0LU&libraries=places',
         'js/gmaps.js',
         'js/split.min.js',
         // 'js/reportes.js',

@@ -23,7 +23,7 @@ class AdminAsset extends AssetBundle
         'css/admin.css',
     ];
     public $js = [
-        'https://maps.googleapis.com/maps/api/js?key=AIzaSyDfPWNknl2WNIxZWbbrNPIYPtHBWx84sI4',
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAvnDL8PwDHrOivIbSY3vL4HRPVomgp0LU',
         'js/gmaps.js',
         'js/split.min.js',
         'js/js.js'
