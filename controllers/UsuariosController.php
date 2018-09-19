@@ -125,7 +125,7 @@ class UsuariosController extends Controller
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 $model->clave = Yii::$app->getSecurity()->generatePasswordHash( $model->clave );
-
+                $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new Usuarios",
