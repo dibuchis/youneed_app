@@ -282,7 +282,7 @@ class ApiController extends Controller
         $array_categorias[] = [
                                 'id' => $categoria->id,
                                 'nombre' => trim(substr( $categoria->nombre, 0, 60 )).'...',
-                                'descripcion' => trim(substr( strip_tags($categoria->descripcion, 0, 60) )).'...',
+                                'descripcion' => trim( substr( strip_tags($categoria->descripcion), 0, 60 ) ).'...',
                                 'imagen' => $categoria->imagen,
                               ];
       }
