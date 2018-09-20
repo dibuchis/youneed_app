@@ -8,6 +8,7 @@ use app\models\Util;
 use app\models\Usuarios;
 use app\models\Traccar;
 use app\models\Configuraciones;
+use app\models\Categorias;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -25,11 +26,12 @@ class ApiController extends Controller
         'verbs' => [
         'class' => VerbFilter::className(),
         'actions' => [
-            'getinfoapp'=>['get'],
-            'login'=>['post'],
-            'register'=>['post'],
-            'recoverpassword'=>['get'],
-            'termsconditions'=>['get'],
+            'getinfoapp'=>['get'], //Información global de la plataforma para rastreo y variables internas
+            'login'=>['post'], //Ingreso de usuarios
+            'register'=>['post'], //Registro de usuarios
+            'recoverpassword'=>['get'], //Recuperar la clave de la cuenta
+            'termsconditions'=>['get'], //Información de terminos y condiciones
+            'gethomecategories'=>['get'], //Listado de categorias para el home del cliente
         ],
  
         ]
@@ -268,6 +270,27 @@ class ApiController extends Controller
                 'message'=>'Términos y condiciones',
                 'data'=>$config->politicas_condiciones,
             ]; 
+    }
+
+    public function actionGethomecategories(){
+      $array_categorias = [];
+      $categorias = Categorias::find();
+      $categorias->orderBy(['rand()' => SORT_DESC]);
+      $categorias->limit(10);
+      $categorias = $categorias->all();
+      foreach ($categorias as $categoria) {
+        $array_categorias[] = [
+                                'id' => $categoria->id,
+                                'nombre' => trim(substr( $categoria->nombre, 0, 60 )).'...',
+                                'descripcion' => trim(substr( strip_tags($categoria->descripcion, 0, 60) )).'...',
+                                'imagen' => $categoria->imagen,
+                              ];
+      }
+      $this->setHeader(200);
+      return [  'status'=>1, 
+                'message'=>'Listado de categorías',
+                'data'=>[ 'categorias'=>$array_categorias ],
+            ];
     }
 
 }
