@@ -31,7 +31,8 @@ class ApiController extends Controller
             'register'=>['post'], //Registro de usuarios
             'recoverpassword'=>['get'], //Recuperar la clave de la cuenta
             'termsconditions'=>['get'], //Información de terminos y condiciones
-            'gethomecategories'=>['get'], //Listado de categorias para el home del cliente
+            'getcategories'=>['get'], //Listado de categorias para el home del cliente, si se especifica el parametro categoria_id muestra la informacion de la misma
+            'getassociates'=>['get'], //Listado de asociados, si se especifica categoria_id, muestra todos los asociados que pertenecen a esta categoria
         ],
  
         ]
@@ -272,25 +273,69 @@ class ApiController extends Controller
             ]; 
     }
 
-    public function actionGethomecategories(){
-      $array_categorias = [];
-      $categorias = Categorias::find();
-      $categorias->orderBy(['rand()' => SORT_DESC]);
-      $categorias->limit(10);
-      $categorias = $categorias->all();
-      foreach ($categorias as $categoria) {
-        $array_categorias[] = [
-                                'id' => $categoria->id,
-                                'nombre' => mb_convert_encoding( trim(substr( $categoria->nombre, 0, 100 )).'...' , 'UTF-8', 'UTF-8' ),
-                                'descripcion' => mb_convert_encoding( trim( substr( strip_tags($categoria->descripcion), 0, 80 ) ).'...', 'UTF-8', 'UTF-8' ),
-                                'imagen' => $categoria->imagen,
-                              ];
+    public function actionGetcategories( $categoria_id = null ){
+      
+      if( is_null( $categoria_id ) ){
+        $array_categorias = [];
+        $categorias = Categorias::find();
+        $categorias->orderBy(['rand()' => SORT_DESC]);
+        // $categorias->limit(10);
+        $categorias = $categorias->all();
+        foreach ($categorias as $categoria) {
+          $array_categorias[] = [
+                                  'id' => $categoria->id,
+                                  'nombre' => mb_convert_encoding( trim(substr( $categoria->nombre, 0, 100 )).'...' , 'UTF-8', 'UTF-8' ),
+                                  'descripcion' => mb_convert_encoding( trim( substr( strip_tags($categoria->descripcion), 0, 80 ) ).'...', 'UTF-8', 'UTF-8' ),
+                                  'imagen' => $categoria->imagen,
+                                ];
+        }
+        $this->setHeader(200);
+        return [  'status'=>1, 
+                  'message'=>'Listado de categorías',
+                  'data'=>[ 'categorias'=>$array_categorias ],
+              ];  
+      }else{
+        $categoria = Categorias::findOne( $categoria_id );
+        if( is_object( $categoria ) ){
+
+          $this->setHeader(200);
+          return [  'status'=>1, 
+                    'message'=>'Información de categoria',
+                    'data'=>[ 'categoria'=>$categoria->attributes ],
+                ];  
+        
+        }else{
+
+          $this->setHeader(200);
+          return [  'status'=>0, 
+                    'message'=>'Categoria no encontrada',
+                ];
+
+        }
       }
+      
+    }
+
+    public function actionGetassociates( $categoria_id = null ){
+      
+      $array_asociados = [];
+      $asociados = Usuarios::find();
+      $asociados->andWhere( [ 'tipo'=>'Asociado', 'estado'=>1 ] );
+      if( !is_null( $categoria_id ) ){
+        $asociados->andWhere( [ 'categoria_id'=>$categoria_id ] );
+      }
+      // $categorias->limit(10);
+      $asociados = $asociados->all();
+      foreach ($asociados as $asociado) {
+        $array_asociados[] = $asociado->attributes;
+      }
+        
       $this->setHeader(200);
       return [  'status'=>1, 
-                'message'=>'Listado de categorías',
-                'data'=>[ 'categorias'=>$array_categorias ],
-            ];
+                'message'=>'Listado de asociados',
+                'data'=>[ 'asociados'=>$array_asociados, 'total'=>count( $array_asociados ) ],
+            ];  
+      
     }
 
 }
