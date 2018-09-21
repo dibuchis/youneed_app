@@ -339,7 +339,7 @@ class ApiController extends Controller
       $this->setHeader(200);
       return [  'status'=>1, 
                 'message'=>'Listado de asociados',
-                'data'=>[ 'asociados'=>$array_asociados, 'total'=>count( $array_asociados ) ],
+                'data'=>[ 'asociados'=>$array_asociados, 'total'=>count( $array_asociados ), 'servicio_id'=>$servicio_id ],
             ];  
       
     }
