@@ -357,8 +357,8 @@ class ApiController extends Controller
       foreach ($servicios as $servicio) {
         $array_servicios[] = [
                                 'id' => $servicio->id,
-                                'nombre' => mb_convert_encoding( trim(substr( $servicio->nombre, 0, 100 )).'...' , 'UTF-8', 'UTF-8' ),
-                                'descripcion' => mb_convert_encoding( trim( substr( strip_tags($servicio->incluye), 0, 80 ) ).'...', 'UTF-8', 'UTF-8' ),
+                                'nombre' => ( is_null( $servicio_id ) ) ? mb_convert_encoding( trim(substr( $servicio->nombre, 0, 100 )).'...' , 'UTF-8', 'UTF-8' ) : $servicio->nombre,
+                                'descripcion' => ( is_null( $servicio_id ) ) ? mb_convert_encoding( trim( substr( strip_tags($servicio->incluye), 0, 80 ) ).'...', 'UTF-8', 'UTF-8' ) : $servicio->incluye,
                                 'imagen' => $servicio->imagen,
                               ];
       }
