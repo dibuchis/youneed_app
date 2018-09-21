@@ -9,6 +9,7 @@ use app\models\Usuarios;
 use app\models\Traccar;
 use app\models\Configuraciones;
 use app\models\Categorias;
+use app\models\Servicios;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -31,8 +32,9 @@ class ApiController extends Controller
             'register'=>['post'], //Registro de usuarios
             'recoverpassword'=>['get'], //Recuperar la clave de la cuenta
             'termsconditions'=>['get'], //Información de terminos y condiciones
-            'getcategories'=>['get'], //Listado de categorias para el home del cliente, si se especifica el parametro categoria_id muestra la informacion de la misma
+            'getcategories'=>['get'], //Listado de categorias si se especifica el parametro categoria_id muestra la informacion de la misma
             'getassociates'=>['get'], //Listado de asociados, si se especifica categoria_id, muestra todos los asociados que pertenecen a esta categoria
+            'getservices'=>['get'], //Listado de servicios para la pagina principal, si se especifica el parametro servicio_id muestra la información del mismo
         ],
  
         ]
@@ -335,6 +337,33 @@ class ApiController extends Controller
                 'message'=>'Listado de asociados',
                 'data'=>[ 'asociados'=>$array_asociados, 'total'=>count( $array_asociados ) ],
             ];  
+      
+    }
+
+    public function actionGetservices( $servicio_id = null ){
+      
+      $array_servicios = [];
+      $servicios = Servicios::find();
+      $servicios->andWhere( [ 'mostrar_app'=>1 ] );
+      if( !is_null( $servicio_id ) ){
+        $servicios->andWhere( [ 'id'=>$servicio_id ] );
+      }
+      // $categorias->limit(10);
+      $servicios = $servicios->all();
+      foreach ($servicios as $servicio) {
+        $array_servicios[] = [
+                                'id' => $servicio->id,
+                                'nombre' => mb_convert_encoding( trim(substr( $servicio->nombre, 0, 100 )).'...' , 'UTF-8', 'UTF-8' ),
+                                'descripcion' => mb_convert_encoding( trim( substr( strip_tags($servicio->incluye), 0, 80 ) ).'...', 'UTF-8', 'UTF-8' ),
+                                'imagen' => $servicio->imagen,
+                              ];
+      }
+        
+      $this->setHeader(200);
+      return [  'status'=>1, 
+                'message'=>'Listado de asociados',
+                'data'=>[ 'servicios'=>$array_servicios, 'total'=>count( $array_servicios ) ],
+            ];
       
     }
 
