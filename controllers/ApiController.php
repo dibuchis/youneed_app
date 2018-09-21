@@ -10,6 +10,7 @@ use app\models\Traccar;
 use app\models\Configuraciones;
 use app\models\Categorias;
 use app\models\Servicios;
+use app\models\Pedidos;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -139,7 +140,14 @@ class ApiController extends Controller
           if( is_object( $usuario ) ){
             
             if( $usuario->save() ){
+
+              $items_cart = 0;
+              $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$usuario->id, 'estado'=>0] )->one();
               
+              if( is_object( $pedido ) ){
+                $items_cart = count( $pedido->items );
+              }
+
               if( $usuario->tipo != 'Asociado' && $usuario->tipo != 'Cliente' ){
                 $this->setHeader(200);
                 return [  'status'=>0, 
@@ -163,6 +171,7 @@ class ApiController extends Controller
                             'traccar_id'=>$usuario->traccar_id,
                             'traccar_transmision'=>Yii::$app->params['traccar']['transmision_url'],
                             'imei'=>$usuario->imei,
+                            'items_cart'=>$items_cart,
                           ]
                         ]
                     ];
