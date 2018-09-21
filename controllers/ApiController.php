@@ -318,14 +318,18 @@ class ApiController extends Controller
       
     }
 
-    public function actionGetassociates( $categoria_id = null ){
+    public function actionGetassociates( $categoria_id = null, $servicio_id = null ){
       
       $array_asociados = [];
       $asociados = Usuarios::find();
-      $asociados->andWhere( [ 'tipo'=>'Asociado', 'estado'=>1 ] );
       if( !is_null( $categoria_id ) ){
         $asociados->andWhere( [ 'categoria_id'=>$categoria_id ] );
       }
+      if( !is_null( $servicio_id ) ){
+        $asociados->innerJoinWith('usuariosServicios', 't.id = usuariosServicios.usuario_id');
+        $asociados->andWhere( [ 'usuarios_servicios.servicio_id'=>$servicio_id ] );
+      }
+      $asociados->andWhere( [ 'tipo'=>'Asociado', 'estado'=>1 ] );
       // $categorias->limit(10);
       $asociados = $asociados->all();
       foreach ($asociados as $asociado) {
