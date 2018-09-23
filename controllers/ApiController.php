@@ -329,10 +329,11 @@ class ApiController extends Controller
       
     }
 
-    public function actionGetassociates( $categoria_id = null, $servicio_id = null ){
+    public function actionGetassociates( $categoria_id = null, $servicio_id = null, $asociado_id = null ){
       
       $array_asociados = [];
       $asociados = Usuarios::find();
+      
       if( !is_null( $categoria_id ) ){
         $asociados->andWhere( [ 'categoria_id'=>$categoria_id ] );
       }
@@ -340,6 +341,10 @@ class ApiController extends Controller
         $asociados->innerJoinWith('usuariosServicios', 't.id = usuariosServicios.usuario_id');
         $asociados->andWhere( [ 'usuarios_servicios.servicio_id'=>$servicio_id ] );
       }
+      if( !is_null( $asociado_id ) ){
+        $asociados->andWhere( [ 'id'=>$asociado_id ] );
+      }
+
       $asociados->andWhere( [ 'tipo'=>'Asociado', 'estado'=>1 ] );
       // $categorias->limit(10);
       $asociados = $asociados->all();
@@ -355,9 +360,15 @@ class ApiController extends Controller
       
     }
 
-    public function actionGetservices( $servicio_id = null ){
+    public function actionGetservices( $servicio_id = null, $asociado_id = null ){
       
       $array_servicios = [];
+      $asociado = null;
+
+      if( !is_null( $asociado_id ) ){
+        $asociado = Usuarios::findOne( $asociado_id );
+      }
+
       $servicios = Servicios::find();
       $servicios->andWhere( [ 'mostrar_app'=>1 ] );
       if( !is_null( $servicio_id ) ){
@@ -372,7 +383,12 @@ class ApiController extends Controller
                                 'incluye' => ( is_null( $servicio_id ) ) ? mb_convert_encoding( trim( substr( strip_tags($servicio->incluye), 0, 80 ) ).'...', 'UTF-8', 'UTF-8' ) : $servicio->incluye,
                                 'imagen' => $servicio->imagen,
                                 'no_incluye' => $servicio->no_incluye,
+                                'aplica_iva' => $servicio->aplica_iva,
+                                'subtotal' => $servicio->subtotal,
                                 'total' => $servicio->total,
+                                'subtotal_diagnostico' => (float)Yii::$app->params['parametros_globales']['valor_visita_diagnostico'] / (float)Yii::$app->params['parametros_globales']['iva_valor'] ,
+                                'total_diagnostico' => Yii::$app->params['parametros_globales']['valor_visita_diagnostico'],
+                                'asociado' => $asociado->attributes,
                               ];
       }
         
