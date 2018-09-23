@@ -41,5 +41,7 @@ return [
         'estados_tareas' => [0=>'Pendiente', 1=>'Realizado'],
         'iva_valor' => '1.12',
         'iva_display' => '12%',
+        'valor_visita_diagnostico' => 10,
+        'texto_visita_diagnostico' => 'Visita diagnóstico',
     ]
 ];

@@ -11,6 +11,7 @@ use app\models\Configuraciones;
 use app\models\Categorias;
 use app\models\Servicios;
 use app\models\Pedidos;
+use app\models\Items;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -36,6 +37,7 @@ class ApiController extends Controller
             'getcategories'=>['get'], //Listado de categorias si se especifica el parametro categoria_id muestra la informacion de la misma
             'getassociates'=>['get'], //Listado de asociados, si se especifica categoria_id, muestra todos los asociados que pertenecen a esta categoria
             'getservices'=>['get'], //Listado de servicios para la pagina principal, si se especifica el parametro servicio_id muestra la información del mismo
+            'setitemcart'=>['get'],
         ],
  
         ]
@@ -380,6 +382,102 @@ class ApiController extends Controller
                 'data'=>[ 'servicios'=>$array_servicios, 'total'=>count( $array_servicios ) ],
             ];
       
+    }
+
+    public function actionSetitemcart(){
+      // token
+      // servicio_id
+      // cantidad
+      // costo_unitario
+      // es_diagnostico
+      // tipo_atencion  
+      // asociado_id   
+      $request = Yii::$app->request;
+      $model = new Items();
+      
+      if( $model->load($request->post(), '') ){
+
+        if( Yii::$app->request->post('token') ){ //Token de usuario
+
+          $usuario = Usuarios::find()->andWhere( ['token'=>Yii::$app->request->post('token')] )->one();
+          if( is_object( $usuario ) ){
+
+            $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$usuario->id, 'estado'=>0] )->one();
+            
+            if( !is_object( $pedido ) ){
+              $pedido = new Pedidos();
+              $pedido->cliente_id = $usuario->id;
+              $pedido->identificacion = $usuario->identificacion;
+              $pedido->razon_social = $usuario->nombres.' '.$usuario->apellidos;
+              $pedido->email = $usuario->email;
+              $pedido->telefono = $usuario->numero_celular;
+              $pedido->fecha_creacion = date('Y-m-d H:i:s');
+              $pedido->estado = 0;
+              $pedido->tipo_atencion = Yii::$app->request->post('tipo_atencion');
+              $pedido->save();
+            }
+            
+            $item = Items::find()->andWhere(['pedido_id'=>$pedido->id, 'servicio_id'=>Yii::$app->request->post('servicio_id')])->one();
+            if( is_object( $item ) ){
+              $item->cantidad = (int)$item->cantidad + Yii::$app->request->post('cantidad');
+              $item->costo_unitario = Yii::$app->request->post('costo_unitario');
+              if( $item->save() ){
+                Util::calcularPedido( $pedido->id );
+                $this->setHeader(200);
+                return [  'status'=>1, 
+                          'message'=>'Registrado exitosamente',
+                      ];
+              }else{
+                $this->setHeader(200);
+                return [  'status'=>0, 
+                          'message'=>'Ocurrio un error al registrar item',
+                          'data'=>[ 'errors'=>$item->getErrors() ],
+                      ];
+              }
+
+            }else{
+              
+              $model->pedido_id = $pedido->id;
+
+              if( $model->save() ){
+
+                Util::calcularPedido( $pedido->id );
+
+                $this->setHeader(200);
+                return [  'status'=>1, 
+                          'message'=>'Registrado exitosamente',
+                      ];
+
+              }else{
+                $this->setHeader(200);
+                return [  'status'=>0, 
+                          'message'=>'Ocurrio un error al registrar item',
+                          'data'=>[ 'errors'=>$model->getErrors() ],
+                      ];
+              }
+
+            }
+
+          }else{
+            $this->setHeader(200);
+            return [  'status'=>0, 
+                      'message'=>'Usuario no encontrado',
+                  ];
+          }
+
+        }else{
+          $this->setHeader(200);
+          return [  'status'=>0, 
+                    'message'=>'El parámetro token es necesario',
+                ];
+        }
+        
+      }else{
+        $this->setHeader(200);
+        return [  'status'=>0, 
+                  'message'=>'Parámetros recibidos incorrectos',
+              ];
+      }
     }
 
 }

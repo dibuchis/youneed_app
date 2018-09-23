@@ -37,6 +37,7 @@ use app\models\Usuarios;
     * @property string $subtotal
     * @property string $iva
     * @property string $iva_0
+    * @property string $iva_impuesto
     * @property string $total
     * @property string $fecha_llegada_atencion
     * @property string $fecha_finalizacion_atencion
@@ -68,7 +69,7 @@ public function rules()
 {
         return [
             [['cliente_id', 'asociado_id', 'ciudad_id', 'forma_pago', 'tarjeta_id', 'tipo_atencion', 'tiempo_llegada', 'estado', 'tiempo_aproximado_llegada'], 'integer'],
-            [['latitud', 'longitud', 'subtotal', 'iva', 'iva_0', 'total', 'valores_transferir_asociado', 'valores_cancelacion_servicio_cliente'], 'number'],
+            [['latitud', 'longitud', 'subtotal', 'iva', 'iva_0', 'iva_impuesto', 'total', 'valores_transferir_asociado', 'valores_cancelacion_servicio_cliente'], 'number'],
             [['fecha_para_servicio', 'fecha_creacion', 'fecha_llegada_atencion', 'fecha_finalizacion_atencion'], 'safe'],
             [['direccion_completa', 'observaciones_adicionales'], 'string'],
             [['identificacion'], 'string', 'max' => 80],
@@ -113,6 +114,7 @@ return [
     'subtotal' => 'Subtotal',
     'iva' => 'Iva',
     'iva_0' => 'Iva 0',
+    'iva_impuesto' => 'Iva Impuesto',
     'total' => 'Total',
     'fecha_llegada_atencion' => 'Fecha Llegada Atencion',
     'fecha_finalizacion_atencion' => 'Fecha Finalizacion Atencion',
