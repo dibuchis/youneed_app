@@ -445,6 +445,7 @@ class ApiController extends Controller
                 $this->setHeader(200);
                 return [  'status'=>1, 
                           'message'=>'Registrado exitosamente',
+                          'data'=>['items_cart'=>count( $pedido->items )]
                       ];
               }else{
                 $this->setHeader(200);
@@ -465,6 +466,7 @@ class ApiController extends Controller
                 $this->setHeader(200);
                 return [  'status'=>1, 
                           'message'=>'Registrado exitosamente',
+                          'data'=>['items_cart'=>count( $pedido->items )]
                       ];
 
               }else{
