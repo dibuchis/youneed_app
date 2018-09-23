@@ -35,9 +35,10 @@ class ApiController extends Controller
             'recoverpassword'=>['get'], //Recuperar la clave de la cuenta
             'termsconditions'=>['get'], //Información de terminos y condiciones
             'getcategories'=>['get'], //Listado de categorias si se especifica el parametro categoria_id muestra la informacion de la misma
-            'getassociates'=>['get'], //Listado de asociados, si se especifica categoria_id, muestra todos los asociados que pertenecen a esta categoria
-            'getservices'=>['get'], //Listado de servicios para la pagina principal, si se especifica el parametro servicio_id muestra la información del mismo
-            'setitemcart'=>['get'],
+            'getassociates'=>['get'], //Listado de asociados
+            'getservices'=>['get'], //Listado de servicios
+            'setitemcart'=>['post'], //Permite agregar un item al carrito de compras
+            'getshoppingcart'=>['get'], //Devuelve el carrito de compras de un usuario
         ],
  
         ]
@@ -501,6 +502,43 @@ class ApiController extends Controller
         $this->setHeader(200);
         return [  'status'=>0, 
                   'message'=>'Parámetros recibidos incorrectos',
+              ];
+      }
+    }
+
+    public function actionGetshoppingcart( $token = null ){
+      $usuario = Usuarios::find()->andWhere( [ 'token'=>$token ] )->one();
+      if( is_object( $usuario ) ){
+        $items = [];
+        $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$usuario->id, 'estado'=>0] )->one();
+        if( is_object( $pedido ) ){
+          foreach ($pedido->items as $item) {
+            
+            $items [] = [ 'descripcion'=>( $item->es_diagnostico == 1 ) ? $item->servicio->nombre.' - '.Yii::$app->params['parametros_globales']['texto_visita_diagnostico'] : $item->servicio->nombre, 
+                          'cantidad'=>$item->cantidad, 
+                          'costo_unitario'=>$item->costo_unitario, 
+                          'costo_total'=>$item->costo_total
+                        ];
+          }
+
+          $this->setHeader(200);
+          return [  'status'=>1, 
+                    'message'=>'Carrito de compras',
+                    'data'=>[ 'pedido'=>$pedido->attributes, 'items'=>$items, 'total'=>count( $pedido->items ) ],
+                ];
+
+        }else{
+          $this->setHeader(200);
+          return [  'status'=>1, 
+                    'message'=>'Carrito de compras',
+                    'data'=>[ 'total'=> 0 ],
+                ];
+        }
+
+      }else{
+        $this->setHeader(200);
+        return [  'status'=>0, 
+                  'message'=>'Usuario no encontrado'
               ];
       }
     }
