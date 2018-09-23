@@ -367,7 +367,7 @@ class ApiController extends Controller
 
       if( !is_null( $asociado_id ) ){
         $asociado = Usuarios::findOne( $asociado_id );
-        if is_object( $asociado ){
+        if( is_object( $asociado ) ){
           $array_asociado = [ 'id' => $asociado->id, 'nombres' => $asociado->nombres, 'apellidos' => $asociado->apellidos ];
         }
       }
