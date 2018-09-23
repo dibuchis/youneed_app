@@ -436,6 +436,7 @@ class ApiController extends Controller
               $pedido->save();
             }
             
+            $item = null;
             if( Yii::$app->request->post('es_diagnostico') != 1 ){
               $item = Items::find()->andWhere(['pedido_id'=>$pedido->id, 'servicio_id'=>Yii::$app->request->post('servicio_id')])->one();
             }
