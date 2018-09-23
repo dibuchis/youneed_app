@@ -388,7 +388,7 @@ class ApiController extends Controller
                                 'total' => $servicio->total,
                                 'subtotal_diagnostico' => (float)Yii::$app->params['parametros_globales']['valor_visita_diagnostico'] / (float)Yii::$app->params['parametros_globales']['iva_valor'] ,
                                 'total_diagnostico' => Yii::$app->params['parametros_globales']['valor_visita_diagnostico'],
-                                'asociado' => $asociado->attributes,
+                                'asociado' => ( is_object( $asociado ) ) ? $asociado->attributes : null,
                               ];
       }
         
