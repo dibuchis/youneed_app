@@ -436,7 +436,10 @@ class ApiController extends Controller
               $pedido->save();
             }
             
-            $item = Items::find()->andWhere(['pedido_id'=>$pedido->id, 'servicio_id'=>Yii::$app->request->post('servicio_id')])->one();
+            if( Yii::$app->request->post('es_diagnostico') != 1 ){
+              $item = Items::find()->andWhere(['pedido_id'=>$pedido->id, 'servicio_id'=>Yii::$app->request->post('servicio_id')])->one();
+            }
+            
             if( is_object( $item ) ){
               $item->cantidad = (int)$item->cantidad + Yii::$app->request->post('cantidad');
               $item->costo_unitario = Yii::$app->request->post('costo_unitario');
