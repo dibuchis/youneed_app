@@ -363,10 +363,13 @@ class ApiController extends Controller
     public function actionGetservices( $servicio_id = null, $asociado_id = null ){
       
       $array_servicios = [];
-      $asociado = null;
+      $array_asociado = [];
 
       if( !is_null( $asociado_id ) ){
         $asociado = Usuarios::findOne( $asociado_id );
+        if is_object( $asociado ){
+          $array_asociado = [ 'id' => $asociado->id, 'nombres' => $asociado->nombres, 'apellidos' => $asociado->apellidos ];
+        }
       }
 
       $servicios = Servicios::find();
@@ -388,7 +391,7 @@ class ApiController extends Controller
                                 'total' => $servicio->total,
                                 'subtotal_diagnostico' => (float)Yii::$app->params['parametros_globales']['valor_visita_diagnostico'] / (float)Yii::$app->params['parametros_globales']['iva_valor'] ,
                                 'total_diagnostico' => Yii::$app->params['parametros_globales']['valor_visita_diagnostico'],
-                                'asociado' => ( is_object( $asociado ) ) ? $asociado->attributes : null,
+                                'asociado' => $array_asociado,
                               ];
       }
         
