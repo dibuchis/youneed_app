@@ -524,7 +524,8 @@ class ApiController extends Controller
         if( is_object( $pedido ) ){
           foreach ($pedido->items as $item) {
             
-            $items [] = [ 'descripcion'=>( $item->es_diagnostico == 1 ) ? $item->servicio->nombre.' - '.Yii::$app->params['parametros_globales']['texto_visita_diagnostico'] : $item->servicio->nombre, 
+            $items [] = [ 'id'=>$item->id,
+                          'descripcion'=>( $item->es_diagnostico == 1 ) ? $item->servicio->nombre.' - '.Yii::$app->params['parametros_globales']['texto_visita_diagnostico'] : $item->servicio->nombre, 
                           'cantidad'=>$item->cantidad, 
                           'costo_unitario'=>$item->costo_unitario, 
                           'costo_total'=>$item->costo_total
