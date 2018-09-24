@@ -157,7 +157,7 @@ class Util extends Model
               }
           }
       }
-      $model->delete();
+      return $model->delete();
     }
 
     public static function calcularPedido( $pedido_id ){
