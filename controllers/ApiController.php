@@ -38,6 +38,7 @@ class ApiController extends Controller
             'getassociates'=>['get'], //Listado de asociados
             'getservices'=>['get'], //Listado de servicios
             'setitemcart'=>['post'], //Permite agregar un item al carrito de compras
+            'deleteitemcart'=>['get'], //Permite borrar un item del carrito de compras
             'getshoppingcart'=>['get'], //Devuelve el carrito de compras de un usuario
         ],
  
@@ -503,6 +504,13 @@ class ApiController extends Controller
         return [  'status'=>0, 
                   'message'=>'Parámetros recibidos incorrectos',
               ];
+      }
+    }
+
+    public function actionDeleteitemcart( $item_id = null ){
+      $item = Items::findOne( $item_id );
+      if( is_object( $item ) ){
+        \app\models\Util::borrarRegistrosRecursivos( $item );
       }
     }
 
