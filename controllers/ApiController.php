@@ -511,8 +511,8 @@ class ApiController extends Controller
       $item = Items::findOne( $item_id );
       if( is_object( $item ) ){
         $pedido_id = $item->pedido_id;
-        \app\models\Util::borrarRegistrosRecursivos( $item );
-        if ( Util::calcularPedido( $pedido_id ) ){
+        if ( \app\models\Util::borrarRegistrosRecursivos( $item ) ){
+          Util::calcularPedido( $pedido_id )
           $this->setHeader(200);
           return [  'status'=>1, 
                     'message'=>'Item eliminado correctamente',
