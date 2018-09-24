@@ -509,8 +509,10 @@ class ApiController extends Controller
 
     public function actionDeleteitemcart( $item_id = null ){
       $item = Items::findOne( $item_id );
+      $pedido_id = $item->pedido_id;
       if( is_object( $item ) ){
         \app\models\Util::borrarRegistrosRecursivos( $item );
+        Util::calcularPedido( $pedido_id );
       }
     }
 
