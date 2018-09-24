@@ -523,6 +523,11 @@ class ApiController extends Controller
                     'message'=>'Ocurrio un error, vuelva a intentarlo',
                 ];
         }
+      }else{
+        $this->setHeader(200);
+        return [  'status'=>0, 
+                  'message'=>'Item no encontrado',
+              ];
       }
     }
 
