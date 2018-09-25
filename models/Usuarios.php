@@ -6,12 +6,15 @@ use yii\base\Model;
 
 class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\IdentityInterface
 {
+
+    public $servicios;
+
     public function rules()
     {
         return array_merge(parent::rules(),
         [
             [['nombres', 'apellidos', 'email', 'numero_celular', 'clave', 'estado'], 'required', 'on' => 'Webapp'],
-            [['identificacion', 'nombres', 'apellidos', 'numero_celular', 'email', 'clave'], 'required', 'on' => 'Asociado'],
+            [['identificacion', 'nombres', 'apellidos', 'numero_celular', 'email', 'clave', 'servicios'], 'required', 'on' => 'Asociado'],
             [['nombres', 'apellidos', 'numero_celular', 'email', 'clave'], 'required', 'on' => 'Cliente'],
             ['email', 'unique'],
             ['email', 'email'],

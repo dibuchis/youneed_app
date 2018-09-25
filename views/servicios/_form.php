@@ -52,7 +52,7 @@ use yii\helpers\Url;
                     'autoGroup' => true
                 ],
         ]) ?>        
-        
+        <h1>PVP</h1>
         <?= $form->field($model, 'subtotal')->widget(\yii\widgets\MaskedInput::className(), [
                     'clientOptions' => [
                             'alias' =>  'decimal',
