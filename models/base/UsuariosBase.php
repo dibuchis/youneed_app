@@ -5,6 +5,7 @@ namespace app\models\base;
 use Yii;
 use app\models\Calificaciones;
 use app\models\Documentos;
+use app\models\Items;
 use app\models\Pedidos;
 use app\models\Tarjetas;
 use app\models\Bancos;
@@ -40,6 +41,7 @@ use app\models\UsuariosServicios;
     * @property integer $plan_id
     * @property string $fecha_cambio_plan
     * @property integer $banco_id
+    * @property string $nombre_beneficiario
     * @property string $tipo_cuenta
     * @property string $numero_cuenta
     * @property integer $preferencias_deposito
@@ -52,6 +54,7 @@ use app\models\UsuariosServicios;
     *
             * @property Calificaciones[] $calificaciones
             * @property Documentos[] $documentos
+            * @property Items[] $items
             * @property Pedidos[] $pedidos
             * @property Pedidos[] $pedidos0
             * @property Tarjetas[] $tarjetas
@@ -83,6 +86,7 @@ public function rules()
             [['identificacion'], 'string', 'max' => 80],
             [['nombres', 'apellidos', 'email', 'clave'], 'string', 'max' => 200],
             [['numero_celular', 'telefono_domicilio'], 'string', 'max' => 45],
+            [['nombre_beneficiario'], 'string', 'max' => 850],
             [['numero_cuenta'], 'string', 'max' => 450],
             [['imei'], 'string', 'max' => 150],
             [['banco_id'], 'exist', 'skipOnError' => true, 'targetClass' => Bancos::className(), 'targetAttribute' => ['banco_id' => 'id']],
@@ -122,6 +126,7 @@ return [
     'plan_id' => 'Plan ID',
     'fecha_cambio_plan' => 'Fecha Cambio Plan',
     'banco_id' => 'Banco ID',
+    'nombre_beneficiario' => 'Nombre Beneficiario',
     'tipo_cuenta' => 'Tipo Cuenta',
     'numero_cuenta' => 'Numero Cuenta',
     'preferencias_deposito' => 'Preferencias Deposito',
@@ -148,6 +153,14 @@ return [
     public function getDocumentos()
     {
     return $this->hasMany(Documentos::className(), ['usuario_id' => 'id']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getItems()
+    {
+    return $this->hasMany(Items::className(), ['asociado_id' => 'id']);
     }
 
     /**

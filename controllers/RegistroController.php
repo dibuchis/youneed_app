@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
+use yii\widgets\ActiveForm;
 
 /**
  * UsuariosController implements the CRUD actions for Usuarios model.
@@ -51,6 +52,7 @@ class RegistroController extends Controller
         $model = new Usuarios();  
         $model->scenario = 'Asociado';
         $model->tipo = 'Asociado';
+        $model->clave = '$2y$13$uBUddTim0vpjWki.zHwcIeYEVEqE1Y6g1hwNueooLMlVqYAnnoy4W';
 
         if ($model->load(Yii::$app->request->post())) {
             if($request->isAjax){
@@ -58,10 +60,13 @@ class RegistroController extends Controller
                 return ActiveForm::validate($model);
             }else{
                 if( $model->save() ){
-
-                    Util::flashAlert( 'success', Yii::$app->params['parametros_globales']['alert_flash_exitoso'] );
+                    return $this->render('registro_correcto', [
+                        'model' => $model,
+                    ]);
                 }else{
-                    Util::flashAlert( 'danger', Yii::$app->params['parametros_globales']['alert_flash_error'] );
+                    return $this->render('registro_incorrecto', [
+                        'model' => $model,
+                    ]);
                 }
                 return $this->redirect(['index']);
             }

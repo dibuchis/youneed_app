@@ -71,23 +71,7 @@ if( Yii::$app->controller->id == 'site' ){
 
     <?=$this->render('_partials/_menu_modulos.php')?>
 
-    <?php if( Yii::$app->user->identity->tipo == 'Personal' ){ ?>
-      <a class="btn-block btn btn-lg btn-primary" href="<?php echo Url::to(['visitas/index']) ?>">Ver listado de visitas</a>
-    <?php } ?>
-
-    <?php if( Yii::$app->controller->id == 'site' ){ ?>
-       <?= $content ?>
-    <?php }else{ ?>
-        <div class="container-crud admin-container">
-            <?php 
-              echo Breadcrumbs::widget([
-                  'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-              ]);
-            ?>
-            <?= $content ?>
-        </div>
-    <?php } ?>
-
+    <?= $content ?>
 
 <?php $this->endBody() ?>
 <?php if( Yii::$app->controller->id == 'site' ){ ?>

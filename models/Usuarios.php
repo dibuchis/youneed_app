@@ -7,14 +7,14 @@ use yii\base\Model;
 class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\IdentityInterface
 {
 
-    public $servicios;
+    public $servicios, $imagen_upload;
 
     public function rules()
     {
         return array_merge(parent::rules(),
         [
             [['nombres', 'apellidos', 'email', 'numero_celular', 'clave', 'estado'], 'required', 'on' => 'Webapp'],
-            [['identificacion', 'nombres', 'apellidos', 'numero_celular', 'email', 'clave', 'servicios'], 'required', 'on' => 'Asociado'],
+            [['imagen', 'tipo_identificacion', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email', 'clave', 'categoria_id', 'servicios', 'dias_trabajo', 'horarios_trabajo', 'banco_id', 'nombre_beneficiario', 'tipo_cuenta', 'numero_cuenta'], 'required', 'on' => 'Asociado'],
             [['nombres', 'apellidos', 'numero_celular', 'email', 'clave'], 'required', 'on' => 'Cliente'],
             ['email', 'unique'],
             ['email', 'email'],
@@ -29,7 +29,7 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
 		    'id' => 'ID',
 		    'tipo_identificacion' => 'Tipo Identificación',
 		    'identificacion' => 'Identificación',
-		    'imagen' => 'Imagen',
+		    'imagen' => 'Fotografía',
 		    'nombres' => 'Nombres',
 		    'apellidos' => 'Apellidos',
 		    'email' => 'Email',
@@ -42,7 +42,8 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
 		    'habilitar_rastreo' => 'Habilitar Rastreo',
 		    'token' => 'Token',
 		    'ciudad_id' => 'Ciudad',
-		    'categoria_id' => 'Categoría actividad',
+		    'categoria_id' => 'Actividad Principal',
+            'servicios' => 'Servicios a prestar',
 		    'fecha_creacion' => 'Fecha Creación',
 		    'fecha_activacion' => 'Fecha Activación',
 		    'fecha_desactivacion' => 'Fecha Desactivación',
@@ -58,6 +59,8 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
 		    'horarios_trabajo' => 'Horarios de Trabajo',
 		    'estado_validacion_documentos' => 'Estado Validación Documentos',
 		    'traccar_id' => 'Traccar ID',
+            'banco_id' => 'Institución Bancaria',
+            'nombre_beneficiario' => 'Nombre del Beneficiario',
 		];
 	}
 
