@@ -69,6 +69,17 @@ class UsuariosController extends Controller
         ]);
     }
 
+    public function actionAsociados()
+    {    
+        $searchModel = new UsuariosSearch();
+        $dataProvider = $searchModel->searchAsociados(Yii::$app->request->queryParams);
+
+        return $this->render('asociados', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
 
     /**
      * Displays a single Usuarios model.

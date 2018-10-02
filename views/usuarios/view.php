@@ -10,22 +10,69 @@ use yii\widgets\DetailView;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            // 'id',
             'tipo_identificacion',
             'identificacion',
-            'imagen:ntext',
+            [
+                'attribute'=>'imagen',
+                'value'=>function ($model) {
+                    if( !is_null( $model->imagen ) ){
+                        return '<img width="200px" src="'.$model->imagen.'">';   
+                    }
+                },
+                'format'=>['raw'],
+            ],
             'nombres',
             'apellidos',
             'email:email',
             'numero_celular',
             'telefono_domicilio',
-            'clave',
-            'tipo',
             'estado',
-            'token_push:ntext',
-            'habilitar_rastreo',
-            'token:ntext',
-            'ciudad_id',
+            [
+                'attribute'=>'estado',
+                'value'=>function ($model) {
+                     $color = 'default';
+                    $texto = '';
+                    if( $model->estado == 1 ){
+                        $color = 'success';
+                        $texto = 'Activo';
+                    }elseif( $model->estado == 0 ){
+                        $color = 'warning';
+                        $texto = 'Inactivo';
+                    }else{
+                        $color = 'danger';
+                        $texto = 'Sin estado';
+                    }
+                    return '<span class="btn-block btn-xs btn-'.$color.'"><center>'.$texto.'</center></span>';
+
+                },
+                'format'=>['raw'],
+            ],
+            [
+                'attribute'=>'habilitar_rastreo',
+                'value'=>function ($model) {
+                     $color = 'default';
+                    $texto = '';
+                    if( $model->estado == 1 ){
+                        $color = 'success';
+                        $texto = 'Permite rastreo';
+                    }elseif( $model->estado == 0 ){
+                        $color = 'warning';
+                        $texto = 'No permite rastreo';
+                    }else{
+                        $color = 'danger';
+                        $texto = 'No permite rastreo';
+                    }
+                    return '<span class="btn-block btn-xs btn-'.$color.'"><center>'.$texto.'</center></span>';
+
+                },
+                'format'=>['raw'],
+            ],
+            [
+                'attribute'=>'ciudad_id',
+                'value'=> ( isset( $model->ciudad ) ) ? $model->ciudad->nombre : null,
+                'format' => ['raw'],
+            ],
             'categoria_id',
             'fecha_creacion',
             'fecha_activacion',
