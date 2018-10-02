@@ -20,7 +20,7 @@ class ServiciosSearch extends Servicios
         return [
             [['id', 'obligatorio_certificado'], 'integer'],
             [['nombre', 'slug', 'incluye', 'no_incluye', 'imagen'], 'safe'],
-            [['tarifa_proveedor', 'subtotal', 'iva', 'total'], 'number'],
+            [['proveedor_subtotal', 'proveedor_iva', 'proveedor_total', 'subtotal', 'iva', 'total'], 'number'],
         ];
     }
 

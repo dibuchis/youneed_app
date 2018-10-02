@@ -15,6 +15,10 @@ use app\models\Usuarios;
     * @property string $descripcion
     * @property string $imagen
     * @property string $fecha_creacion
+    * @property integer $aplica_iva
+    * @property string $subtotal
+    * @property string $iva
+    * @property string $total
     *
             * @property CategoriasServicios[] $categoriasServicios
             * @property Usuarios[] $usuarios
@@ -37,6 +41,8 @@ public function rules()
         return [
             [['descripcion', 'imagen'], 'string'],
             [['fecha_creacion'], 'safe'],
+            [['aplica_iva'], 'integer'],
+            [['subtotal', 'iva', 'total'], 'number'],
             [['nombre'], 'string', 'max' => 450],
             [['slug'], 'string', 'max' => 2000],
         ];
@@ -54,6 +60,10 @@ return [
     'descripcion' => 'Descripcion',
     'imagen' => 'Imagen',
     'fecha_creacion' => 'Fecha Creacion',
+    'aplica_iva' => 'Aplica Iva',
+    'subtotal' => 'Subtotal',
+    'iva' => 'Iva',
+    'total' => 'Total',
 ];
 }
 

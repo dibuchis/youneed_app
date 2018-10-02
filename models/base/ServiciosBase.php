@@ -15,7 +15,6 @@ use app\models\UsuariosServicios;
     * @property string $slug
     * @property string $incluye
     * @property string $no_incluye
-    * @property string $tarifa_proveedor
     * @property integer $aplica_iva
     * @property string $subtotal
     * @property string $iva
@@ -23,6 +22,10 @@ use app\models\UsuariosServicios;
     * @property integer $obligatorio_certificado
     * @property string $imagen
     * @property integer $mostrar_app
+    * @property integer $proveedor_aplica_iva
+    * @property string $proveedor_subtotal
+    * @property string $proveedor_iva
+    * @property string $proveedor_total
     *
             * @property CategoriasServicios[] $categoriasServicios
             * @property Items[] $items
@@ -45,8 +48,8 @@ public function rules()
 {
         return [
             [['incluye', 'no_incluye', 'imagen'], 'string'],
-            [['tarifa_proveedor', 'subtotal', 'iva', 'total'], 'number'],
-            [['aplica_iva', 'obligatorio_certificado', 'mostrar_app'], 'integer'],
+            [['aplica_iva', 'obligatorio_certificado', 'mostrar_app', 'proveedor_aplica_iva'], 'integer'],
+            [['subtotal', 'iva', 'total', 'proveedor_subtotal', 'proveedor_iva', 'proveedor_total'], 'number'],
             [['nombre'], 'string', 'max' => 450],
             [['slug'], 'string', 'max' => 2000],
         ];
@@ -63,7 +66,6 @@ return [
     'slug' => 'Slug',
     'incluye' => 'Incluye',
     'no_incluye' => 'No Incluye',
-    'tarifa_proveedor' => 'Tarifa Proveedor',
     'aplica_iva' => 'Aplica Iva',
     'subtotal' => 'Subtotal',
     'iva' => 'Iva',
@@ -71,6 +73,10 @@ return [
     'obligatorio_certificado' => 'Obligatorio Certificado',
     'imagen' => 'Imagen',
     'mostrar_app' => 'Mostrar App',
+    'proveedor_aplica_iva' => 'Proveedor Aplica Iva',
+    'proveedor_subtotal' => 'Proveedor Subtotal',
+    'proveedor_iva' => 'Proveedor Iva',
+    'proveedor_total' => 'Proveedor Total',
 ];
 }
 

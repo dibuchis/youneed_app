@@ -46,6 +46,45 @@ use kartik\markdown\MarkdownEditor;
         <div class="col-md-7">
             <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?> 
             <?= $form->field($model, 'descripcion')->widget(\yii\redactor\widgets\Redactor::className()) ?>
+
+            <div class="row">
+                <h1>Visita diagnostico</h1>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'aplica_iva')->dropDownList( Yii::$app->params['parametros_globales']['estados_condiciones'], []) ?>    
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'subtotal')->widget(\yii\widgets\MaskedInput::className(), [
+                            'clientOptions' => [
+                                    'alias' =>  'decimal',
+                                    'groupSeparator' => '',
+                                    'digits' => 2, 
+                                    'autoGroup' => true
+                                ],
+                        ])->textInput(['value' => $model->subtotal]) ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'iva')->widget(\yii\widgets\MaskedInput::className(), [
+                            'clientOptions' => [
+                                    'alias' =>  'decimal',
+                                    'groupSeparator' => '',
+                                    'digits' => 2, 
+                                    'autoGroup' => true
+                                ],
+                        ])->textInput(['value' => $model->iva, 'readonly'=>'readonly']) ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'total')->widget(\yii\widgets\MaskedInput::className(), [
+                            'clientOptions' => [
+                                    'alias' =>  'decimal',
+                                    'groupSeparator' => '',
+                                    'digits' => 2, 
+                                    'autoGroup' => true
+                                ],
+                        ])->textInput(['value' => $model->total]) ?>
+                </div>
+
+            </div>
+
         </div>
     </div>
   

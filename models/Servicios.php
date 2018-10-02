@@ -29,6 +29,10 @@ class Servicios extends \app\models\base\ServiciosBase
 	    'obligatorio_certificado' => '¿Obligatorio Certificado?',
 	    'imagen' => 'Imagen',
 	    'mostrar_app' => '¿Mostrar en APP?',
+	    'proveedor_aplica_iva' => 'Aplica Iva',
+		'proveedor_subtotal' => 'Subtotal',
+		'proveedor_iva' => 'Iva',
+		'proveedor_total' => 'Total',
 	];
 	}
 }

@@ -1,4 +1,27 @@
 jQuery(document).ready(function ($) {
+    
+    $(document).on('change', '#categorias-aplica_iva', function(){
+        var valor = $(this).val();
+        if( valor == 0 ){
+            $(".field-categorias-subtotal").hide();
+            $(".field-categorias-iva").hide();
+        }else{
+            $(".field-categorias-subtotal").show();
+            $(".field-categorias-iva").show();
+        }
+    });
+
+    $(document).on('change', '#servicios-proveedor_aplica_iva', function(){
+        var valor = $(this).val();
+        if( valor == 0 ){
+            $(".field-servicios-proveedor_subtotal").hide();
+            $(".field-servicios-proveedor_iva").hide();
+        }else{
+            $(".field-servicios-proveedor_subtotal").show();
+            $(".field-servicios-proveedor_iva").show();
+        }
+    });
+
     $(document).on('change', '#servicios-aplica_iva', function(){
         var valor = $(this).val();
         if( valor == 0 ){
@@ -10,6 +33,23 @@ jQuery(document).ready(function ($) {
         }
     });
 });
+
+$(document).on('blur', '#categorias-subtotal', function(){ 
+    calcularMontosIva( '#categorias-subtotal', '', '#categorias-iva', '#categorias-total' );
+});
+
+$(document).on('blur', '#categorias-total', function(){ 
+    calcularMontosIvaDesglose( '#categorias-subtotal', '#categorias-iva', '#categorias-total' );
+});
+
+$(document).on('blur', '#servicios-proveedor_subtotal', function(){ 
+    calcularMontosIva( '#servicios-proveedor_subtotal', '', '#servicios-proveedor_iva', '#servicios-proveedor_total' );
+});
+
+$(document).on('blur', '#servicios-proveedor_total', function(){ 
+    calcularMontosIvaDesglose( '#servicios-proveedor_subtotal', '#servicios-proveedor_iva', '#servicios-proveedor_total' );
+});
+
 $(document).on('blur', '#servicios-subtotal', function(){ 
     calcularMontosIva( '#servicios-subtotal', '', '#servicios-iva', '#servicios-total' );
 });

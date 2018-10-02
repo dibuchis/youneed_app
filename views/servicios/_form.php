@@ -43,40 +43,68 @@ use yii\helpers\Url;
                 ],
             ]); ?>
 
-        <?= $form->field($model, 'aplica_iva')->dropDownList( Yii::$app->params['parametros_globales']['estados_condiciones'], []) ?>
-        <?= $form->field($model, 'tarifa_proveedor')->widget(\yii\widgets\MaskedInput::className(), [
-            'clientOptions' => [
-                    'alias' =>  'decimal',
-                    'groupSeparator' => '',
-                    'digits' => 2, 
-                    'autoGroup' => true
-                ],
-        ]) ?>        
-        <h1>PVP</h1>
-        <?= $form->field($model, 'subtotal')->widget(\yii\widgets\MaskedInput::className(), [
-                    'clientOptions' => [
-                            'alias' =>  'decimal',
-                            'groupSeparator' => '',
-                            'digits' => 2, 
-                            'autoGroup' => true
-                        ],
-                ])->textInput(['value' => $model->subtotal]) ?>
-        <?= $form->field($model, 'iva')->widget(\yii\widgets\MaskedInput::className(), [
-                    'clientOptions' => [
-                            'alias' =>  'decimal',
-                            'groupSeparator' => '',
-                            'digits' => 2, 
-                            'autoGroup' => true
-                        ],
-                ])->textInput(['value' => $model->iva, 'readonly'=>'readonly']) ?>
-        <?= $form->field($model, 'total')->widget(\yii\widgets\MaskedInput::className(), [
-                    'clientOptions' => [
-                            'alias' =>  'decimal',
-                            'groupSeparator' => '',
-                            'digits' => 2, 
-                            'autoGroup' => true
-                        ],
-                ])->textInput(['value' => $model->total]) ?>
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Asociado</h1>
+                
+                <?= $form->field($model, 'proveedor_aplica_iva')->dropDownList( Yii::$app->params['parametros_globales']['estados_condiciones'], []) ?>
+                <?= $form->field($model, 'proveedor_subtotal')->widget(\yii\widgets\MaskedInput::className(), [
+                            'clientOptions' => [
+                                    'alias' =>  'decimal',
+                                    'groupSeparator' => '',
+                                    'digits' => 2, 
+                                    'autoGroup' => true
+                                ],
+                        ])->textInput(['value' => $model->proveedor_subtotal]) ?>
+                <?= $form->field($model, 'proveedor_iva')->widget(\yii\widgets\MaskedInput::className(), [
+                            'clientOptions' => [
+                                    'alias' =>  'decimal',
+                                    'groupSeparator' => '',
+                                    'digits' => 2, 
+                                    'autoGroup' => true
+                                ],
+                        ])->textInput(['value' => $model->proveedor_iva, 'readonly'=>'readonly']) ?>
+                <?= $form->field($model, 'proveedor_total')->widget(\yii\widgets\MaskedInput::className(), [
+                            'clientOptions' => [
+                                    'alias' =>  'decimal',
+                                    'groupSeparator' => '',
+                                    'digits' => 2, 
+                                    'autoGroup' => true
+                                ],
+                        ])->textInput(['value' => $model->proveedor_total]) ?>
+
+            </div>
+            <div class="col-md-6">
+                <h1>PVP</h1>
+                <?= $form->field($model, 'aplica_iva')->dropDownList( Yii::$app->params['parametros_globales']['estados_condiciones'], []) ?>
+                <?= $form->field($model, 'subtotal')->widget(\yii\widgets\MaskedInput::className(), [
+                            'clientOptions' => [
+                                    'alias' =>  'decimal',
+                                    'groupSeparator' => '',
+                                    'digits' => 2, 
+                                    'autoGroup' => true
+                                ],
+                        ])->textInput(['value' => $model->subtotal]) ?>
+                <?= $form->field($model, 'iva')->widget(\yii\widgets\MaskedInput::className(), [
+                            'clientOptions' => [
+                                    'alias' =>  'decimal',
+                                    'groupSeparator' => '',
+                                    'digits' => 2, 
+                                    'autoGroup' => true
+                                ],
+                        ])->textInput(['value' => $model->iva, 'readonly'=>'readonly']) ?>
+                <?= $form->field($model, 'total')->widget(\yii\widgets\MaskedInput::className(), [
+                            'clientOptions' => [
+                                    'alias' =>  'decimal',
+                                    'groupSeparator' => '',
+                                    'digits' => 2, 
+                                    'autoGroup' => true
+                                ],
+                        ])->textInput(['value' => $model->total]) ?>
+            </div>
+        </div>
+ 
+        
 
         <?= $form->field( $model, 'obligatorio_certificado' )->checkbox(); ?>
         <?= $form->field( $model, 'mostrar_app' )->checkbox(); ?>
