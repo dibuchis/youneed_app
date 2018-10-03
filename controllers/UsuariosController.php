@@ -248,7 +248,8 @@ class UsuariosController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        \app\models\Util::borrarRegistrosRecursivos( $model );
 
         if($request->isAjax){
             /*
