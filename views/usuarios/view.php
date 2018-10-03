@@ -73,24 +73,32 @@ use yii\widgets\DetailView;
                 'value'=> ( isset( $model->ciudad ) ) ? $model->ciudad->nombre : null,
                 'format' => ['raw'],
             ],
-            'categoria_id',
             'fecha_creacion',
-            'fecha_activacion',
-            'fecha_desactivacion',
-            'causas_desactivacion:ntext',
-            'plan_id',
-            'fecha_cambio_plan',
-            'banco_id',
-            'tipo_cuenta',
-            'numero_cuenta',
-            'preferencias_deposito',
-            'observaciones:ntext',
-            'dias_trabajo',
-            'horarios_trabajo',
-            'estado_validacion_documentos',
-            'traccar_id',
-            'imei',
         ],
     ]) ?>
+
+
+    <?php if( $model->tipo == 'Asociado' ){ ?>
+        <h2>Información de asociado</h2>
+        <?= DetailView::widget([
+        'model' => $model,
+            'attributes' => [
+                'categoria_id',
+                'fecha_activacion',
+                'fecha_desactivacion',
+                'causas_desactivacion:ntext',
+                'plan_id',
+                'fecha_cambio_plan',
+                'banco_id',
+                'tipo_cuenta',
+                'numero_cuenta',
+                'preferencias_deposito',
+                'dias_trabajo',
+                'horarios_trabajo',
+                'estado_validacion_documentos',
+                'observaciones:ntext',
+            ],
+        ]) ?>
+    <?php } ?>
 
 </div>

@@ -23,7 +23,7 @@ CrudAsset::register($this);
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'pjax'=>true,
-            'columns' => require(__DIR__.'/_columns_clientes.php'),
+            'columns' => require(__DIR__.'/_columns_asociados.php'),
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
@@ -44,6 +44,7 @@ CrudAsset::register($this);
 </div>
 <?php Modal::begin([
     "id"=>"ajaxCrudModal",
+    "size"=>"modal-lg",
     "footer"=>"",// always need it for jquery plugin
 ])?>
 <?php Modal::end(); ?>

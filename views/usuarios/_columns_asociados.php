@@ -50,10 +50,10 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'clave',
     // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'tipo',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'tipo',
+    ],
     [
         'attribute'=>'estado',
         'filter'=>false,
@@ -64,6 +64,18 @@ return [
         },
         // 'filterType'=>GridView::FILTER_SELECT2,
         'filter'=> array_merge( [ ''=>'Todos'], Yii::$app->params['parametros_globales']['estados'] ), 
+        'format'=>'raw'
+    ],
+    [
+        'attribute'=>'estado_validacion_documentos',
+        'filter'=>false,
+        // 'hAlign' => 'left',
+        // 'width'=>'240px',
+        'value'=>function ($model, $key, $index, $widget) {
+            return Yii::$app->params['parametros_globales']['estados_condiciones'][$model->estado_validacion_documentos];
+        },
+        // 'filterType'=>GridView::FILTER_SELECT2,
+        'filter'=> array_merge( [ ''=>'Todos'], Yii::$app->params['parametros_globales']['estados_condiciones'] ), 
         'format'=>'raw'
     ],
     // [
@@ -90,14 +102,14 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'fecha_creacion',
     ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'fecha_activacion',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'fecha_desactivacion',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'fecha_activacion',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'fecha_desactivacion',
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'causas_desactivacion',

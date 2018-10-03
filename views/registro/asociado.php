@@ -114,6 +114,17 @@ use dosamigos\fileupload\FileUpload;
                 ]);
             ?>
 
+            <?= $form->field($model, 'plan_id')->widget(\kartik\widgets\Select2::classname(), [
+	            'data' => \yii\helpers\ArrayHelper::map(\app\models\Planes::find()->orderBy('nombre')->asArray()->all(), 'id', function($model, $defaultValue) {
+	                        return $model['nombre'];
+	                    }
+	                ),
+	            'options' => ['placeholder' => Yii::t('app', 'Seleccione')],
+	            'pluginOptions' => [
+	                'allowClear' => true
+	            ],
+	        ]); ?>
+
 	    </div>
 	</div>
 	<div class="row">

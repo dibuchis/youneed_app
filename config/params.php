@@ -35,8 +35,8 @@ return [
                         'iva' => 1.12,
                     ],
     'parametros_globales' => [
-        'estados' => [1=>'Activo', 0=>'Inactivo'],
-        'estados_condiciones' => [1=>'Si', 0=>'No'],
+        'estados' => [0=>'Inactivo', 1=>'Activo'],
+        'estados_condiciones' => [0=>'No', 1=>'Si'],
         'estados_acciones' => [0=>'Mantenimiento', 1=>'Activo'],
         'estados_tareas' => [0=>'Pendiente', 1=>'Realizado'],
         'iva_valor' => '1.12',
