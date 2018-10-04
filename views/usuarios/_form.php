@@ -17,7 +17,7 @@ use dosamigos\fileupload\FileUpload;
 
     <ul class="nav nav-tabs">
       <li class="active"><a data-toggle="tab" href="#infogeneral">Información general</a></li>
-      <?php if( $model->tipo == 'Asociado' ){ ?>
+      <?php if( $model->es_asociado == 1 ){ ?>
           <li><a data-toggle="tab" href="#infoservicios">Información de servicios</a></li>
           <li><a data-toggle="tab" href="#infopagos">Información para pagos</a></li>
       <?php } ?>
@@ -25,24 +25,49 @@ use dosamigos\fileupload\FileUpload;
 
     <div class="tab-content">
       <div id="infogeneral" class="tab-pane fade in active">
+
         <?= $form->field($model, 'nombres')->textInput(['maxlength' => true]) ?>
 
         <?= $form->field($model, 'apellidos')->textInput(['maxlength' => true]) ?>
 
         <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
+        <?= $form->field($model, 'telefono_domicilio')->textInput(['maxlength' => true]) ?>
+
         <?= $form->field($model, 'numero_celular')->textInput(['maxlength' => true]) ?>
+
+        <?= $form->field($model, 'ciudad_id')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(\app\models\Ciudades::find()->orderBy('nombre')->asArray()->all(), 'id', function($model, $defaultValue) {
+                        return $model['nombre'];
+                    }
+                ),
+            'options' => ['placeholder' => Yii::t('app', 'Seleccione')],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]); ?>
 
         <?= $form->field($model, 'clave')->passwordInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'estado')->dropDownList(Yii::$app->params['estados_genericos'], ['prompt' => 'Seleccione']) ?>
-      
-        <pre>
-        <?php print_r( $model ); ?>
-        </pre>
 
-        <?php if( $model->tipo == 'Asociado' ){ ?>
-            <?= $form->field($model, 'estado_validacion_documentos')->dropDownList(Yii::$app->params['estados_genericos'], ['prompt' => 'Seleccione']) ?>
+        <?= $form->field($model, 'estado')->dropDownList(Yii::$app->params['estados_genericos'], ['prompt' => 'Seleccione']) ?>
+
+        <?= $form->field($model, 'causas_desactivacion')->textInput(['maxlength' => true]) ?>
+      
+        <div class="row">
+            <div class="col-md-4">
+                <?= $form->field($model, 'fecha_creacion')->textInput(['maxlength' => true, 'readonly'=>'readonly']) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'fecha_activacion')->textInput(['maxlength' => true, 'readonly'=>'readonly']) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'fecha_desactivacion')->textInput(['maxlength' => true, 'readonly'=>'readonly']) ?>
+            </div>
+        </div>
+
+        <?php if( $model->es_asociado == 1 ){ ?>
+            <?= $form->field($model, 'estado_validacion_documentos')->dropDownList(Yii::$app->params['parametros_globales']['estados_condiciones'], ['prompt' => 'Seleccione']) ?>
         <?php } ?>
 
       </div>
@@ -70,8 +95,6 @@ use dosamigos\fileupload\FileUpload;
                 ]
             ]);
         ?>
-
-        <?= $form->field($model, 'causas_desactivacion')->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
         <?= $form->field($model, 'plan_id')->widget(\kartik\widgets\Select2::classname(), [
             'data' => \yii\helpers\ArrayHelper::map(\app\models\Planes::find()->orderBy('nombre')->asArray()->all(), 'id', function($model, $defaultValue) {

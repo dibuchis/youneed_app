@@ -303,7 +303,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if( Yii::$app->user->identity->tipo == 'Asociado' ){
+        if( Yii::$app->user->identity->es_asociado == 1 ){
             // $this->layout = 'main_movil';
             // return $this->render('index_visitas', [
             //     // 'searchModel' => $searchModel,

@@ -19,7 +19,7 @@ class UsuariosSearch extends Usuarios
     {
         return [
             [['id', 'tipo_identificacion', 'estado', 'habilitar_rastreo', 'ciudad_id', 'categoria_id', 'plan_id', 'banco_id', 'preferencias_deposito', 'dias_trabajo', 'horarios_trabajo', 'estado_validacion_documentos', 'traccar_id'], 'integer'],
-            [['identificacion', 'imagen', 'nombres', 'apellidos', 'email', 'numero_celular', 'telefono_domicilio', 'clave', 'tipo', 'token_push', 'token', 'fecha_creacion', 'fecha_activacion', 'fecha_desactivacion', 'causas_desactivacion', 'fecha_cambio_plan', 'tipo_cuenta', 'numero_cuenta', 'observaciones', 'imei'], 'safe'],
+            [['identificacion', 'imagen', 'nombres', 'apellidos', 'email', 'numero_celular', 'telefono_domicilio', 'clave', 'token_push', 'token', 'fecha_creacion', 'fecha_activacion', 'fecha_desactivacion', 'causas_desactivacion', 'fecha_cambio_plan', 'tipo_cuenta', 'numero_cuenta', 'observaciones', 'imei'], 'safe'],
         ];
     }
 
@@ -83,7 +83,6 @@ class UsuariosSearch extends Usuarios
             ->andFilterWhere(['like', 'numero_celular', $this->numero_celular])
             ->andFilterWhere(['like', 'telefono_domicilio', $this->telefono_domicilio])
             ->andFilterWhere(['like', 'clave', $this->clave])
-            ->andFilterWhere(['like', 'tipo', $this->tipo])
             ->andFilterWhere(['like', 'token_push', $this->token_push])
             ->andFilterWhere(['like', 'token', $this->token])
             ->andFilterWhere(['like', 'causas_desactivacion', $this->causas_desactivacion])
@@ -129,7 +128,7 @@ class UsuariosSearch extends Usuarios
             'horarios_trabajo' => $this->horarios_trabajo,
             'estado_validacion_documentos' => $this->estado_validacion_documentos,
             'traccar_id' => $this->traccar_id,
-            'tipo' => 'Superadmin',
+            'es_super' => 1,
         ]);
 
         $query->andFilterWhere(['like', 'identificacion', $this->identificacion])
@@ -186,7 +185,7 @@ class UsuariosSearch extends Usuarios
             'horarios_trabajo' => $this->horarios_trabajo,
             'estado_validacion_documentos' => $this->estado_validacion_documentos,
             'traccar_id' => $this->traccar_id,
-            'tipo' => 'Cliente',
+            'es_cliente' => 1,
         ]);
 
         $query->andFilterWhere(['like', 'identificacion', $this->identificacion])
@@ -197,7 +196,6 @@ class UsuariosSearch extends Usuarios
             ->andFilterWhere(['like', 'numero_celular', $this->numero_celular])
             ->andFilterWhere(['like', 'telefono_domicilio', $this->telefono_domicilio])
             ->andFilterWhere(['like', 'clave', $this->clave])
-            ->andFilterWhere(['like', 'tipo', $this->tipo])
             ->andFilterWhere(['like', 'token_push', $this->token_push])
             ->andFilterWhere(['like', 'token', $this->token])
             ->andFilterWhere(['like', 'causas_desactivacion', $this->causas_desactivacion])
@@ -243,7 +241,7 @@ class UsuariosSearch extends Usuarios
             'horarios_trabajo' => $this->horarios_trabajo,
             'estado_validacion_documentos' => $this->estado_validacion_documentos,
             'traccar_id' => $this->traccar_id,
-            'tipo' => 'Asociado',
+            'es_asociado' => 1,
         ]);
 
         $query->andFilterWhere(['like', 'identificacion', $this->identificacion])
@@ -254,7 +252,6 @@ class UsuariosSearch extends Usuarios
             ->andFilterWhere(['like', 'numero_celular', $this->numero_celular])
             ->andFilterWhere(['like', 'telefono_domicilio', $this->telefono_domicilio])
             ->andFilterWhere(['like', 'clave', $this->clave])
-            ->andFilterWhere(['like', 'tipo', $this->tipo])
             ->andFilterWhere(['like', 'token_push', $this->token_push])
             ->andFilterWhere(['like', 'token', $this->token])
             ->andFilterWhere(['like', 'causas_desactivacion', $this->causas_desactivacion])

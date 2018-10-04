@@ -27,7 +27,6 @@ use yii\widgets\DetailView;
             'email:email',
             'numero_celular',
             'telefono_domicilio',
-            'estado',
             [
                 'attribute'=>'estado',
                 'value'=>function ($model) {
@@ -78,7 +77,7 @@ use yii\widgets\DetailView;
     ]) ?>
 
 
-    <?php if( $model->tipo == 'Asociado' ){ ?>
+    <?php if( $model->es_asociado == 1 ){ ?>
         <h2>Información de asociado</h2>
         <?= DetailView::widget([
         'model' => $model,

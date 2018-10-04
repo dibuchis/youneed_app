@@ -15,7 +15,7 @@ NavBar::begin([
 ]);
 if( !Yii::$app->user->isGuest ){
 
-    if( Yii::$app->user->identity->tipo == 'Superadmin' ){
+    if( Yii::$app->user->identity->es_super == 1 ){
 
             echo NavX::widget([
                 'items' => [
@@ -84,7 +84,7 @@ if( !Yii::$app->user->isGuest ){
                 'activateParents' => true,
                 'encodeLabels' => false
             ]);
-    }elseif( Yii::$app->user->identity->tipo == 'Asociado' ){
+    }elseif( Yii::$app->user->identity->es_asociado == 1 ){
         echo NavX::widget([
             'items' => [
                 [

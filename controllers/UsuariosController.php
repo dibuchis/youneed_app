@@ -117,7 +117,6 @@ class UsuariosController extends Controller
         $request = Yii::$app->request;
         $model = new Usuarios();  
         $model->scenario = 'Webapp';
-        $model->tipo = 'Superadmin';
 
         if($request->isAjax){
             /*
@@ -136,6 +135,7 @@ class UsuariosController extends Controller
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 $model->clave = Yii::$app->getSecurity()->generatePasswordHash( $model->clave );
+                $model->es_super = 1;
                 $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
@@ -183,7 +183,7 @@ class UsuariosController extends Controller
         $request = Yii::$app->request;
         $model = $this->findModel($id);
         $model->scenario = 'Webapp';
-        $model->tipo = 'Superadmin';
+        
         $modelOld = $this->findModel($id);
 
         if($request->isAjax){
@@ -201,6 +201,15 @@ class UsuariosController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
+
+                if( Yii::$app->request->post('estado') == 0 ){
+                    $model->fecha_desactivacion = date('Y-m-d H:i:s');
+                    $model->save();
+                }else{
+                    $model->fecha_activacion = date('Y-m-d H:i:s');
+                    $model->save();
+                }
+
                 if( $modelOld->clave != $model->clave ){
                     $model->clave = Yii::$app->getSecurity()->generatePasswordHash( $model->clave );
                     $model->save();

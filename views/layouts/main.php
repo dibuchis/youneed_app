@@ -70,9 +70,7 @@ if( Yii::$app->controller->id == 'site' ){
 <?php $this->beginBody() ?>
     <?=$this->render('_partials/_menu_modulos.php')?>
 
-    <?php if( Yii::$app->user->identity->tipo == 'Personal' ){ ?>
-      <a class="btn-block btn btn-lg btn-primary" href="<?php echo Url::to(['visitas/index']) ?>">Ver listado de visitas</a>
-    <?php } ?>
+
 
     <?php if( Yii::$app->controller->id == 'site' ){ ?>
        <?= $content ?>

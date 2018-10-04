@@ -51,10 +51,6 @@ return [
         // 'attribute'=>'clave',
     // ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'tipo',
-    ],
-    [
         'attribute'=>'estado',
         'filter'=>false,
         // 'hAlign' => 'left',

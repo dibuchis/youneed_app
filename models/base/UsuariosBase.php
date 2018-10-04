@@ -27,7 +27,6 @@ use app\models\UsuariosServicios;
     * @property string $numero_celular
     * @property string $telefono_domicilio
     * @property string $clave
-    * @property string $tipo
     * @property integer $estado
     * @property string $token_push
     * @property integer $habilitar_rastreo
@@ -51,6 +50,10 @@ use app\models\UsuariosServicios;
     * @property integer $estado_validacion_documentos
     * @property integer $traccar_id
     * @property string $imei
+    * @property integer $es_super
+    * @property integer $es_asociado
+    * @property integer $es_cliente
+    * @property integer $es_operador
     *
             * @property Calificaciones[] $calificaciones
             * @property Documentos[] $documentos
@@ -80,8 +83,8 @@ return 'usuarios';
 public function rules()
 {
         return [
-            [['tipo_identificacion', 'estado', 'habilitar_rastreo', 'ciudad_id', 'categoria_id', 'plan_id', 'banco_id', 'preferencias_deposito', 'dias_trabajo', 'horarios_trabajo', 'estado_validacion_documentos', 'traccar_id'], 'integer'],
-            [['imagen', 'tipo', 'token_push', 'token', 'causas_desactivacion', 'tipo_cuenta', 'observaciones'], 'string'],
+            [['tipo_identificacion', 'estado', 'habilitar_rastreo', 'ciudad_id', 'categoria_id', 'plan_id', 'banco_id', 'preferencias_deposito', 'dias_trabajo', 'horarios_trabajo', 'estado_validacion_documentos', 'traccar_id', 'es_super', 'es_asociado', 'es_cliente', 'es_operador'], 'integer'],
+            [['imagen', 'token_push', 'token', 'causas_desactivacion', 'tipo_cuenta', 'observaciones'], 'string'],
             [['fecha_creacion', 'fecha_activacion', 'fecha_desactivacion', 'fecha_cambio_plan'], 'safe'],
             [['identificacion'], 'string', 'max' => 80],
             [['nombres', 'apellidos', 'email', 'clave'], 'string', 'max' => 200],
@@ -112,7 +115,6 @@ return [
     'numero_celular' => 'Numero Celular',
     'telefono_domicilio' => 'Telefono Domicilio',
     'clave' => 'Clave',
-    'tipo' => 'Tipo',
     'estado' => 'Estado',
     'token_push' => 'Token Push',
     'habilitar_rastreo' => 'Habilitar Rastreo',
@@ -136,6 +138,10 @@ return [
     'estado_validacion_documentos' => 'Estado Validacion Documentos',
     'traccar_id' => 'Traccar ID',
     'imei' => 'Imei',
+    'es_super' => 'Es Super',
+    'es_asociado' => 'Es Asociado',
+    'es_cliente' => 'Es Cliente',
+    'es_operador' => 'Es Operador',
 ];
 }
 
