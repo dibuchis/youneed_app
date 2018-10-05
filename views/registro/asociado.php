@@ -228,12 +228,13 @@ use dosamigos\fileupload\FileUpload;
 	            	<?php $documentos = TiposDocumentos::find()->all(); ?>
 
 	            	<?php foreach ($documentos as $doc) { ?>
-	            		
-	            		<?= Html::img( Url::to('@web/images/ajax-loader.gif'), ['class'=> 'loader']);?>
+	            		<h3><?php echo $doc->nombre; ?></h3>
+	            		<?php echo Html::hiddenInput('documentos[]', '', ['id'=>'doc_'.$doc->id]); ?>
+	            		<?= Html::img( Url::to('@web/images/ajax-loader.gif'), ['class'=> 'loader loader_doc_'.$doc->id] );?>
 					    <?= FileUpload::widget([
 					        'model' => $model,
 					        'attribute' => 'imagen_upload[]['.$doc->id.']',
-					        'url' => ['ajax/subirfotografia', 'id' => $model->id],
+					        'url' => ['ajax/subirdocumento', 'id' => $model->id],
 					        'options' => ['accept' => 'image/*,application/pdf'],
 					        'clientOptions' => [
 					            'maxFileSize' => 2000000,
