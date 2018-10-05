@@ -18,7 +18,7 @@ class UsuariosSearch extends Usuarios
     public function rules()
     {
         return [
-            [['id', 'tipo_identificacion', 'estado', 'habilitar_rastreo', 'ciudad_id', 'categoria_id', 'plan_id', 'banco_id', 'preferencias_deposito', 'dias_trabajo', 'horarios_trabajo', 'estado_validacion_documentos', 'traccar_id'], 'integer'],
+            [['id', 'tipo_identificacion', 'estado', 'habilitar_rastreo', 'categoria_id', 'plan_id', 'banco_id', 'preferencias_deposito', 'dias_trabajo', 'horarios_trabajo', 'estado_validacion_documentos', 'traccar_id'], 'integer'],
             [['identificacion', 'imagen', 'nombres', 'apellidos', 'email', 'numero_celular', 'telefono_domicilio', 'clave', 'token_push', 'token', 'fecha_creacion', 'fecha_activacion', 'fecha_desactivacion', 'causas_desactivacion', 'fecha_cambio_plan', 'tipo_cuenta', 'numero_cuenta', 'observaciones', 'imei'], 'safe'],
         ];
     }
@@ -60,7 +60,6 @@ class UsuariosSearch extends Usuarios
             'tipo_identificacion' => $this->tipo_identificacion,
             'estado' => $this->estado,
             'habilitar_rastreo' => $this->habilitar_rastreo,
-            'ciudad_id' => $this->ciudad_id,
             'categoria_id' => $this->categoria_id,
             'fecha_creacion' => $this->fecha_creacion,
             'fecha_activacion' => $this->fecha_activacion,
@@ -115,7 +114,6 @@ class UsuariosSearch extends Usuarios
             'tipo_identificacion' => $this->tipo_identificacion,
             'estado' => $this->estado,
             'habilitar_rastreo' => $this->habilitar_rastreo,
-            'ciudad_id' => $this->ciudad_id,
             'categoria_id' => $this->categoria_id,
             'fecha_creacion' => $this->fecha_creacion,
             'fecha_activacion' => $this->fecha_activacion,
@@ -172,7 +170,6 @@ class UsuariosSearch extends Usuarios
             'tipo_identificacion' => $this->tipo_identificacion,
             'estado' => $this->estado,
             'habilitar_rastreo' => $this->habilitar_rastreo,
-            'ciudad_id' => $this->ciudad_id,
             'categoria_id' => $this->categoria_id,
             'fecha_creacion' => $this->fecha_creacion,
             'fecha_activacion' => $this->fecha_activacion,
@@ -228,7 +225,6 @@ class UsuariosSearch extends Usuarios
             'tipo_identificacion' => $this->tipo_identificacion,
             'estado' => $this->estado,
             'habilitar_rastreo' => $this->habilitar_rastreo,
-            'ciudad_id' => $this->ciudad_id,
             'categoria_id' => $this->categoria_id,
             'fecha_creacion' => $this->fecha_creacion,
             'fecha_activacion' => $this->fecha_activacion,

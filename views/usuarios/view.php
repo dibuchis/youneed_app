@@ -68,8 +68,8 @@ use yii\widgets\DetailView;
                 'format'=>['raw'],
             ],
             [
-                'attribute'=>'ciudad_id',
-                'value'=> ( isset( $model->ciudad ) ) ? $model->ciudad->nombre : null,
+                'attribute'=>'canton_id',
+                'value'=> ( isset( $model->canton ) ) ? $model->canton->nombre : null,
                 'format' => ['raw'],
             ],
             'fecha_creacion',

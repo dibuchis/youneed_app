@@ -18,7 +18,7 @@ class PedidosSearch extends Pedidos
     public function rules()
     {
         return [
-            [['id', 'cliente_id', 'asociado_id', 'ciudad_id', 'forma_pago', 'tarjeta_id', 'tipo_atencion', 'tiempo_llegada', 'estado', 'tiempo_aproximado_llegada'], 'integer'],
+            [['id', 'cliente_id', 'asociado_id', 'forma_pago', 'tarjeta_id', 'tipo_atencion', 'tiempo_llegada', 'estado', 'tiempo_aproximado_llegada'], 'integer'],
             [['latitud', 'longitud', 'subtotal', 'iva', 'iva_0', 'total', 'valores_transferir_asociado', 'valores_cancelacion_servicio_cliente'], 'number'],
             [['identificacion', 'razon_social', 'nombres', 'apellidos', 'email', 'telefono', 'fecha_para_servicio', 'direccion_completa', 'observaciones_adicionales', 'codigo_postal', 'fecha_creacion', 'fecha_llegada_atencion', 'fecha_finalizacion_atencion'], 'safe'],
         ];
@@ -63,7 +63,6 @@ class PedidosSearch extends Pedidos
             'latitud' => $this->latitud,
             'longitud' => $this->longitud,
             'fecha_para_servicio' => $this->fecha_para_servicio,
-            'ciudad_id' => $this->ciudad_id,
             'forma_pago' => $this->forma_pago,
             'tarjeta_id' => $this->tarjeta_id,
             'tipo_atencion' => $this->tipo_atencion,

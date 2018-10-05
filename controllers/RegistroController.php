@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
+use app\models\UsuariosServicios;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -51,7 +52,7 @@ class RegistroController extends Controller
         $request = Yii::$app->request;
         $model = new Usuarios();  
         $model->scenario = 'Asociado';
-        $model->tipo = 'Asociado';
+        $model->es_asociado = 1;
         $model->clave = '$2y$13$uBUddTim0vpjWki.zHwcIeYEVEqE1Y6g1hwNueooLMlVqYAnnoy4W';
 
         if ($model->load(Yii::$app->request->post())) {
@@ -60,6 +61,17 @@ class RegistroController extends Controller
                 return ActiveForm::validate($model);
             }else{
                 if( $model->save() ){
+
+                    if( is_array( Yii::$app->request->post()['Usuarios']['servicios'] ) ){
+                        UsuariosServicios::deleteAll('usuario_id = '.$model->id);
+                        foreach ( Yii::$app->request->post()['Usuarios']['servicios'] as $pc ) {
+                            $p = new UsuariosServicios();
+                            $p->servicio_id = $pc;
+                            $p->usuario_id = $model->id;
+                            $p->save();
+                        }
+                    }
+
                     return $this->render('registro_correcto', [
                         'model' => $model,
                     ]);

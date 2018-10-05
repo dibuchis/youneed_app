@@ -2,6 +2,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Servicios;
+use app\models\CategoriasServicios;
+use app\models\UsuariosServicios;
 use yii\helpers\Url;
 use kartik\widgets\DepDrop;
 use dosamigos\fileupload\FileUpload;
@@ -36,8 +38,8 @@ use dosamigos\fileupload\FileUpload;
 
         <?= $form->field($model, 'numero_celular')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'ciudad_id')->widget(\kartik\widgets\Select2::classname(), [
-            'data' => \yii\helpers\ArrayHelper::map(\app\models\Ciudades::find()->orderBy('nombre')->asArray()->all(), 'id', function($model, $defaultValue) {
+        <?= $form->field($model, 'canton_id')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(\app\models\Cantones::find()->orderBy('nombre')->asArray()->all(), 'id', function($model, $defaultValue) {
                         return $model['nombre'];
                     }
                 ),
@@ -73,6 +75,22 @@ use dosamigos\fileupload\FileUpload;
       </div>
 
       <div id="infoservicios" class="tab-pane fade">
+
+        <?php 
+            $data_adicionales = CategoriasServicios::find()->andWhere( ['categoria_id'=>$model->categoria_id] )->all();
+            $array_adicionales = [];
+            foreach ($data_adicionales as $adis) {
+                $array_adicionales [$adis->servicio_id] = $adis->servicio->nombre;
+            }
+            $array_filtros = array();
+            if ($model->id > 0) {
+                $productos = UsuariosServicios::find()->where(' usuario_id = '.$model->id)->all();
+                foreach ($productos as $p) {
+                    $array_filtros[ $p->servicio_id ] = [ 'selected' => true ];
+                }
+            }
+        ?>
+
         <?php 
             $lista_categorias = \yii\helpers\ArrayHelper::map(\app\models\Categorias::find()->orderBy('nombre')->asArray()->all(), 'id', 
                     function($model, $defaultValue) {
@@ -85,8 +103,8 @@ use dosamigos\fileupload\FileUpload;
 
             echo $form->field($model, 'servicios')->widget(DepDrop::classname(), [
                 'type'=>DepDrop::TYPE_SELECT2,
-                'data'=>[],
-                'options'=>['id'=>'subcat1-id', 'placeholder'=>'Seleccione', 'options'=> []],
+                'data'=>$array_adicionales,
+                'options'=>['id'=>'subcat1-id', 'placeholder'=>'Seleccione', 'options'=>$array_filtros],
                 'select2Options'=>['pluginOptions'=>['multiple' => true,'allowClear'=>true]],
                 'pluginOptions'=>[
                     'depends'=>['cat-id'],

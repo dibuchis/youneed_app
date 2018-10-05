@@ -4,3 +4,6 @@
 	  <strong>Error!</strong> No se pudo realizar el registro, vuelva a intentarlo.
 	</div>
 </div>
+<pre>
+	<?php print_r($model->getErrors()); ?>
+</pre>

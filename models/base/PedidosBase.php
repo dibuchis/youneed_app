@@ -5,7 +5,7 @@ namespace app\models\base;
 use Yii;
 use app\models\Calificaciones;
 use app\models\Items;
-use app\models\Ciudades;
+use app\models\Cantones;
 use app\models\Tarjetas;
 use app\models\Usuarios;
 
@@ -26,7 +26,6 @@ use app\models\Usuarios;
     * @property string $fecha_para_servicio
     * @property string $direccion_completa
     * @property string $observaciones_adicionales
-    * @property integer $ciudad_id
     * @property integer $forma_pago
     * @property integer $tarjeta_id
     * @property string $codigo_postal
@@ -44,10 +43,11 @@ use app\models\Usuarios;
     * @property string $valores_transferir_asociado
     * @property string $valores_cancelacion_servicio_cliente
     * @property integer $tiempo_aproximado_llegada
+    * @property integer $canton_id
     *
             * @property Calificaciones[] $calificaciones
             * @property Items[] $items
-            * @property Ciudades $ciudad
+            * @property Cantones $canton
             * @property Tarjetas $tarjeta
             * @property Usuarios $cliente
             * @property Usuarios $asociado
@@ -68,7 +68,7 @@ return 'pedidos';
 public function rules()
 {
         return [
-            [['cliente_id', 'asociado_id', 'ciudad_id', 'forma_pago', 'tarjeta_id', 'tipo_atencion', 'tiempo_llegada', 'estado', 'tiempo_aproximado_llegada'], 'integer'],
+            [['cliente_id', 'asociado_id', 'forma_pago', 'tarjeta_id', 'tipo_atencion', 'tiempo_llegada', 'estado', 'tiempo_aproximado_llegada', 'canton_id'], 'integer'],
             [['latitud', 'longitud', 'subtotal', 'iva', 'iva_0', 'iva_impuesto', 'total', 'valores_transferir_asociado', 'valores_cancelacion_servicio_cliente'], 'number'],
             [['fecha_para_servicio', 'fecha_creacion', 'fecha_llegada_atencion', 'fecha_finalizacion_atencion'], 'safe'],
             [['direccion_completa', 'observaciones_adicionales'], 'string'],
@@ -76,7 +76,7 @@ public function rules()
             [['razon_social'], 'string', 'max' => 800],
             [['nombres', 'apellidos', 'email'], 'string', 'max' => 200],
             [['telefono', 'codigo_postal'], 'string', 'max' => 45],
-            [['ciudad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ciudades::className(), 'targetAttribute' => ['ciudad_id' => 'id']],
+            [['canton_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cantones::className(), 'targetAttribute' => ['canton_id' => 'id']],
             [['tarjeta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tarjetas::className(), 'targetAttribute' => ['tarjeta_id' => 'id']],
             [['cliente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['cliente_id' => 'id']],
             [['asociado_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['asociado_id' => 'id']],
@@ -103,7 +103,6 @@ return [
     'fecha_para_servicio' => 'Fecha Para Servicio',
     'direccion_completa' => 'Direccion Completa',
     'observaciones_adicionales' => 'Observaciones Adicionales',
-    'ciudad_id' => 'Ciudad ID',
     'forma_pago' => 'Forma Pago',
     'tarjeta_id' => 'Tarjeta ID',
     'codigo_postal' => 'Codigo Postal',
@@ -121,6 +120,7 @@ return [
     'valores_transferir_asociado' => 'Valores Transferir Asociado',
     'valores_cancelacion_servicio_cliente' => 'Valores Cancelacion Servicio Cliente',
     'tiempo_aproximado_llegada' => 'Tiempo Aproximado Llegada',
+    'canton_id' => 'Canton ID',
 ];
 }
 
@@ -143,9 +143,9 @@ return [
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getCiudad()
+    public function getCanton()
     {
-    return $this->hasOne(Ciudades::className(), ['id' => 'ciudad_id']);
+    return $this->hasOne(Cantones::className(), ['id' => 'canton_id']);
     }
 
     /**

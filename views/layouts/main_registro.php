@@ -10,21 +10,12 @@ use app\assets\CrudAsset;
 use app\assets\MonitoreoAsset;
 use app\assets\DibujadoAsset;
 use app\assets\ReporteAsset;
+use app\assets\RegistroasociadoAsset;
 use yii\helpers\Url;
 
-if( Yii::$app->controller->id == 'site' ){
-  if( Yii::$app->controller->action->id == 'soporteatencion' ){
-    DibujadoAsset::register($this);
-  }else{
-    MonitoreoAsset::register($this);
-  }
-}elseif( Yii::$app->controller->id == 'reportes' ){
-  // ReporteAsset::register($this);
-}elseif( Yii::$app->controller->id == 'lugares' ){
-  DibujadoAsset::register($this);
-}else{
-  CrudAsset::register($this);
-}
+
+  RegistroasociadoAsset::register($this);
+
 
 ?>
 <?php $this->beginPage() ?>

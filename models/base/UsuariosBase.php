@@ -9,8 +9,8 @@ use app\models\Items;
 use app\models\Pedidos;
 use app\models\Tarjetas;
 use app\models\Bancos;
+use app\models\Cantones;
 use app\models\Categorias;
-use app\models\Ciudades;
 use app\models\Planes;
 use app\models\UsuariosServicios;
 
@@ -31,7 +31,6 @@ use app\models\UsuariosServicios;
     * @property string $token_push
     * @property integer $habilitar_rastreo
     * @property string $token
-    * @property integer $ciudad_id
     * @property integer $categoria_id
     * @property string $fecha_creacion
     * @property string $fecha_activacion
@@ -54,6 +53,7 @@ use app\models\UsuariosServicios;
     * @property integer $es_asociado
     * @property integer $es_cliente
     * @property integer $es_operador
+    * @property integer $canton_id
     *
             * @property Calificaciones[] $calificaciones
             * @property Documentos[] $documentos
@@ -62,8 +62,8 @@ use app\models\UsuariosServicios;
             * @property Pedidos[] $pedidos0
             * @property Tarjetas[] $tarjetas
             * @property Bancos $banco
+            * @property Cantones $canton
             * @property Categorias $categoria
-            * @property Ciudades $ciudad
             * @property Planes $plan
             * @property UsuariosServicios[] $usuariosServicios
     */
@@ -83,7 +83,7 @@ return 'usuarios';
 public function rules()
 {
         return [
-            [['tipo_identificacion', 'estado', 'habilitar_rastreo', 'ciudad_id', 'categoria_id', 'plan_id', 'banco_id', 'preferencias_deposito', 'dias_trabajo', 'horarios_trabajo', 'estado_validacion_documentos', 'traccar_id', 'es_super', 'es_asociado', 'es_cliente', 'es_operador'], 'integer'],
+            [['tipo_identificacion', 'estado', 'habilitar_rastreo', 'categoria_id', 'plan_id', 'banco_id', 'preferencias_deposito', 'dias_trabajo', 'horarios_trabajo', 'estado_validacion_documentos', 'traccar_id', 'es_super', 'es_asociado', 'es_cliente', 'es_operador', 'canton_id'], 'integer'],
             [['imagen', 'token_push', 'token', 'causas_desactivacion', 'tipo_cuenta', 'observaciones'], 'string'],
             [['fecha_creacion', 'fecha_activacion', 'fecha_desactivacion', 'fecha_cambio_plan'], 'safe'],
             [['identificacion'], 'string', 'max' => 80],
@@ -93,8 +93,8 @@ public function rules()
             [['numero_cuenta'], 'string', 'max' => 450],
             [['imei'], 'string', 'max' => 150],
             [['banco_id'], 'exist', 'skipOnError' => true, 'targetClass' => Bancos::className(), 'targetAttribute' => ['banco_id' => 'id']],
+            [['canton_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cantones::className(), 'targetAttribute' => ['canton_id' => 'id']],
             [['categoria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::className(), 'targetAttribute' => ['categoria_id' => 'id']],
-            [['ciudad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ciudades::className(), 'targetAttribute' => ['ciudad_id' => 'id']],
             [['plan_id'], 'exist', 'skipOnError' => true, 'targetClass' => Planes::className(), 'targetAttribute' => ['plan_id' => 'id']],
         ];
 }
@@ -119,7 +119,6 @@ return [
     'token_push' => 'Token Push',
     'habilitar_rastreo' => 'Habilitar Rastreo',
     'token' => 'Token',
-    'ciudad_id' => 'Ciudad ID',
     'categoria_id' => 'Categoria ID',
     'fecha_creacion' => 'Fecha Creacion',
     'fecha_activacion' => 'Fecha Activacion',
@@ -142,6 +141,7 @@ return [
     'es_asociado' => 'Es Asociado',
     'es_cliente' => 'Es Cliente',
     'es_operador' => 'Es Operador',
+    'canton_id' => 'Canton ID',
 ];
 }
 
@@ -204,17 +204,17 @@ return [
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getCategoria()
+    public function getCanton()
     {
-    return $this->hasOne(Categorias::className(), ['id' => 'categoria_id']);
+    return $this->hasOne(Cantones::className(), ['id' => 'canton_id']);
     }
 
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getCiudad()
+    public function getCategoria()
     {
-    return $this->hasOne(Ciudades::className(), ['id' => 'ciudad_id']);
+    return $this->hasOne(Categorias::className(), ['id' => 'categoria_id']);
     }
 
     /**
