@@ -22,6 +22,7 @@ use dosamigos\fileupload\FileUpload;
       <?php if( $model->es_asociado == 1 ){ ?>
           <li><a data-toggle="tab" href="#infoservicios">Información de servicios</a></li>
           <li><a data-toggle="tab" href="#infopagos">Información para pagos</a></li>
+          <li><a data-toggle="tab" href="#infodocumentos">Documentos</a></li>
       <?php } ?>
     </ul>
 
@@ -164,8 +165,45 @@ use dosamigos\fileupload\FileUpload;
       </div>
 
       <div id="infodocumentos" class="tab-pane fade">
-        <h3>Menu 2</h3>
-        <p>Some content in menu 2.</p>
+        
+        <?php if( !empty($model->fotografia_cedula) ){ ?>
+            <?= $form->field($model, 'fotografia_cedula')->hiddenInput(); ?>
+            <a target="_blank" class="btn-primary btn" href="<?php echo $model->fotografia_cedula ?>">Ver documento subido</a>
+            <hr>
+        <?php } ?>
+
+        <?php if( !empty($model->ruc) ){ ?>
+            <?= $form->field($model, 'ruc')->hiddenInput(); ?>
+            <a target="_blank" class="btn-primary btn" href="<?php echo $model->ruc ?>">Ver documento subido</a>
+            <hr>
+        <?php } ?>
+
+        <?php if( !empty($model->visa_trabajo) ){ ?>
+            <?= $form->field($model, 'visa_trabajo')->hiddenInput(); ?>
+            <a target="_blank" class="btn-primary btn" href="<?php echo $model->visa_trabajo ?>">Ver documento subido</a>
+            <hr>
+        <?php } ?>
+
+        <?php if( !empty($model->rise) ){ ?>
+            <?= $form->field($model, 'rise')->hiddenInput(); ?>
+            <a target="_blank" class="btn-primary btn" href="<?php echo $model->rise ?>">Ver documento subido</a>
+            <hr>
+        <?php } ?>
+
+        <?php if( !empty($model->referencias_personales) ){ ?>
+            <?= $form->field($model, 'referencias_personales')->hiddenInput(); ?>
+            <a target="_blank" class="btn-primary btn" href="<?php echo $model->referencias_personales ?>">Ver documento subido</a>
+            <hr>
+        <?php } ?>
+
+        <?php if( !empty($model->titulo_academico) ){ ?>
+            <?= $form->field($model, 'titulo_academico')->hiddenInput(); ?>
+            <a target="_blank" class="btn-primary btn" href="<?php echo $model->titulo_academico ?>">Ver documento subido</a>
+            <hr>
+        <?php } ?>
+
+
+
       </div>
     </div>
   

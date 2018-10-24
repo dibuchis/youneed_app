@@ -32,7 +32,7 @@ if( !Yii::$app->user->isGuest ){
                             ['label' => 'Provincias', 'url' => ['provincias/index']],
                             ['label' => 'Ciudades', 'url' => ['cantones/index']],
                             // ['label' => 'Ciudades', 'url' => ['ciudades/index']],
-                            ['label' => 'Tipos de Documentos', 'url' => ['tipos-documentos/index']],
+                            // ['label' => 'Tipos de Documentos', 'url' => ['tipos-documentos/index']],
                             ['label' => 'Bancos', 'url' => ['bancos/index']],
                             ['label' => 'Categorías de servicios', 'url' => ['categorias/index']],
                             ['label' => 'Servicios', 'url' => ['servicios/index']],

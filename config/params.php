@@ -3,6 +3,7 @@
 return [
     'adminEmail' => 'admin@example.com',
     'uploadImages' => '/img_temporales/',
+    'uploadFiles' => '/documentos/',
     'google_key' => 'AIzaSyCWmnu8hgRqQzEIU3Sp35ygYoyq_WOIC6Q',
     'metros_redonda' => 6000, //6km
     'metros_redonda_movil' => 12500, //6km

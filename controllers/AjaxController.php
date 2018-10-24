@@ -170,35 +170,25 @@ class AjaxController extends Controller
         return '';
     }
 
-    public function actionSubirdocumento()
+    public function actionSubirdocumento( $atributo_upload, $atributo_modelo )
     {
         $model = new Usuarios();
-        $image = UploadedFile::getInstance($model, 'imagen_upload');
-        if( $image ){
-            $model->imagen = Util::getGenerarPermalink( Yii::$app->security->generateRandomString() ). '.jpg';
-            $path = \Yii::getAlias('@webroot') .Yii::$app->params['uploadImages']. $model->imagen;
-            $pathweb = \Yii::getAlias('@web') .Yii::$app->params['uploadImages']. $model->imagen;
-            if( $image->saveAs($path) ){
+        $file = UploadedFile::getInstance($model, $atributo_upload);
+        if( $file ){
+            $model->$atributo_modelo = Util::getGenerarPermalink( Yii::$app->security->generateRandomString() ).'.'.$file->getExtension();
+            $path = \Yii::getAlias('@webroot') .Yii::$app->params['uploadFiles']. $model->$atributo_modelo;
+            $pathweb = \Yii::getAlias('@web') .Yii::$app->params['uploadFiles']. $model->$atributo_modelo;
 
-                $thumbnail = Image::thumbnail($path, 400, 400);
-                $size = $thumbnail->getSize();
-                // if ($size->getWidth() < 250 or $size->getHeight() < 150) {
-                    $white = Image::getImagine()->create(new Box(400, 400));
-                    $thumbnail = $white->paste($thumbnail, new Point(400 / 2 - $size->getWidth() / 2, 400 / 2 - $size->getHeight() / 2));
-                // }
-                $thumbnail->save(Yii::getAlias($path), ['quality' => 75]);
-
-                $imageData = base64_encode(file_get_contents($path));
+            if( $file->saveAs($path) ){
 
                 return Json::encode([
                     [
-                        'name' => $model->imagen,
-                        'size' => $image->size,
+                        'name' => $model->$atributo_modelo,
+                        'size' => $file->size,
                         'url' => $pathweb,
                         'thumbnailUrl' => $path,
                         // 'deleteUrl' => 'image-delete?name=' . $fileName,
                         'deleteType' => 'POST',
-                        'base64' => 'data:'.mime_content_type($path).';base64,'.$imageData,
                     ],
                 ]);
             }

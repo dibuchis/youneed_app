@@ -39,4 +39,10 @@ $(document).ready(function () {
     });
 
     $('div.setup-panel div a.btn-success').trigger('click');
+
+    $(".seleccion_plan").click(function(){
+        $("#usuarios-plan_id").val( $(this).attr("plan-id") );
+        $(".plan_seleccionado").html( "Plan seleccionado: " + $(this).attr("plan-nombre") );
+        $(".plan_seleccionado").show();
+    });
 });

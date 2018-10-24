@@ -54,6 +54,13 @@ use app\models\UsuariosServicios;
     * @property integer $es_cliente
     * @property integer $es_operador
     * @property integer $canton_id
+    * @property string $fotografia_asociado
+    * @property string $fotografia_cedula
+    * @property string $ruc
+    * @property string $visa_trabajo
+    * @property string $rise
+    * @property string $referencias_personales
+    * @property string $titulo_academico
     *
             * @property Calificaciones[] $calificaciones
             * @property Documentos[] $documentos
@@ -92,6 +99,7 @@ public function rules()
             [['nombre_beneficiario'], 'string', 'max' => 850],
             [['numero_cuenta'], 'string', 'max' => 450],
             [['imei'], 'string', 'max' => 150],
+            [['fotografia_asociado', 'fotografia_cedula', 'ruc', 'visa_trabajo', 'rise', 'referencias_personales', 'titulo_academico'], 'string', 'max' => 900],
             [['banco_id'], 'exist', 'skipOnError' => true, 'targetClass' => Bancos::className(), 'targetAttribute' => ['banco_id' => 'id']],
             [['canton_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cantones::className(), 'targetAttribute' => ['canton_id' => 'id']],
             [['categoria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::className(), 'targetAttribute' => ['categoria_id' => 'id']],
@@ -142,6 +150,13 @@ return [
     'es_cliente' => 'Es Cliente',
     'es_operador' => 'Es Operador',
     'canton_id' => 'Canton ID',
+    'fotografia_asociado' => 'Fotografia Asociado',
+    'fotografia_cedula' => 'Fotografia Cedula',
+    'ruc' => 'Ruc',
+    'visa_trabajo' => 'Visa Trabajo',
+    'rise' => 'Rise',
+    'referencias_personales' => 'Referencias Personales',
+    'titulo_academico' => 'Titulo Academico',
 ];
 }
 

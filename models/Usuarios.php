@@ -3,24 +3,44 @@
 namespace app\models;
 use Yii;
 use yii\base\Model;
+use borales\extensions\phoneInput\PhoneInputValidator;
 
 class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\IdentityInterface
 {
 
     public $servicios, $imagen_upload;
+    public $fotografia_asociado_upload;
+    public $fotografia_cedula_upload;
+    public $ruc_upload;
+    public $visa_trabajo_upload;
+    public $rise_upload;
+    public $referencias_personales_upload;
+    public $titulo_academico_upload;
 
     public function rules()
     {
         return array_merge(parent::rules(),
         [
             [['nombres', 'apellidos', 'email', 'numero_celular', 'clave', 'estado'], 'required', 'on' => 'Webapp'],
-            [['imagen', 'tipo_identificacion', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email', 'clave', 'categoria_id', 'servicios', 'dias_trabajo', 'horarios_trabajo', 'banco_id', 'nombre_beneficiario', 'tipo_cuenta', 'numero_cuenta'], 'required', 'on' => 'Asociado'],
+            [['imagen', 'tipo_identificacion', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email', 'clave', 'categoria_id', 'servicios', 'dias_trabajo', 'horarios_trabajo', 'banco_id', 'nombre_beneficiario', 'tipo_cuenta', 'numero_cuenta', 'plan_id'], 'required', 'on' => 'Asociado'],
             [['nombres', 'apellidos', 'numero_celular', 'email', 'clave'], 'required', 'on' => 'Cliente'],
             ['email', 'unique'],
             ['email', 'email'],
             ['numero_celular', 'unique'],
             ['identificacion', 'unique'],
+            [['numero_celular'], PhoneInputValidator::className(), 'region' => ['EC']],
         ]);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $this->numero_celular = preg_replace('/\s+/', '', $this->numero_celular);
+            $this->numero_celular = str_replace(' ', '', $this->numero_celular);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function attributeLabels()
@@ -61,6 +81,13 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
 		    'traccar_id' => 'Traccar ID',
             'banco_id' => 'Institución Bancaria',
             'nombre_beneficiario' => 'Nombre del Beneficiario',
+            'fotografia_asociado' => 'Fotografía del asociado',
+            'fotografia_cedula' => 'Fotografía de cédula de identidad',
+            'ruc' => 'Fotografía del Registro Único de Contribuyentes',
+            'visa_trabajo' => 'Fotografía del Pasaporte con Visa de Trabajo',
+            'rise' => 'Fotografía del RISE Régimen Impositivo Simplificado Ecuatoriano',
+            'referencias_personales' => 'Carta de Referencias Personales',
+            'titulo_academico' => 'Título Académico o Certificado que Acredite sus Conocimientos',
 		];
 	}
 

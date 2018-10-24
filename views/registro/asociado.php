@@ -7,6 +7,7 @@ use app\models\TiposDocumentos;
 use yii\helpers\Url;
 use kartik\widgets\DepDrop;
 use dosamigos\fileupload\FileUpload;
+use borales\extensions\phoneInput\PhoneInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
@@ -18,7 +19,9 @@ use dosamigos\fileupload\FileUpload;
     'enableAjaxValidation' => true,
     'options'=>['enctype'=>'multipart/form-data'] // important
 ]); ?>
+
 	<div class="container">
+		<?php echo $form->errorSummary( $model, ['class' => 'alert alert-danger'] ); ?>
 	    <div class="stepwizard">
 	        <div class="stepwizard-row setup-panel">
 	            <div class="stepwizard-step col-xs-3"> 
@@ -100,7 +103,15 @@ use dosamigos\fileupload\FileUpload;
 								<div class="col-md-6">
 									<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-								    <?= $form->field($model, 'numero_celular')->textInput(['maxlength' => true]) ?>
+								    <?php 
+							            echo $form->field($model, 'numero_celular')->widget(PhoneInput::className(), [
+							                'jsOptions' => [
+							                    // 'preferredCountries' => ['EC'],
+							                    'onlyCountries' => ['EC'],
+							                    'nationalMode' => false,
+							                ]
+							            ]);
+							        ?>
 
 								    <?= $form->field($model, 'canton_id')->widget(\kartik\widgets\Select2::classname(), [
 								        'data' => \yii\helpers\ArrayHelper::map(\app\models\Cantones::find()->orderBy('nombre')->asArray()->all(), 'id', 
@@ -154,18 +165,6 @@ use dosamigos\fileupload\FileUpload;
 			                ]);
 			            ?>
 
-			            <?= $form->field($model, 'plan_id')->widget(\kartik\widgets\Select2::classname(), [
-				            'data' => \yii\helpers\ArrayHelper::map(\app\models\Planes::find()->orderBy('nombre')->asArray()->all(), 'id', function($model, $defaultValue) {
-				                        return $model['nombre'];
-				                    }
-				                ),
-				            'options' => ['placeholder' => Yii::t('app', 'Seleccione')],
-				            'pluginOptions' => [
-				                'allowClear' => true
-				            ],
-				        ]); ?>
-
-
 				        <section id="plans">
         
 					            <div class="row">
@@ -184,7 +183,7 @@ use dosamigos\fileupload\FileUpload;
 					                        </div>
 					                        <?php echo $planes[0]->descripcion; ?>
 					                        <div class="panel-footer">
-					                            <a class="btn btn-lg btn-block btn-success" href="#">Seleccionar</a>
+					                            <a plan-id="<?php echo $planes[0]->id; ?>" plan-nombre="<?php echo $planes[0]->nombre; ?>" class="btn btn-lg btn-block btn-success seleccion_plan" href="javascript:;">Seleccionar</a>
 					                        </div>
 					                    </div>
 					                </div>
@@ -202,19 +201,31 @@ use dosamigos\fileupload\FileUpload;
 					                        </div>
 					                        <?php echo $planes[1]->descripcion; ?>
 					                        <div class="panel-footer">
-					                            <a class="btn btn-lg btn-block btn-success" href="#">Seleccionar</a>
+					                            <a plan-id="<?php echo $planes[1]->id; ?>" plan-nombre="<?php echo $planes[1]->nombre; ?>" class="btn btn-lg btn-block btn-success seleccion_plan" href="javascript:;">Seleccionar</a>
 					                        </div>
 					                    </div>
 					                </div>
 					                <!-- /item -->
 
 					            </div>
+
+					            <div class="alert alert-success plan_seleccionado" style="display: none;">
+					            	Plan seleccionado:
+					            </div>
+
+					            <?= $form->field($model, 'plan_id')->hiddenInput()->label(false); ?>
 					        
 					    </section>
 
-
-
 				    </div>
+				    
+				    	<div class="col-md-6">
+				    		<?= $form->field($model, 'dias_trabajo')->dropDownList([ 1 => 'Lunes a Viernes', 2 => 'Fines de semana', 3 => 'Cualquier día' ], ['prompt' => 'Seleccione']) ?>
+				    	</div>
+				    	<div class="col-md-6">
+				    		<?= $form->field($model, 'horarios_trabajo')->dropDownList([ 1 => '7am a 12 am', 2 => '12am a 7pm', 3 => '7pm a 7 am', 4 => '24 horas' ], ['prompt' => 'Seleccione']) ?>
+				    	</div>
+				    
 	                <button class="btn btn-primary nextBtn pull-right" type="button">Siguiente</button>
 	            </div>
 	        </div>
@@ -224,17 +235,26 @@ use dosamigos\fileupload\FileUpload;
 	                 <h3 class="panel-title">Documentos</h3>
 	            </div>
 	            <div class="panel-body">
-	                
-	            	<?php $documentos = TiposDocumentos::find()->all(); ?>
+	                <?php $array_documentos = 	[ 
+	                								[ 'atributo_upload' => 'fotografia_cedula_upload', 'atributo_modelo' => 'fotografia_cedula' ],
+	                								[ 'atributo_upload' => 'ruc_upload', 'atributo_modelo' => 'ruc' ],
+	                								[ 'atributo_upload' => 'visa_trabajo_upload', 'atributo_modelo' => 'visa_trabajo' ],
+	                								[ 'atributo_upload' => 'rise_upload', 'atributo_modelo' => 'rise' ],
+	                								[ 'atributo_upload' => 'referencias_personales_upload', 'atributo_modelo' => 'referencias_personales' ],
+	                								[ 'atributo_upload' => 'titulo_academico_upload', 'atributo_modelo' => 'titulo_academico' ],
+	                							];
 
-	            	<?php foreach ($documentos as $doc) { ?>
-	            		<h3><?php echo $doc->nombre; ?></h3>
-	            		<?php echo Html::hiddenInput('documentos[]', '', ['id'=>'doc_'.$doc->id]); ?>
-	            		<?= Html::img( Url::to('@web/images/ajax-loader.gif'), ['class'=> 'loader loader_doc_'.$doc->id] );?>
+	                ?>
+
+	                <?php foreach ($array_documentos as $documento) { ?>
+
+		            	<?php echo $form->field($model, $documento['atributo_modelo'])->textarea(['style' => 'display:none;']); ?>
+					    <a style="display: none;" target="_blank" id="vista_<?php echo $documento['atributo_modelo']; ?>" class="btn-primary btn" href="">Ver documento subido</a>
+					    <?= Html::img( Url::to('@web/images/ajax-loader.gif'), ['class'=> 'loader loader_'.$documento['atributo_modelo']] );?>
 					    <?= FileUpload::widget([
 					        'model' => $model,
-					        'attribute' => 'imagen_upload[]['.$doc->id.']',
-					        'url' => ['ajax/subirdocumento', 'id' => $model->id],
+					        'attribute' => $documento['atributo_upload'],
+					        'url' => ['ajax/subirdocumento', 'atributo_upload' => $documento['atributo_upload'], 'atributo_modelo' => $documento['atributo_modelo'] ],
 					        'options' => ['accept' => 'image/*,application/pdf'],
 					        'clientOptions' => [
 					            'maxFileSize' => 2000000,
@@ -242,23 +262,25 @@ use dosamigos\fileupload\FileUpload;
 					        ],
 					        'clientEvents' => [
 					            'fileuploaddone' => 'function(e, data) {
-					                                    $("#usuarios-imagen").val( data.result[0].base64 );
-					                                    $("#vista_previa_imagen").attr("src", data.result[0].base64);
-					                                    $(".loader").hide();
+					                                    $("#usuarios-'.$documento['atributo_modelo'].'").val( data.result[0]["url"] );
+					                                    $("#vista_'.$documento['atributo_modelo'].'").attr("href", data.result[0]["url"]);
+					                                    $("#vista_'.$documento['atributo_modelo'].'").show();
+					                                    $(".loader_'.$documento['atributo_modelo'].'").hide();
 					                                }',
 					            'fileuploadfail' => 'function(e, data) {
 
 					                                }',
 					            'fileuploadstart' => 'function(e, data) {
-					            	$(".loader").show();
+					            	$(".loader_'.$documento['atributo_modelo'].'").show();
 					                                }',
 					        ],
 					    ]); ?>
 					    <div class="alert alert-info">
-					    	<strong><?php echo $doc->nombre; ?></strong> (Archivo de imagen o PDF)
+					    	Subir una imagen o un archivo PDF no mayor a 2MB
 					    </div>
-					    <hr>
-	            	<?php } ?>
+						<hr>
+
+					<?php } ?>
 
 	                <button class="btn btn-primary nextBtn pull-right" type="button">Siguiente</button>
 	            </div>

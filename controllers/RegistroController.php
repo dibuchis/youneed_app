@@ -56,6 +56,10 @@ class RegistroController extends Controller
         $model->clave = '$2y$13$uBUddTim0vpjWki.zHwcIeYEVEqE1Y6g1hwNueooLMlVqYAnnoy4W';
 
         if ($model->load(Yii::$app->request->post())) {
+            
+            $model->numero_celular = preg_replace('/\s+/', '', $model->numero_celular);
+            $model->numero_celular = str_replace(' ', '', $model->numero_celular);
+
             if($request->isAjax){
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
