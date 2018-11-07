@@ -37,8 +37,8 @@ use borales\extensions\phoneInput\PhoneInput;
 	                <p><small>Documentos</small></p>
 	            </div>
 	            <div class="stepwizard-step col-xs-3"> 
-	                <a href="#step-4" type="button" class="btn btn-default btn-circle" >4</a>
-	                <p><small>Información para pagos</small></p>
+	                <a href="#step-4" type="button" class="btn btn-default btn-circle" >5</a>
+	                <p><small>Información para pagos y planes</small></p>
 	            </div>
 	        </div>
 	    </div>
@@ -165,58 +165,6 @@ use borales\extensions\phoneInput\PhoneInput;
 			                ]);
 			            ?>
 
-				        <section id="plans">
-        
-					            <div class="row">
-					            	<?php 
-					            		$planes = Planes::find()->all();
-					            	?>
-					                <!-- item -->
-					                <div class="col-md-6 text-center">
-					                    <div class="panel panel-success panel-pricing">
-					                        <div class="panel-heading">
-					                            <i class="fa fa-desktop"></i>
-					                            <h3><?php echo $planes[0]->nombre; ?></h3>
-					                        </div>
-					                        <div class="panel-body text-center">
-					                            <p><strong><?php echo $planes[0]->pvp; ?> USD / anual</strong></p>
-					                        </div>
-					                        <?php echo $planes[0]->descripcion; ?>
-					                        <div class="panel-footer">
-					                            <a plan-id="<?php echo $planes[0]->id; ?>" plan-nombre="<?php echo $planes[0]->nombre; ?>" class="btn btn-lg btn-block btn-success seleccion_plan" href="javascript:;">Seleccionar</a>
-					                        </div>
-					                    </div>
-					                </div>
-					                <!-- /item -->
-
-					                <!-- item -->
-					                <div class="col-md-6 text-center">
-					                    <div class="panel panel-success panel-pricing">
-					                        <div class="panel-heading">
-					                            <i class="fa fa-desktop"></i>
-					                            <h3><?php echo $planes[1]->nombre; ?></h3>
-					                        </div>
-					                        <div class="panel-body text-center">
-					                            <p><strong><?php echo $planes[1]->pvp; ?> USD / anual</strong></p>
-					                        </div>
-					                        <?php echo $planes[1]->descripcion; ?>
-					                        <div class="panel-footer">
-					                            <a plan-id="<?php echo $planes[1]->id; ?>" plan-nombre="<?php echo $planes[1]->nombre; ?>" class="btn btn-lg btn-block btn-success seleccion_plan" href="javascript:;">Seleccionar</a>
-					                        </div>
-					                    </div>
-					                </div>
-					                <!-- /item -->
-
-					            </div>
-
-					            <div class="alert alert-success plan_seleccionado" style="display: none;">
-					            	Plan seleccionado:
-					            </div>
-
-					            <?= $form->field($model, 'plan_id')->hiddenInput()->label(false); ?>
-					        
-					    </section>
-
 				    </div>
 				    
 				    	<div class="col-md-6">
@@ -241,7 +189,7 @@ use borales\extensions\phoneInput\PhoneInput;
 	                								[ 'atributo_upload' => 'visa_trabajo_upload', 'atributo_modelo' => 'visa_trabajo' ],
 	                								[ 'atributo_upload' => 'rise_upload', 'atributo_modelo' => 'rise' ],
 	                								[ 'atributo_upload' => 'referencias_personales_upload', 'atributo_modelo' => 'referencias_personales' ],
-	                								[ 'atributo_upload' => 'titulo_academico_upload', 'atributo_modelo' => 'titulo_academico' ],
+	                								//[ 'atributo_upload' => 'titulo_academico_upload', 'atributo_modelo' => 'titulo_academico' ],
 	                							];
 
 	                ?>
@@ -285,9 +233,8 @@ use borales\extensions\phoneInput\PhoneInput;
 	                <button class="btn btn-primary nextBtn pull-right" type="button">Siguiente</button>
 	            </div>
 	        </div>
-	        
 	        <div class="panel panel-primary setup-content" id="step-4">
-	            <div class="panel-heading">
+	    		<div class="panel-heading">
 	                 <h3 class="panel-title">Información para pagos</h3>
 	            </div>
 	            <div class="panel-body">
@@ -315,8 +262,60 @@ use borales\extensions\phoneInput\PhoneInput;
 				    		<?= $form->field($model, 'numero_cuenta')->textInput(['maxlength' => true]) ?>
 				    	</div>
 				    </div>
-	                <?= Html::submitButton($model->isNewRecord ? 'Registrarse' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-primary btn-lg center-block' : 'btn btn-primary']) ?>
-	            </div>
+
+		        	<section id="plans">
+	        
+				            <div class="row">
+				            	<?php 
+				            		$planes = Planes::find()->all();
+				            	?>
+				                <!-- item -->
+				                <div class="col-md-6 text-center">
+				                    <div class="panel panel-success panel-pricing">
+				                        <div class="panel-heading">
+				                            <i class="fa fa-desktop"></i>
+				                            <h3><?php echo $planes[0]->nombre; ?></h3>
+				                        </div>
+				                        <div class="panel-body text-center">
+				                            <p><strong><?php echo $planes[0]->pvp; ?> USD / anual</strong></p>
+				                        </div>
+				                        <?php echo $planes[0]->descripcion; ?>
+				                        <div class="panel-footer">
+				                            <a plan-id="<?php echo $planes[0]->id; ?>" plan-nombre="<?php echo $planes[0]->nombre; ?>" class="btn btn-lg btn-block btn-success seleccion_plan" href="javascript:;">Seleccionar</a>
+				                        </div>
+				                    </div>
+				                </div>
+				                <!-- /item -->
+
+				                <!-- item -->
+				                <div class="col-md-6 text-center">
+				                    <div class="panel panel-success panel-pricing">
+				                        <div class="panel-heading">
+				                            <i class="fa fa-desktop"></i>
+				                            <h3><?php echo $planes[1]->nombre; ?></h3>
+				                        </div>
+				                        <div class="panel-body text-center">
+				                            <p><strong><?php echo $planes[1]->pvp; ?> USD / anual</strong></p>
+				                        </div>
+				                        <?php echo $planes[1]->descripcion; ?>
+				                        <div class="panel-footer">
+				                            <a plan-id="<?php echo $planes[1]->id; ?>" plan-nombre="<?php echo $planes[1]->nombre; ?>" class="btn btn-lg btn-block btn-success seleccion_plan" href="javascript:;">Seleccionar</a>
+				                        </div>
+				                    </div>
+				                </div>
+				                <!-- /item -->
+
+				            </div>
+
+				            <div class="alert alert-success plan_seleccionado" style="display: none;">
+				            	Plan seleccionado:
+				            </div>
+
+				            <?= $form->field($model, 'plan_id')->hiddenInput()->label(false); ?>
+				        
+				    </section>
+				     <?= Html::submitButton($model->isNewRecord ? 'Registrarse' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-primary btn-lg center-block' : 'btn btn-primary']) ?>
+				</div>
 	        </div>
 	    </form>
 	</div>
