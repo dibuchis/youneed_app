@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Servicios;
 use app\models\CategoriasServicios;
+use app\models\UsuariosCategorias;
 use app\models\UsuariosServicios;
 use yii\helpers\Url;
 use kartik\widgets\DepDrop;
@@ -78,42 +79,24 @@ use dosamigos\fileupload\FileUpload;
       <div id="infoservicios" class="tab-pane fade">
 
         <?php 
-            $data_adicionales = CategoriasServicios::find()->andWhere( ['categoria_id'=>$model->categoria_id] )->all();
-            $array_adicionales = [];
-            foreach ($data_adicionales as $adis) {
-                $array_adicionales [$adis->servicio_id] = $adis->servicio->nombre;
-            }
-            $array_filtros = array();
-            if ($model->id > 0) {
-                $productos = UsuariosServicios::find()->where(' usuario_id = '.$model->id)->all();
-                foreach ($productos as $p) {
-                    $array_filtros[ $p->servicio_id ] = [ 'selected' => true ];
-                }
-            }
+            $categorias = UsuariosCategorias::find()->andwhere( [ 'usuario_id'=>$model->id ] )->all();
+            $servicios = UsuariosServicios::find()->andwhere( [ 'usuario_id'=>$model->id ] )->all();
         ?>
 
-        <?php 
-            $lista_categorias = \yii\helpers\ArrayHelper::map(\app\models\Categorias::find()->orderBy('nombre')->asArray()->all(), 'id', 
-                    function($model, $defaultValue) {
-                        return $model['nombre'];
-                    }
-            );
-            echo $form->field($model, 'categoria_id')->dropDownList($lista_categorias, ['id'=>'cat-id', 'prompt' => 'Seleccione']);
-            echo Html::hiddenInput('input-type-1', 'Additional value 1', ['id'=>'input-type-1']);
-            echo Html::hiddenInput('input-type-2', 'Additional value 2', ['id'=>'input-type-2']);
-
-            echo $form->field($model, 'servicios')->widget(DepDrop::classname(), [
-                'type'=>DepDrop::TYPE_SELECT2,
-                'data'=>$array_adicionales,
-                'options'=>['id'=>'subcat1-id', 'placeholder'=>'Seleccione', 'options'=>$array_filtros],
-                'select2Options'=>['pluginOptions'=>['multiple' => true,'allowClear'=>true]],
-                'pluginOptions'=>[
-                    'depends'=>['cat-id'],
-                    'url'=>Url::to(['/ajax/listadoservicios']),
-                    'params'=>['input-type-1', 'input-type-2'],
-                ]
-            ]);
-        ?>
+        <label>Categorias (varios)</label><br>
+        <span>
+            <?php foreach ($categorias as $categoria) {
+                echo $categoria->categoria->nombre.', ';
+            } ?>
+        </span>
+        <p>&nbsp;</p>
+        <label>Servicios (varios)</label><br>
+        <span>
+            <?php foreach ($servicios as $servicio) {
+                echo $servicio->servicio->nombre.', ';
+            } ?>
+        </span>
+        <p>&nbsp;</p>
 
         <?= $form->field($model, 'plan_id')->widget(\kartik\widgets\Select2::classname(), [
             'data' => \yii\helpers\ArrayHelper::map(\app\models\Planes::find()->orderBy('nombre')->asArray()->all(), 'id', function($model, $defaultValue) {
