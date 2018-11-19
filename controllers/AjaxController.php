@@ -12,6 +12,7 @@ use yii\helpers\Json;
 use yii\web\UploadedFile;
 use app\models\Categorias;
 use app\models\Servicios;
+use app\models\CategoriasServicios;
 use app\models\Util;
 use yii\imagine\Image;
 use Imagine\Image\Box;
@@ -119,13 +120,12 @@ class AjaxController extends Controller
             if ($parents != null) {
                 $cat_id = $parents[0];
 
-                $servicios = Servicios::find()
-                  ->innerJoinWith('categoriasServicios', 't.id = categoriasServicios.servicio_id')
-                  ->andWhere(['categorias_servicios.categoria_id' => $cat_id])
+                $servicios = CategoriasServicios::find()
+                  ->andWhere(['in', 'categoria_id', $parents[0] ])
                   ->all();
 
                 foreach ($servicios as $servicio) {
-                    $out [] = ['id'=>$servicio->id, 'name'=>strip_tags($servicio->incluye)]; 
+                    $out [] = ['id'=>$servicio->servicio_id, 'name'=>strip_tags($servicio->servicio->nombre)]; 
                 }
                 return Json::encode(['output'=>$out, 'selected'=>'']);
                 return;

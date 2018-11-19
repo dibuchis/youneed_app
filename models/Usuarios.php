@@ -16,13 +16,14 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
     public $rise_upload;
     public $referencias_personales_upload;
     public $titulo_academico_upload;
+    public $categorias;
 
     public function rules()
     {
         return array_merge(parent::rules(),
         [
             [['nombres', 'apellidos', 'email', 'numero_celular', 'clave', 'estado'], 'required', 'on' => 'Webapp'],
-            [['imagen', 'tipo_identificacion', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email', 'clave', 'categoria_id', 'servicios', 'dias_trabajo', 'horarios_trabajo', 'banco_id', 'nombre_beneficiario', 'tipo_cuenta', 'numero_cuenta', 'plan_id', 'fotografia_cedula', 'referencias_personales'], 'required', 'on' => 'Asociado'],
+            [['imagen', 'tipo_identificacion', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email', 'clave', 'servicios', 'dias_trabajo', 'horarios_trabajo', 'banco_id', 'nombre_beneficiario', 'tipo_cuenta', 'numero_cuenta', 'plan_id', 'fotografia_cedula', 'referencias_personales', 'categorias'], 'required', 'on' => 'Asociado'],
             [['nombres', 'apellidos', 'numero_celular', 'email', 'clave'], 'required', 'on' => 'Cliente'],
             ['email', 'unique'],
             ['email', 'email'],

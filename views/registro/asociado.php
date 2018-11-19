@@ -145,10 +145,21 @@ use borales\extensions\phoneInput\PhoneInput;
 			            <?php 
 			                $lista_categorias = \yii\helpers\ArrayHelper::map(\app\models\Categorias::find()->orderBy('nombre')->asArray()->all(), 'id', 
 				                    function($model, $defaultValue) {
-				                        return $model['nombre'];
+				                        return $model['id'].' - '.$model['nombre'];
 				                    }
 			                );
-			                echo $form->field($model, 'categoria_id')->dropDownList($lista_categorias, ['id'=>'cat-id', 'prompt' => 'Seleccione']);
+
+			                //echo $form->field($model, 'categorias')->dropDownList($lista_categorias, ['id'=>'cat-id', 'prompt' => 'Seleccione', 'multiple'=>'multiple']);
+			                
+			                echo $form->field($model, 'categorias')->widget(\kartik\widgets\Select2::classname(), [
+				                'data' => $lista_categorias,
+				                'options' => ['id'=>'cat-id', 'placeholder' => 'Seleccione categorías'],
+				                'pluginOptions' => [
+				                    'allowClear' => true, 
+				                    'multiple' => true,
+				                ],
+				            ]);
+
 			                echo Html::hiddenInput('input-type-1', 'Additional value 1', ['id'=>'input-type-1']);
 			                echo Html::hiddenInput('input-type-2', 'Additional value 2', ['id'=>'input-type-2']);
 

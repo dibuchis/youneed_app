@@ -10,8 +10,8 @@ use app\models\Pedidos;
 use app\models\Tarjetas;
 use app\models\Bancos;
 use app\models\Cantones;
-use app\models\Categorias;
 use app\models\Planes;
+use app\models\UsuariosCategorias;
 use app\models\UsuariosServicios;
 
 /**
@@ -31,7 +31,6 @@ use app\models\UsuariosServicios;
     * @property string $token_push
     * @property integer $habilitar_rastreo
     * @property string $token
-    * @property integer $categoria_id
     * @property string $fecha_creacion
     * @property string $fecha_activacion
     * @property string $fecha_desactivacion
@@ -70,8 +69,8 @@ use app\models\UsuariosServicios;
             * @property Tarjetas[] $tarjetas
             * @property Bancos $banco
             * @property Cantones $canton
-            * @property Categorias $categoria
             * @property Planes $plan
+            * @property UsuariosCategorias[] $usuariosCategorias
             * @property UsuariosServicios[] $usuariosServicios
     */
 class UsuariosBase extends \yii\db\ActiveRecord
@@ -90,7 +89,7 @@ return 'usuarios';
 public function rules()
 {
         return [
-            [['tipo_identificacion', 'estado', 'habilitar_rastreo', 'categoria_id', 'plan_id', 'banco_id', 'preferencias_deposito', 'dias_trabajo', 'horarios_trabajo', 'estado_validacion_documentos', 'traccar_id', 'es_super', 'es_asociado', 'es_cliente', 'es_operador', 'canton_id'], 'integer'],
+            [['tipo_identificacion', 'estado', 'habilitar_rastreo', 'plan_id', 'banco_id', 'preferencias_deposito', 'dias_trabajo', 'horarios_trabajo', 'estado_validacion_documentos', 'traccar_id', 'es_super', 'es_asociado', 'es_cliente', 'es_operador', 'canton_id'], 'integer'],
             [['imagen', 'token_push', 'token', 'causas_desactivacion', 'tipo_cuenta', 'observaciones'], 'string'],
             [['fecha_creacion', 'fecha_activacion', 'fecha_desactivacion', 'fecha_cambio_plan'], 'safe'],
             [['identificacion'], 'string', 'max' => 80],
@@ -102,7 +101,6 @@ public function rules()
             [['fotografia_asociado', 'fotografia_cedula', 'ruc', 'visa_trabajo', 'rise', 'referencias_personales', 'titulo_academico'], 'string', 'max' => 900],
             [['banco_id'], 'exist', 'skipOnError' => true, 'targetClass' => Bancos::className(), 'targetAttribute' => ['banco_id' => 'id']],
             [['canton_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cantones::className(), 'targetAttribute' => ['canton_id' => 'id']],
-            [['categoria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::className(), 'targetAttribute' => ['categoria_id' => 'id']],
             [['plan_id'], 'exist', 'skipOnError' => true, 'targetClass' => Planes::className(), 'targetAttribute' => ['plan_id' => 'id']],
         ];
 }
@@ -127,7 +125,6 @@ return [
     'token_push' => 'Token Push',
     'habilitar_rastreo' => 'Habilitar Rastreo',
     'token' => 'Token',
-    'categoria_id' => 'Categoria ID',
     'fecha_creacion' => 'Fecha Creacion',
     'fecha_activacion' => 'Fecha Activacion',
     'fecha_desactivacion' => 'Fecha Desactivacion',
@@ -227,17 +224,17 @@ return [
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getCategoria()
+    public function getPlan()
     {
-    return $this->hasOne(Categorias::className(), ['id' => 'categoria_id']);
+    return $this->hasOne(Planes::className(), ['id' => 'plan_id']);
     }
 
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getPlan()
+    public function getUsuariosCategorias()
     {
-    return $this->hasOne(Planes::className(), ['id' => 'plan_id']);
+    return $this->hasMany(UsuariosCategorias::className(), ['usuario_id' => 'id']);
     }
 
     /**

@@ -6,6 +6,7 @@ use Yii;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
 use app\models\UsuariosServicios;
+use app\models\UsuariosCategorias;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -65,6 +66,16 @@ class RegistroController extends Controller
                 return ActiveForm::validate($model);
             }else{
                 if( $model->save() ){
+
+                    if( is_array( Yii::$app->request->post()['Usuarios']['categorias'] ) ){
+                        UsuariosCategorias::deleteAll('usuario_id = '.$model->id);
+                        foreach ( Yii::$app->request->post()['Usuarios']['categorias'] as $pc ) {
+                            $p = new UsuariosCategorias();
+                            $p->categoria_id = $pc;
+                            $p->usuario_id = $model->id;
+                            $p->save();
+                        }
+                    }
 
                     if( is_array( Yii::$app->request->post()['Usuarios']['servicios'] ) ){
                         UsuariosServicios::deleteAll('usuario_id = '.$model->id);

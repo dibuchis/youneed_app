@@ -4,7 +4,7 @@ namespace app\models\base;
 
 use Yii;
 use app\models\CategoriasServicios;
-use app\models\Usuarios;
+use app\models\UsuariosCategorias;
 
 /**
  * This is the model class for table "categorias".
@@ -21,7 +21,7 @@ use app\models\Usuarios;
     * @property string $total
     *
             * @property CategoriasServicios[] $categoriasServicios
-            * @property Usuarios[] $usuarios
+            * @property UsuariosCategorias[] $usuariosCategorias
     */
 class CategoriasBase extends \yii\db\ActiveRecord
 {
@@ -78,8 +78,8 @@ return [
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getUsuarios()
+    public function getUsuariosCategorias()
     {
-    return $this->hasMany(Usuarios::className(), ['categoria_id' => 'id']);
+    return $this->hasMany(UsuariosCategorias::className(), ['categoria_id' => 'id']);
     }
 }
