@@ -145,7 +145,7 @@ use borales\extensions\phoneInput\PhoneInput;
 			            <?php 
 			                $lista_categorias = \yii\helpers\ArrayHelper::map(\app\models\Categorias::find()->orderBy('nombre')->asArray()->all(), 'id', 
 				                    function($model, $defaultValue) {
-				                        return $model['id'].' - '.$model['nombre'];
+				                        return $model['nombre'];
 				                    }
 			                );
 
