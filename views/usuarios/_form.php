@@ -30,15 +30,30 @@ use dosamigos\fileupload\FileUpload;
     <div class="tab-content">
       <div id="infogeneral" class="tab-pane fade in active">
 
-        <?= $form->field($model, 'nombres')->textInput(['maxlength' => true]) ?>
+        <div class="row">
+            
+            <div class="col-md-4">
+                <img src="<?php echo $model->imagen ?>" class="img-responsive">
+            </div>
+            <div class="col-md-8">
+                <?= $form->field($model, 'nombres')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'apellidos')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'apellidos')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'telefono_domicilio')->textInput(['maxlength' => true]) ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?= $form->field($model, 'telefono_domicilio')->textInput(['maxlength' => true]) ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?= $form->field($model, 'numero_celular')->textInput(['maxlength' => true]) ?>
+                    </div>
+                </div>
+                
+            </div>
 
-        <?= $form->field($model, 'numero_celular')->textInput(['maxlength' => true]) ?>
+        </div>
 
         <?= $form->field($model, 'canton_id')->widget(\kartik\widgets\Select2::classname(), [
             'data' => \yii\helpers\ArrayHelper::map(\app\models\Cantones::find()->orderBy('nombre')->asArray()->all(), 'id', function($model, $defaultValue) {

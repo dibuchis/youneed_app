@@ -10,6 +10,7 @@ use app\models\Pedidos;
 use app\models\Tarjetas;
 use app\models\Bancos;
 use app\models\Cantones;
+use app\models\Paises;
 use app\models\Planes;
 use app\models\UsuariosCategorias;
 use app\models\UsuariosServicios;
@@ -60,6 +61,7 @@ use app\models\UsuariosServicios;
     * @property string $rise
     * @property string $referencias_personales
     * @property string $titulo_academico
+    * @property integer $pais_id
     *
             * @property Calificaciones[] $calificaciones
             * @property Documentos[] $documentos
@@ -69,6 +71,7 @@ use app\models\UsuariosServicios;
             * @property Tarjetas[] $tarjetas
             * @property Bancos $banco
             * @property Cantones $canton
+            * @property Paises $pais
             * @property Planes $plan
             * @property UsuariosCategorias[] $usuariosCategorias
             * @property UsuariosServicios[] $usuariosServicios
@@ -89,7 +92,7 @@ return 'usuarios';
 public function rules()
 {
         return [
-            [['tipo_identificacion', 'estado', 'habilitar_rastreo', 'plan_id', 'banco_id', 'preferencias_deposito', 'dias_trabajo', 'horarios_trabajo', 'estado_validacion_documentos', 'traccar_id', 'es_super', 'es_asociado', 'es_cliente', 'es_operador', 'canton_id'], 'integer'],
+            [['tipo_identificacion', 'estado', 'habilitar_rastreo', 'plan_id', 'banco_id', 'preferencias_deposito', 'dias_trabajo', 'horarios_trabajo', 'estado_validacion_documentos', 'traccar_id', 'es_super', 'es_asociado', 'es_cliente', 'es_operador', 'canton_id', 'pais_id'], 'integer'],
             [['imagen', 'token_push', 'token', 'causas_desactivacion', 'tipo_cuenta', 'observaciones'], 'string'],
             [['fecha_creacion', 'fecha_activacion', 'fecha_desactivacion', 'fecha_cambio_plan'], 'safe'],
             [['identificacion'], 'string', 'max' => 80],
@@ -101,6 +104,7 @@ public function rules()
             [['fotografia_asociado', 'fotografia_cedula', 'ruc', 'visa_trabajo', 'rise', 'referencias_personales', 'titulo_academico'], 'string', 'max' => 900],
             [['banco_id'], 'exist', 'skipOnError' => true, 'targetClass' => Bancos::className(), 'targetAttribute' => ['banco_id' => 'id']],
             [['canton_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cantones::className(), 'targetAttribute' => ['canton_id' => 'id']],
+            [['pais_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paises::className(), 'targetAttribute' => ['pais_id' => 'id']],
             [['plan_id'], 'exist', 'skipOnError' => true, 'targetClass' => Planes::className(), 'targetAttribute' => ['plan_id' => 'id']],
         ];
 }
@@ -154,6 +158,7 @@ return [
     'rise' => 'Rise',
     'referencias_personales' => 'Referencias Personales',
     'titulo_academico' => 'Titulo Academico',
+    'pais_id' => 'Pais ID',
 ];
 }
 
@@ -219,6 +224,14 @@ return [
     public function getCanton()
     {
     return $this->hasOne(Cantones::className(), ['id' => 'canton_id']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getPais()
+    {
+    return $this->hasOne(Paises::className(), ['id' => 'pais_id']);
     }
 
     /**

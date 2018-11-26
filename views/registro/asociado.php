@@ -113,6 +113,19 @@ use borales\extensions\phoneInput\PhoneInput;
 							            ]);
 							        ?>
 
+							        <?= $form->field($model, 'pais_id')->widget(\kartik\widgets\Select2::classname(), [
+								        'data' => \yii\helpers\ArrayHelper::map(\app\models\Paises::find()->orderBy('nombre')->asArray()->all(), 'id', 
+								                function($model, $defaultValue) {
+								                    return $model['nombre'];
+								                }
+								            ),
+								        'options' => ['placeholder' => 'Seleccione'],
+								        'pluginOptions' => [
+								            'allowClear' => true, 
+								            'multiple' => false,
+								        ],
+								    ]); ?>
+
 								    <?= $form->field($model, 'canton_id')->widget(\kartik\widgets\Select2::classname(), [
 								        'data' => \yii\helpers\ArrayHelper::map(\app\models\Cantones::find()->orderBy('nombre')->asArray()->all(), 'id', 
 								                function($model, $defaultValue) {
@@ -249,6 +262,9 @@ use borales\extensions\phoneInput\PhoneInput;
 	                 <h3 class="panel-title">Información para pagos</h3>
 	            </div>
 	            <div class="panel-body">
+	            	<div class="alert alert-success">
+	            		Los datos proporcionados servirán para realizar los pagos por los servicios realizados
+	            	</div>
 	                <?= $form->field($model, 'banco_id')->widget(\kartik\widgets\Select2::classname(), [
 				        'data' => \yii\helpers\ArrayHelper::map(\app\models\Bancos::find()->orderBy('nombre')->asArray()->all(), 'id', 
 				                function($model, $defaultValue) {
