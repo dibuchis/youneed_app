@@ -18,7 +18,7 @@ class CiudadesSearch extends Ciudades
     public function rules()
     {
         return [
-            [['id', 'canton_id'], 'integer'],
+            [['id', 'pais_id'], 'integer'],
             [['nombre'], 'safe'],
         ];
     }
@@ -57,7 +57,7 @@ class CiudadesSearch extends Ciudades
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'canton_id' => $this->canton_id,
+            'pais_id' => $this->pais_id,
         ]);
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre]);

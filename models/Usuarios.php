@@ -17,13 +17,14 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
     public $referencias_personales_upload;
     public $titulo_academico_upload;
     public $categorias;
+    public $terminos_condiciones;
 
     public function rules()
     {
         return array_merge(parent::rules(),
         [
             [['nombres', 'apellidos', 'email', 'numero_celular', 'clave', 'estado'], 'required', 'on' => 'Webapp'],
-            [['imagen', 'tipo_identificacion', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email', 'clave', 'servicios', 'dias_trabajo', 'horarios_trabajo', 'banco_id', 'nombre_beneficiario', 'tipo_cuenta', 'numero_cuenta', 'plan_id', 'fotografia_cedula', 'referencias_personales', 'categorias', 'pais_id', 'canton_id'], 'required', 'on' => 'Asociado'],
+            [['imagen', 'tipo_identificacion', 'identificacion', 'nombres', 'apellidos', 'numero_celular', 'email', 'clave', 'servicios', 'dias_trabajo', 'horarios_trabajo', 'banco_id', 'nombre_beneficiario', 'tipo_cuenta', 'numero_cuenta', 'plan_id', 'fotografia_cedula', 'referencias_personales', 'categorias', 'pais_id', 'ciudad_id'], 'required', 'on' => 'Asociado'],
             [['nombres', 'apellidos', 'numero_celular', 'email', 'clave'], 'required', 'on' => 'Cliente'],
             ['email', 'unique'],
             ['email', 'email'],
@@ -31,6 +32,7 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
             ['identificacion', 'unique'],
             [['numero_celular'], PhoneInputValidator::className(), 'region' => ['EC']],
             [['identificacion'], 'checkIdentification'],
+            ['terminos_condiciones', 'required', 'on' => ['Asociado'], 'requiredValue' => 1, 'message' => 'Es necesario que acepte los términos y condiciones'],
         ]);
     }
 
@@ -217,7 +219,9 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
             'rise' => 'Fotografía del RISE Régimen Impositivo Simplificado Ecuatoriano',
             'referencias_personales' => 'Carta de Referencias Personales',
             'titulo_academico' => 'Título Académico o Certificado que Acredite sus Conocimientos',
-            'pais_id' => 'País'
+            'pais_id' => 'País',
+            'ciudad_id' => 'Ciudad',
+            'terminos_condiciones' => 'Aceptar términos y condiciones',
 		];
 	}
 

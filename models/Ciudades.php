@@ -16,7 +16,7 @@ class Ciudades extends \app\models\base\CiudadesBase
 	{
 	return [
 	    'id' => 'ID',
-	    'canton_id' => 'Cantón',
+	    'pais_id' => 'País',
 	    'nombre' => 'Nombre',
 	];
 	}

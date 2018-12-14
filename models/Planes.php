@@ -9,7 +9,7 @@ class Planes extends \app\models\base\PlanesBase
     {
         return array_merge(parent::rules(),
         [
-            [['nombre', 'descripcion', 'pvp', 'descuento_1', 'descuento_2' ], 'required'],
+            [['nombre', 'descripcion', 'pvp', 'descuento_1', 'sin_descuento' ], 'required'],
         ]);
     }
 
@@ -20,7 +20,7 @@ class Planes extends \app\models\base\PlanesBase
 	    'nombre' => 'Nombre',
 	    'descripcion' => 'Descripción',
 	    'pvp' => 'PVP',
-	    'descuento_1' => 'Descuento 1',
+	    'descuento_1' => 'Descuento aplicado',
 	    'descuento_2' => 'Descuento 2',
 	    'fecha_creacion' => 'Fecha Creación',
 	];

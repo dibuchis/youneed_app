@@ -32,6 +32,28 @@ jQuery(document).ready(function ($) {
             $(".field-servicios-iva").show();
         }
     });
+
+    // Calculo de descuentos para planes
+    $(document).on('blur', '#planes-sin_descuento', function(){ 
+        var sin_descuento = $(this).val();
+        var descuento_aplicado = $("#planes-descuento_1").val();
+        if( parseFloat(sin_descuento) > 0 && parseFloat(descuento_aplicado) > 0 ){
+            var planes_pvp = (parseFloat(descuento_aplicado) * parseFloat(sin_descuento)) / 100;
+            planes_pvp = parseFloat(sin_descuento) - planes_pvp
+            $("#planes-pvp").val( parseFloat(planes_pvp) );
+        }
+    });
+
+    $(document).on('blur', '#planes-descuento_1', function(){ 
+        var sin_descuento = $("#planes-sin_descuento").val();
+        var descuento_aplicado = $(this).val();
+        if( parseFloat(sin_descuento) > 0 && parseFloat(descuento_aplicado) > 0 ){
+            var planes_pvp = (parseFloat(descuento_aplicado) * parseFloat(sin_descuento)) / 100;
+            planes_pvp = parseFloat(sin_descuento) - planes_pvp
+            $("#planes-pvp").val( parseFloat(planes_pvp) );
+        }
+    });
+
 });
 
 $(document).on('blur', '#categorias-subtotal', function(){ 

@@ -17,14 +17,14 @@ use yii\widgets\ActiveForm;
 
     <div class="row">
         <div class="col-md-4">
-            <?= $form->field($model, 'pvp')->widget(\yii\widgets\MaskedInput::className(), [
+            <?= $form->field($model, 'sin_descuento')->widget(\yii\widgets\MaskedInput::className(), [
                 'clientOptions' => [
                         'alias' =>  'decimal',
                         'groupSeparator' => '',
                         'digits' => 2, 
                         'autoGroup' => true
                     ],
-            ]) ?>
+            ])->textInput(['value' => $model->sin_descuento]) ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'descuento_1')->widget(\yii\widgets\MaskedInput::className(), [
@@ -34,17 +34,17 @@ use yii\widgets\ActiveForm;
                         'digits' => 2, 
                         'autoGroup' => true
                     ],
-            ]) ?>
+            ])->textInput(['value' => $model->descuento_1]) ?>
         </div>
         <div class="col-md-4">
-            <?= $form->field($model, 'descuento_2')->widget(\yii\widgets\MaskedInput::className(), [
+            <?= $form->field($model, 'pvp')->widget(\yii\widgets\MaskedInput::className(), [
                 'clientOptions' => [
                         'alias' =>  'decimal',
                         'groupSeparator' => '',
                         'digits' => 2, 
                         'autoGroup' => true
                     ],
-            ]) ?>
+            ])->textInput(['value' => $model->pvp, 'readonly'=>'readonly']) ?>
         </div>
     </div>
 

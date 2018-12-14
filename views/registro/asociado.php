@@ -113,31 +113,33 @@ use borales\extensions\phoneInput\PhoneInput;
 							            ]);
 							        ?>
 
-							        <?= $form->field($model, 'pais_id')->widget(\kartik\widgets\Select2::classname(), [
-								        'data' => \yii\helpers\ArrayHelper::map(\app\models\Paises::find()->orderBy('nombre')->asArray()->all(), 'id', 
-								                function($model, $defaultValue) {
-								                    return $model['nombre'];
-								                }
-								            ),
-								        'options' => ['placeholder' => 'Seleccione'],
-								        'pluginOptions' => [
-								            'allowClear' => true, 
-								            'multiple' => false,
-								        ],
-								    ]); ?>
 
-								    <?= $form->field($model, 'canton_id')->widget(\kartik\widgets\Select2::classname(), [
-								        'data' => \yii\helpers\ArrayHelper::map(\app\models\Cantones::find()->orderBy('nombre')->asArray()->all(), 'id', 
-								                function($model, $defaultValue) {
-								                    return $model['nombre'];
-								                }
-								            ),
-								        'options' => ['placeholder' => 'Seleccione'],
-								        'pluginOptions' => [
-								            'allowClear' => true, 
-								            'multiple' => false,
-								        ],
-								    ]); ?>
+								    <?= $form->field($model, 'pais_id')->widget(\kartik\widgets\Select2::classname(), [
+						                'data' => \yii\helpers\ArrayHelper::map(\app\models\Paises::find()->orderBy('nombre')->asArray()->all(), 'id', 
+						                        function($model, $defaultValue) {
+						                            return $model['nombre'];
+						                        }
+						                    ),
+						                'options' => ['placeholder' => Yii::t('app', 'Seleccione una empresa'), 'id'=>'cat1-id'],
+						                'pluginOptions' => [
+						                    'allowClear' => true
+						                ],
+						            ]); ?>
+
+						            <?php 
+						                echo $form->field($model, 'ciudad_id')->widget(DepDrop::classname(), [
+						                    'type'=>DepDrop::TYPE_SELECT2,
+						                    'data'=>[],
+						                    'options'=>['id'=>'subcat11-id', 'placeholder'=>'Seleccione', 'options'=> [] ],
+						                    'select2Options'=>['pluginOptions'=>['multiple' => false,'allowClear'=>true]],
+						                    'pluginOptions'=>[
+						                        'depends'=>['cat1-id'],
+						                        'url'=>Url::to(['/ajax/ciudades']),
+						                    ]
+						                ]);
+						            ?>
+
+								 
 
 								</div>	
 							</div>
@@ -301,10 +303,14 @@ use borales\extensions\phoneInput\PhoneInput;
 				                    <div class="panel panel-success panel-pricing">
 				                        <div class="panel-heading">
 				                            <i class="fa fa-desktop"></i>
-				                            <h3><?php echo $planes[0]->nombre; ?></h3>
+				                            <h3><?php echo $planes[0]->nombre; ?> - $<?php echo $planes[0]->sin_descuento; ?> USD</h3>
 				                        </div>
 				                        <div class="panel-body text-center">
-				                            <p><strong><?php echo $planes[0]->pvp; ?> USD / anual</strong></p>
+				                            <p>
+				                            	<strong><?php echo $planes[0]->pvp; ?> USD / anual</strong>
+				                            	<br>
+				                            	<small>(<?php echo $planes[0]->descuento_1; ?> % de descuento)</small>
+				                            </p>
 				                        </div>
 				                        <?php echo $planes[0]->descripcion; ?>
 				                        <div class="panel-footer">
@@ -319,10 +325,14 @@ use borales\extensions\phoneInput\PhoneInput;
 				                    <div class="panel panel-success panel-pricing">
 				                        <div class="panel-heading">
 				                            <i class="fa fa-desktop"></i>
-				                            <h3><?php echo $planes[1]->nombre; ?></h3>
+				                            <h3><?php echo $planes[1]->nombre; ?> - $<?php echo $planes[1]->sin_descuento; ?> USD</h3>
 				                        </div>
 				                        <div class="panel-body text-center">
-				                            <p><strong><?php echo $planes[1]->pvp; ?> USD / anual</strong></p>
+				                            <p>
+				                            	<strong><?php echo $planes[1]->pvp; ?> USD / anual</strong>
+				                            	<br>
+				                            	<small>(<?php echo $planes[1]->descuento_1; ?> % de descuento)</small>
+				                            </p>
 				                        </div>
 				                        <?php echo $planes[1]->descripcion; ?>
 				                        <div class="panel-footer">
@@ -340,6 +350,21 @@ use borales\extensions\phoneInput\PhoneInput;
 
 				            <?= $form->field($model, 'plan_id')->hiddenInput()->label(false); ?>
 				        
+				        	<textarea readonly="readonly" style="height: 200px;" class="col-md-12">
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				        	</textarea>
+
+				        	<?= $form->field($model, 'terminos_condiciones')->checkbox(['checked' => true]); ?>
+
 				    </section>
 				     <?= Html::submitButton($model->isNewRecord ? 'Registrarse' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-primary btn-lg center-block' : 'btn btn-primary']) ?>
 				</div>

@@ -20,6 +20,7 @@ use Imagine\Image\Point;
 use app\models\Trazabilidades;
 use app\models\Usuarios;
 use app\models\Traccar;
+use app\models\Ciudades;
 
 /**
  * EmpresasController implements the CRUD actions for Empresas model.
@@ -194,6 +195,23 @@ class AjaxController extends Controller
             }
         }
         return '';
+    }
+
+    public function actionCiudades(){
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $adicionales = Ciudades::find()->andWhere( ['pais_id'=>$cat_id] )->all();
+                foreach ($adicionales as $adicional) {
+                    $out [] = ['id'=>$adicional->id, 'name'=>$adicional->nombre]; 
+                }
+                return Json::encode(['output'=>$out, 'selected'=>'']);
+                return;
+            }
+        }
+        return Json::encode(['output'=>'', 'Seleccione'=>'']);
     }
 
 }

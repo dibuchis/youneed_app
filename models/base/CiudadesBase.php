@@ -3,7 +3,7 @@
 namespace app\models\base;
 
 use Yii;
-use app\models\Cantones;
+use app\models\Paises;
 use app\models\Pedidos;
 use app\models\Usuarios;
 
@@ -11,10 +11,10 @@ use app\models\Usuarios;
  * This is the model class for table "ciudades".
 *
     * @property integer $id
-    * @property integer $canton_id
+    * @property integer $pais_id
     * @property string $nombre
     *
-            * @property Cantones $canton
+            * @property Paises $pais
             * @property Pedidos[] $pedidos
             * @property Usuarios[] $usuarios
     */
@@ -34,10 +34,10 @@ return 'ciudades';
 public function rules()
 {
         return [
-            [['canton_id'], 'required'],
-            [['canton_id'], 'integer'],
+            [['pais_id'], 'required'],
+            [['pais_id'], 'integer'],
             [['nombre'], 'string', 'max' => 650],
-            [['canton_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cantones::className(), 'targetAttribute' => ['canton_id' => 'id']],
+            [['pais_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paises::className(), 'targetAttribute' => ['pais_id' => 'id']],
         ];
 }
 
@@ -48,7 +48,7 @@ public function attributeLabels()
 {
 return [
     'id' => 'ID',
-    'canton_id' => 'Canton ID',
+    'pais_id' => 'Pais ID',
     'nombre' => 'Nombre',
 ];
 }
@@ -56,9 +56,9 @@ return [
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getCanton()
+    public function getPais()
     {
-    return $this->hasOne(Cantones::className(), ['id' => 'canton_id']);
+    return $this->hasOne(Paises::className(), ['id' => 'pais_id']);
     }
 
     /**

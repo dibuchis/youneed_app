@@ -3,7 +3,8 @@
 namespace app\models\base;
 
 use Yii;
-use app\models\Provincias;
+use app\models\Ciudades;
+use app\models\Usuarios;
 
 /**
  * This is the model class for table "paises".
@@ -11,7 +12,8 @@ use app\models\Provincias;
     * @property integer $id
     * @property string $nombre
     *
-            * @property Provincias[] $provincias
+            * @property Ciudades[] $ciudades
+            * @property Usuarios[] $usuarios
     */
 class PaisesBase extends \yii\db\ActiveRecord
 {
@@ -47,8 +49,16 @@ return [
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getProvincias()
+    public function getCiudades()
     {
-    return $this->hasMany(Provincias::className(), ['pais_id' => 'id']);
+    return $this->hasMany(Ciudades::className(), ['pais_id' => 'id']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getUsuarios()
+    {
+    return $this->hasMany(Usuarios::className(), ['pais_id' => 'id']);
     }
 }

@@ -27,19 +27,19 @@ CrudAsset::register($this);
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Create new Ciudades','class'=>'btn btn-default']).
+                    ['role'=>'modal-remote','title'=> 'Crear nueva ciudad','class'=>'btn btn-default']).
                     Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
                     ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
                     '{toggleData}'.
                     '{export}'
                 ],
-            ],          
+            ], 
             'striped' => true,
             'condensed' => true,
             'responsive' => true,          
             'panel' => [
                 'type' => 'primary', 
-                'heading' => '<i class="glyphicon glyphicon-list"></i> Listado de Ciudades',
+                'heading' => '<i class="glyphicon glyphicon-list"></i> Listado de ciudades',
             ]
         ])?>
     </div>

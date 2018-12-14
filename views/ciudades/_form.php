@@ -11,10 +11,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'canton_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\app\models\Cantones::find()->orderBy('nombre')->asArray()->all(), 'id', function($model, $defaultValue) {
-                    $model = \app\models\Cantones::findOne($model['id']);
-                    return $model->provincia->pais->nombre.' - '.$model->provincia->nombre.' - '.$model->nombre;
+    <?= $form->field($model, 'pais_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\app\models\Paises::find()->orderBy('nombre')->asArray()->all(), 'id', function($model, $defaultValue) {
+                    return $model['nombre'];
                 }
             ),
         'options' => ['placeholder' => Yii::t('app', 'Seleccione')],

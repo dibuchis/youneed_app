@@ -29,8 +29,8 @@ if( !Yii::$app->user->isGuest ){
                         'items' => [
                             '<li class="dropdown-header">Catálogos generales</li>',
                             ['label' => 'Países', 'url' => ['paises/index']],
-                            ['label' => 'Provincias', 'url' => ['provincias/index']],
-                            ['label' => 'Ciudades', 'url' => ['cantones/index']],
+                            // ['label' => 'Provincias', 'url' => ['provincias/index']],
+                            ['label' => 'Ciudades', 'url' => ['ciudades/index']],
                             // ['label' => 'Ciudades', 'url' => ['ciudades/index']],
                             // ['label' => 'Tipos de Documentos', 'url' => ['tipos-documentos/index']],
                             ['label' => 'Bancos', 'url' => ['bancos/index']],

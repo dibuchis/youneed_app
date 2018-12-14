@@ -1,11 +1,15 @@
 <?php
 use yii\helpers\Url;
+use kartik\grid\GridView;
+use kartik\widgets\Select2;
+use yii\helpers\ArrayHelper;
+use app\models\Paises;
 
 return [
-    // [
-    //     'class' => 'kartik\grid\CheckboxColumn',
-    //     'width' => '20px',
-    // ],
+    [
+        'class' => 'kartik\grid\CheckboxColumn',
+        'width' => '20px',
+    ],
     [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
@@ -14,10 +18,25 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
     // ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'canton_id',
-    // ],
+    [
+        'attribute'=>'pais_id', 
+        // 'width'=>'520px',
+        // 'vAlign'=>'middle',  
+        'value'=>function ($model, $key, $index, $widget) { 
+            return $model->pais->nombre;
+        },
+        'filterType'=>GridView::FILTER_SELECT2, 
+        'filter'=> ArrayHelper::map(Paises::find()->orderBy('nombre')->asArray()->all(), 'id', 
+            function($model, $defaultValue) {
+                return $model['nombre'];
+            }
+        ), 
+        'filterWidgetOptions'=>[
+            'pluginOptions'=>['allowClear'=>true],
+        ],
+        'filterInputOptions'=>['placeholder'=>'Seleccione'],
+        'format'=>'raw'
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nombre',
