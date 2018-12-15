@@ -187,7 +187,6 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
 		    'numero_celular' => 'Número Celular',
 		    'telefono_domicilio' => 'Teléfono del Domicilio',
 		    'clave' => 'Clave',
-		    'tipo' => 'Tipo',
 		    'estado' => 'Estado',
 		    'token_push' => 'Token Push',
 		    'habilitar_rastreo' => 'Habilitar Rastreo',

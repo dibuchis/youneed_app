@@ -152,10 +152,25 @@ class ApiController extends Controller
                 $items_cart = count( $pedido->items );
               }
 
-              if( $usuario->tipo != 'Asociado' && $usuario->tipo != 'Cliente' ){
+              if( $usuario->es_super == 1 ){
                 $this->setHeader(200);
                 return [  'status'=>0, 
                           'message'=>'Usuario válido en ambiente web solamente'
+                      ];
+              }
+
+              $tipo = '';
+
+              if( $usuario->es_asociado == 1 && $usuario->es_cliente == 1 ){
+                $tipo = 'asociado_cliente';
+              }elseif( $usuario->es_asociado == 1 ){
+                $tipo = 'asociado';
+              }elseif( $usuario->es_cliente == 1 ){
+                $tipo = 'cliente';
+              }else{
+                $this->setHeader(200);
+                return [  'status'=>0, 
+                          'message'=>'Usuario sin rol definido',
                       ];
               }
 
@@ -164,7 +179,7 @@ class ApiController extends Controller
                         'message'=>'Bienvenid@: '.$usuario->nombres,
                         'data'=>[
                           'usuario'=>[
-                            'tipo'=>$usuario->tipo,
+                            'tipo'=>$tipo,
                             'display_name'=>$usuario->nombres.' '.$usuario->apellidos,
                             'nombres'=>$usuario->nombres,
                             'apellidos'=>$usuario->apellidos,
