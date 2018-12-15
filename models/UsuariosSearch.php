@@ -135,7 +135,6 @@ class UsuariosSearch extends Usuarios
             ->andFilterWhere(['like', 'numero_celular', $this->numero_celular])
             ->andFilterWhere(['like', 'telefono_domicilio', $this->telefono_domicilio])
             ->andFilterWhere(['like', 'clave', $this->clave])
-            ->andFilterWhere(['like', 'tipo', $this->tipo])
             ->andFilterWhere(['like', 'token_push', $this->token_push])
             ->andFilterWhere(['like', 'token', $this->token])
             ->andFilterWhere(['like', 'causas_desactivacion', $this->causas_desactivacion])
