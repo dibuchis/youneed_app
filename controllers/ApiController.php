@@ -391,6 +391,8 @@ class ApiController extends Controller
 
       $servicios = Servicios::find();
       $servicios->andWhere( [ 'mostrar_app'=>1 ] );
+      $servicios->andWhere( [ '>','total', 0 ] );
+
       if( !is_null( $servicio_id ) ){
         $servicios->andWhere( [ 'id'=>$servicio_id ] );
       }
