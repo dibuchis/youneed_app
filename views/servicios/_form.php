@@ -16,32 +16,34 @@ use yii\helpers\Url;
 
     <div class="row">
         <div class="col-md-4">
-            <?php echo $form->field($model, 'imagen')->textarea(['style' => 'display:none;']); ?>
-            <?php echo Html::img($model->imagen , ['style'=> 'height:200px;', 'id'=>'vista_previa_imagen']); ?>
-            <?= Html::img( Url::to('@web/images/ajax-loader.gif'), ['class'=> 'loader']);?>
-            <?= FileUpload::widget([
-                'model' => $model,
-                'attribute' => 'imagen_upload',
-                'url' => ['ajax/subirimagenservicios', 'id' => $model->id],
-                'options' => ['accept' => 'image/*'],
-                'clientOptions' => [
-                    'maxFileSize' => 2000000,
-                    'dataType' => 'json'
-                ],
-                'clientEvents' => [
-                    'fileuploaddone' => 'function(e, data) {
-                                            $("#servicios-imagen").val( data.result[0].base64 );
-                                            $("#vista_previa_imagen").attr("src", data.result[0].base64);
-                                            $(".loader").hide();
-                                        }',
-                    'fileuploadfail' => 'function(e, data) {
+            <?php //echo $form->field($model, 'imagen')->textarea(['style' => 'display:none;']); ?>
+            <?php //echo Html::img($model->imagen , ['style'=> 'height:200px;', 'id'=>'vista_previa_imagen']); ?>
+            <?php //echo  Html::img( Url::to('@web/images/ajax-loader.gif'), ['class'=> 'loader']);?>
+            <?php 
+            // echo  FileUpload::widget([
+            //     'model' => $model,
+            //     'attribute' => 'imagen_upload',
+            //     'url' => ['ajax/subirimagenservicios', 'id' => $model->id],
+            //     'options' => ['accept' => 'image/*'],
+            //     'clientOptions' => [
+            //         'maxFileSize' => 2000000,
+            //         'dataType' => 'json'
+            //     ],
+            //     'clientEvents' => [
+            //         'fileuploaddone' => 'function(e, data) {
+            //                                 $("#servicios-imagen").val( data.result[0].base64 );
+            //                                 $("#vista_previa_imagen").attr("src", data.result[0].base64);
+            //                                 $(".loader").hide();
+            //                             }',
+            //         'fileuploadfail' => 'function(e, data) {
 
-                                        }',
-                    'fileuploadstart' => 'function(e, data) {
-                        $(".loader").show();
-                                        }',
-                ],
-            ]); ?>
+            //                             }',
+            //         'fileuploadstart' => 'function(e, data) {
+            //             $(".loader").show();
+            //                             }',
+            //     ],
+            // ]); 
+            ?>
 
         <div class="row">
             <div class="col-md-6">

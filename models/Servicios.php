@@ -11,7 +11,7 @@ class Servicios extends \app\models\base\ServiciosBase
     {
         return array_merge(parent::rules(),
         [
-            [['imagen', 'nombre', 'incluye', 'no_incluye', 'categorias'], 'required'],
+            [['nombre', 'incluye', 'no_incluye', 'categorias'], 'required'],
         ]);
     }
 

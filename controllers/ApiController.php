@@ -377,7 +377,7 @@ class ApiController extends Controller
       
     }
 
-    public function actionGetservices( $servicio_id = null, $asociado_id = null ){
+    public function actionGetservices( $servicio_id = null, $asociado_id = null, $categoria_id = null ){
       
       $array_servicios = [];
       $array_asociado = [];
@@ -394,6 +394,11 @@ class ApiController extends Controller
       if( !is_null( $servicio_id ) ){
         $servicios->andWhere( [ 'id'=>$servicio_id ] );
       }
+
+      if( !is_null( $categoria_id ) ){
+        $servicios->innerJoinWith('categoriasServicios', 't.id = categoriasServicios.categoria_id');
+        $servicios->andWhere( [ 'categorias_servicios.categoria_id'=>$categoria_id ] );
+      }
       // $categorias->limit(10);
       $servicios = $servicios->all();
       foreach ($servicios as $servicio) {
@@ -401,7 +406,7 @@ class ApiController extends Controller
                                 'id' => $servicio->id,
                                 'nombre' => ( is_null( $servicio_id ) ) ? mb_convert_encoding( trim(substr( $servicio->nombre, 0, 100 )).'...' , 'UTF-8', 'UTF-8' ) : $servicio->nombre,
                                 'incluye' => ( is_null( $servicio_id ) ) ? mb_convert_encoding( trim( substr( strip_tags($servicio->incluye), 0, 80 ) ).'...', 'UTF-8', 'UTF-8' ) : $servicio->incluye,
-                                'imagen' => $servicio->imagen,
+                                // 'imagen' => $servicio->imagen,
                                 'no_incluye' => $servicio->no_incluye,
                                 'aplica_iva' => $servicio->aplica_iva,
                                 'subtotal' => $servicio->subtotal,

@@ -14,16 +14,16 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
     // ],
-    [
-        'attribute'=>'imagen',
-        'value'=>function ($model, $key, $index, $widget) {
-            return '<img width="150px;" src="'.$model->imagen.'">';
-        },
-        // 'width'=>'10px;',
-        // 'filterType'=>GridView::FILTER_SELECT2,
-        // 'filter'=>[ 'Pago pendiente' => 'Pago pendiente', 'No autorizado' => 'No autorizado', 'Pagado' => 'Pagado', 'Depositado' => 'Depositado'], 
-        'format'=>'raw'
-    ],
+    // [
+    //     'attribute'=>'imagen',
+    //     'value'=>function ($model, $key, $index, $widget) {
+    //         return '<img width="150px;" src="'.$model->imagen.'">';
+    //     },
+    //     // 'width'=>'10px;',
+    //     // 'filterType'=>GridView::FILTER_SELECT2,
+    //     // 'filter'=>[ 'Pago pendiente' => 'Pago pendiente', 'No autorizado' => 'No autorizado', 'Pagado' => 'Pagado', 'Depositado' => 'Depositado'], 
+    //     'format'=>'raw'
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nombre',
