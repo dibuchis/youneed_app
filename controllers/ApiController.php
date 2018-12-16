@@ -362,7 +362,7 @@ class ApiController extends Controller
         $asociados->andWhere( [ 'id'=>$asociado_id ] );
       }
 
-      $asociados->andWhere( [ 'tipo'=>'Asociado', 'estado'=>1 ] );
+      $asociados->andWhere( [ 'es_asociado'=>1, 'estado'=>1 ] );
       // $categorias->limit(10);
       $asociados = $asociados->all();
       foreach ($asociados as $asociado) {
