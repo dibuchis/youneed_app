@@ -377,7 +377,7 @@ class ApiController extends Controller
       
     }
 
-    public function actionGetservices( $servicio_id = null, $asociado_id = null, $categoria_id = null, $query_search = null ){
+    public function actionGetservices( $servicio_id = null, $asociado_id = null, $categoria_id = null, $name = null ){
       
       $array_servicios = [];
       $array_asociado = [];
@@ -402,8 +402,8 @@ class ApiController extends Controller
         $servicios->andWhere( [ 'categorias_servicios.categoria_id'=>$categoria_id ] );
       }
 
-      if( !is_null( $query_search ) ){
-        $servicios->andFilterWhere(['like', 'nombre', $query_search]);
+      if( !is_null( $name ) ){
+        $servicios->andFilterWhere(['like', 'nombre', $name]);
         $servicios->limit(10);
       }
 
@@ -413,7 +413,7 @@ class ApiController extends Controller
         $array_servicios[] = [
                                 'id' => $servicio->id,
                                 // 'nombre' => ( is_null( $servicio_id ) ) ? mb_convert_encoding( trim(substr( $servicio->nombre, 0, 100 )).'...' , 'UTF-8', 'UTF-8' ) : $servicio->nombre,
-                                'nombre' => $servicio->nombre,
+                                'name' => $servicio->nombre,
                                 'incluye' => ( is_null( $servicio_id ) ) ? mb_convert_encoding( trim( substr( strip_tags($servicio->incluye), 0, 80 ) ).'...', 'UTF-8', 'UTF-8' ) : $servicio->incluye,
                                 // 'imagen' => $servicio->imagen,
                                 'no_incluye' => $servicio->no_incluye,
