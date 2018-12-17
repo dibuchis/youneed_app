@@ -34,12 +34,13 @@ class ApiController extends Controller
             'register'=>['post'], //Registro de usuarios
             'recoverpassword'=>['get'], //Recuperar la clave de la cuenta
             'termsconditions'=>['get'], //Información de terminos y condiciones
-            'getcategories'=>['get'], //Listado de categorias si se especifica el parametro categoria_id muestra la informacion de la misma
+            'getcategories'=>['get'], //Listado de categorias
             'getassociates'=>['get'], //Listado de asociados
             'getservices'=>['get'], //Listado de servicios
             'setitemcart'=>['post'], //Permite agregar un item al carrito de compras
             'deleteitemcart'=>['get'], //Permite borrar un item del carrito de compras
             'getshoppingcart'=>['get'], //Devuelve el carrito de compras de un usuario
+            'getorders'=>['get'],
         ],
  
         ]
@@ -606,6 +607,61 @@ class ApiController extends Controller
                   'message'=>'Usuario no encontrado'
               ];
       }
+    }
+
+    public function actionGetorders( $token = null, $usuario_tipo = 0, $estado = 0 ){
+
+      //$usuario_tipo
+      // 0 -> Cliente
+      // 1 -> Asociado
+
+      // $estado
+      // 0 -> En espera
+      // 1 -> Reservada
+      // 2 -> En ejecución
+      // 3 -> Pagada
+      // 4 -> Cancelada
+
+      $array_pedidos = [];
+
+      $usuario = Usuarios::find()->andWhere( [ 'token'=>$token ] )->one();
+
+      if( !is_object( $usuario ) ){
+        $this->setHeader(200);
+        return [  'status'=>0, 
+                  'message'=>'Usuario no encontrado',
+              ];
+      }
+
+      $pedidos = Pedidos::find();
+
+      if( $usuario_tipo = 0 ){
+        $pedidos->andWhere( ['cliente_id'=>$usuario->id, 'estado'=>$estado] );
+      }else{
+        $pedidos->andWhere( ['asociado_id'=>$usuario->id, 'estado'=>$estado] );
+      }
+
+      $pedidos->orderBy(['id'=>SORT_DESC]);
+      $pedidos->all();
+
+      foreach ($pedidos as $pedido) {
+        $array_pedidos[] = [
+                              'id' => $pedido->id,
+                              'razon_social' => $pedido->razon_social,
+                              'fecha_creacion' => $pedido->fecha_creacion,
+                              'total' => $pedido->total,
+                              'fecha_para_servicio' => $pedido->fecha_para_servicio,
+                              'nombres_asociado'=> $pedido->asociado->nombres.' '.$pedido->asociado->apellidos,
+                            ];
+      }
+        
+      $this->setHeader(200);
+      return [  'status'=>1, 
+                'message'=>'Listado de asociados',
+                'data'=>[ 'pedidos'=>$array_pedidos, 'total'=>count( $array_pedidos ) ],
+            ];
+      
+
     }
 
 }
