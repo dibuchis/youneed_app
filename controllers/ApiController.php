@@ -473,7 +473,7 @@ class ApiController extends Controller
                 Util::calcularPedido( $pedido->id );
                 $this->setHeader(200);
                 return [  'status'=>1, 
-                          'message'=>'Registrado exitosamente',
+                          'message'=>'Servicio agregado exitosamente',
                           'data'=>['items_cart'=>count( $pedido->items )]
                       ];
               }else{
@@ -556,27 +556,34 @@ class ApiController extends Controller
       }
     }
 
-    public function actionGetshoppingcart( $token = null ){
+    public function actionGetshoppingcart( $token = null, $numero_items = null ){
       $usuario = Usuarios::find()->andWhere( [ 'token'=>$token ] )->one();
       if( is_object( $usuario ) ){
         $items = [];
         $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$usuario->id, 'estado'=>0] )->one();
         if( is_object( $pedido ) ){
-          foreach ($pedido->items as $item) {
-            
-            $items [] = [ 'id'=>$item->id,
-                          'descripcion'=>( $item->es_diagnostico == 1 ) ? $item->servicio->nombre.' - '.Yii::$app->params['parametros_globales']['texto_visita_diagnostico'] : $item->servicio->nombre, 
-                          'cantidad'=>$item->cantidad, 
-                          'costo_unitario'=>$item->costo_unitario, 
-                          'costo_total'=>$item->costo_total
-                        ];
-          }
 
-          $this->setHeader(200);
-          return [  'status'=>1, 
-                    'message'=>'Carrito de compras',
-                    'data'=>[ 'pedido'=>$pedido->attributes, 'items'=>$items, 'total'=>count( $pedido->items ) ],
-                ];
+          if( is_null( $numero_items ) ){
+            foreach ($pedido->items as $item) {
+              $items [] = [ 'id'=>$item->id,
+                            'descripcion'=>( $item->es_diagnostico == 1 ) ? $item->servicio->nombre.' - '.Yii::$app->params['parametros_globales']['texto_visita_diagnostico'] : $item->servicio->nombre, 
+                            'cantidad'=>$item->cantidad, 
+                            'costo_unitario'=>$item->costo_unitario, 
+                            'costo_total'=>$item->costo_total
+                          ];
+            }
+            $this->setHeader(200);
+            return [  'status'=>1, 
+                      'message'=>'Carrito de compras',
+                      'data'=>[ 'pedido'=>$pedido->attributes, 'items'=>$items, 'total'=>count( $pedido->items ) ],
+                  ];
+          }else{
+            $this->setHeader(200);
+            return [  'status'=>1, 
+                      'message'=>'Carrito de compras',
+                      'data'=>[ 'total'=>count( $pedido->items ) ],
+                  ];
+          }
 
         }else{
           $this->setHeader(200);
