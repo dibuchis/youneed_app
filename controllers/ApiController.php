@@ -377,7 +377,7 @@ class ApiController extends Controller
       
     }
 
-    public function actionGetservices( $servicio_id = null, $asociado_id = null, $categoria_id = null ){
+    public function actionGetservices( $servicio_id = null, $asociado_id = null, $categoria_id = null, $query_search = null ){
       
       $array_servicios = [];
       $array_asociado = [];
@@ -401,6 +401,12 @@ class ApiController extends Controller
         $servicios->innerJoinWith('categoriasServicios', 't.id = categoriasServicios.categoria_id');
         $servicios->andWhere( [ 'categorias_servicios.categoria_id'=>$categoria_id ] );
       }
+
+      if( !is_null( $query_search ) ){
+        $servicios->andFilterWhere(['like', 'nombre', $query_search]);
+        $servicios->limit(10);
+      }
+
       // $categorias->limit(10);
       $servicios = $servicios->all();
       foreach ($servicios as $servicio) {
