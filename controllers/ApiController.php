@@ -642,9 +642,7 @@ class ApiController extends Controller
       }
 
       $pedidos->orderBy(['id'=>SORT_DESC]);
-      $pedidos->all();
-
-      return $pedidos;
+      $pedidos = $pedidos->all();
 
       foreach ($pedidos as $pedido) {
         $array_pedidos[] = [
