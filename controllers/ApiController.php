@@ -635,7 +635,7 @@ class ApiController extends Controller
 
       $pedidos = Pedidos::find();
 
-      if( $usuario_tipo = 0 ){
+      if( $usuario_tipo == 0 ){
         $pedidos->andWhere( ['cliente_id'=>$usuario->id, 'estado'=>$estado] );
       }else{
         $pedidos->andWhere( ['asociado_id'=>$usuario->id, 'estado'=>$estado] );
@@ -657,7 +657,7 @@ class ApiController extends Controller
         
       $this->setHeader(200);
       return [  'status'=>1, 
-                'message'=>'Listado de asociados',
+                'message'=>'Listado de pedidos',
                 'data'=>[ 'pedidos'=>$array_pedidos, 'total'=>count( $array_pedidos ) ],
             ];
       
