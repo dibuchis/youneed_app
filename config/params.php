@@ -44,5 +44,12 @@ return [
         'iva_display' => '12%',
         'valor_visita_diagnostico' => 10,
         'texto_visita_diagnostico' => 'Visita diagnóstico',
+    ],
+    'estados_pedidos' => [
+        0 => 'En espera',
+        1 => 'Reservada',
+        2 => 'En ejecución',
+        3 => 'Pagada',
+        4 => 'Cancelada',
     ]
 ];

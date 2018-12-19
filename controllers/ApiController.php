@@ -25,26 +25,27 @@ class ApiController extends Controller
  
     public function behaviors()
     {
-    return [
-        'verbs' => [
-        'class' => VerbFilter::className(),
-        'actions' => [
-            'getinfoapp'=>['get'], //Información global de la plataforma para rastreo y variables internas
-            'login'=>['post'], //Ingreso de usuarios
-            'register'=>['post'], //Registro de usuarios
-            'recoverpassword'=>['get'], //Recuperar la clave de la cuenta
-            'termsconditions'=>['get'], //Información de terminos y condiciones
-            'getcategories'=>['get'], //Listado de categorias
-            'getassociates'=>['get'], //Listado de asociados
-            'getservices'=>['get'], //Listado de servicios
-            'setitemcart'=>['post'], //Permite agregar un item al carrito de compras
-            'deleteitemcart'=>['get'], //Permite borrar un item del carrito de compras
-            'getshoppingcart'=>['get'], //Devuelve el carrito de compras de un usuario
-            'getorders'=>['get'],
-        ],
- 
-        ]
-    ];
+      return [
+          'verbs' => [
+          'class' => VerbFilter::className(),
+          'actions' => [
+              'getinfoapp'=>['get'], //Información global de la plataforma para rastreo y variables internas
+              'login'=>['post'], //Ingreso de usuarios
+              'register'=>['post'], //Registro de usuarios
+              'recoverpassword'=>['get'], //Recuperar la clave de la cuenta
+              'termsconditions'=>['get'], //Información de terminos y condiciones
+              'getcategories'=>['get'], //Listado de categorias
+              'getassociates'=>['get'], //Listado de asociados
+              'getservices'=>['get'], //Listado de servicios
+              'setitemcart'=>['post'], //Permite agregar un item al carrito de compras
+              'deleteitemcart'=>['get'], //Permite borrar un item del carrito de compras
+              'getshoppingcart'=>['get'], //Devuelve el carrito de compras de un usuario
+              'getorders'=>['get'],
+              'setshoppingcart'=>['get'],
+          ],
+   
+          ]
+      ];
     }
  
  
@@ -647,6 +648,7 @@ class ApiController extends Controller
       foreach ($pedidos as $pedido) {
         $nombres_asociado = '';
         $items = [];
+        $estado = Yii::$app->params['estados_pedidos'][$estado];
 
         foreach ($pedido->items as $item) {
           $items [] = $item->servicio->nombre;
@@ -663,6 +665,7 @@ class ApiController extends Controller
                               'total' => $pedido->total,
                               'fecha_para_servicio' => $pedido->fecha_para_servicio,
                               'nombres_asociado'=> $nombres_asociado,
+                              'estado'=> $estado,
                             ];
       }
         
@@ -672,6 +675,38 @@ class ApiController extends Controller
                 'data'=>[ 'pedidos'=>$array_pedidos, 'total'=>count( $array_pedidos ) ],
             ];
       
+
+    }
+
+    public function actionSetshoppingcart( $pedido_id = null ){
+
+      if( is_null( $pedido_id ) ){
+        $this->setHeader(200);
+        return [  'status'=>0, 
+                  'message'=>'El parámetro pedido_id es requerido',
+              ];
+      }else{
+        $pedido = Pedidos::findOne( $pedido_id );
+        if( is_object( $pedido ) ){
+          $pedido->estado = 1;
+          if( $pedido->save() ){
+            $this->setHeader(200);
+            return [  'status'=>1, 
+                      'message'=>'Pedido reservado exitosamente',
+                  ];
+          }else{
+            $this->setHeader(200);
+            return [  'status'=>0, 
+                      'message'=>'Ocurrio un error, vuelva a intentarlo',
+                  ];
+          }
+        }else{
+          $this->setHeader(200);
+          return [  'status'=>0, 
+                    'message'=>'Pedido no encontrado',
+                ];
+        }
+      }
 
     }
 
