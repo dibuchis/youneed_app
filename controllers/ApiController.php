@@ -646,12 +646,19 @@ class ApiController extends Controller
 
       foreach ($pedidos as $pedido) {
         $nombres_asociado = '';
+        $items [];
+
+        foreach ($pedido->items as $item) {
+          $items [] = $item->servicio->nombre;
+        }
+
         if( is_object( $pedido->asociado ) ){
           $nombres_asociado = $pedido->asociado->nombres.' '.$pedido->asociado->apellidos;
         }
         $array_pedidos[] = [
                               'id' => $pedido->id,
                               'razon_social' => $pedido->razon_social,
+                              'servicios' => implode(',', $items),
                               'fecha_creacion' => $pedido->fecha_creacion,
                               'total' => $pedido->total,
                               'fecha_para_servicio' => $pedido->fecha_para_servicio,
