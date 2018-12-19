@@ -652,7 +652,7 @@ class ApiController extends Controller
       foreach ($pedidos as $pedido) {
         $nombres_asociado = '';
         $items = [];
-        $estado_pedido = Yii::$app->params['estados_pedidos'][$estado];
+        $estado_pedido = Yii::$app->params['estados_pedidos'][$pedido->estado];
 
         foreach ($pedido->items as $item) {
           $items [] = $item->servicio->nombre;
