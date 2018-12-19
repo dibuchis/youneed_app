@@ -610,7 +610,7 @@ class ApiController extends Controller
       }
     }
 
-    public function actionGetorders( $token = null, $usuario_tipo = 0, $estado = 0 ){
+    public function actionGetorders( $token = null, $usuario_tipo = 0, $estado = null ){
 
       //$usuario_tipo
       // 0 -> Cliente
@@ -637,9 +637,13 @@ class ApiController extends Controller
       $pedidos = Pedidos::find();
 
       if( $usuario_tipo == 0 ){
-        $pedidos->andWhere( ['cliente_id'=>$usuario->id, 'estado'=>$estado] );
+        $pedidos->andWhere( ['cliente_id'=>$usuario->id] );
       }else{
-        $pedidos->andWhere( ['asociado_id'=>$usuario->id, 'estado'=>$estado] );
+        $pedidos->andWhere( ['asociado_id'=>$usuario->id] );
+      }
+
+      if( !is_null( $estado ) ){
+        $pedidos->andWhere( ['estado'=>$estado] ); 
       }
 
       $pedidos->orderBy(['id'=>SORT_DESC]);
@@ -648,7 +652,7 @@ class ApiController extends Controller
       foreach ($pedidos as $pedido) {
         $nombres_asociado = '';
         $items = [];
-        $estado = Yii::$app->params['estados_pedidos'][$estado];
+        $estado_pedido = Yii::$app->params['estados_pedidos'][$estado];
 
         foreach ($pedido->items as $item) {
           $items [] = $item->servicio->nombre;
@@ -665,7 +669,7 @@ class ApiController extends Controller
                               'total' => $pedido->total,
                               'fecha_para_servicio' => $pedido->fecha_para_servicio,
                               'nombres_asociado'=> $nombres_asociado,
-                              'estado'=> $estado,
+                              'estado'=> $estado_pedido,
                             ];
       }
         
