@@ -646,7 +646,7 @@ class ApiController extends Controller
 
       foreach ($pedidos as $pedido) {
         $nombres_asociado = '';
-        $items [];
+        $items = [];
 
         foreach ($pedido->items as $item) {
           $items [] = $item->servicio->nombre;
