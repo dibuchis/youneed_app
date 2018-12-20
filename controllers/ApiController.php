@@ -606,10 +606,11 @@ class ApiController extends Controller
           }
 
         }else{
+          $pedido_info = ['id'=>0];
           $this->setHeader(200);
           return [  'status'=>1, 
                     'message'=>'Carrito de compras',
-                    'data'=>[ 'total'=> 0 ],
+                    'data'=>[ 'pedido'=>$pedido_info, 'total'=> 0 ],
                 ];
         }
 
