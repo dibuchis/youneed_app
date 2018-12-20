@@ -16,6 +16,41 @@ class Traccar extends Model {
         return self::curl($data, $method, $device_id);
     }
 
+    public static function setPosition( $imei, $lat, $lon, $speed = 0, $batt = 0 ){
+
+        $url = Yii::$app->params['traccar']['transmision_url'];  
+        $curl = curl_init();
+        
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "5055",
+          CURLOPT_URL => $url,
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "id=$imei&timestamp=".strtotime(date('Y-m-d H:i:s'))."&lat=$lat&lon=$lon&speed=$speed&bearing=0.0&altitude=0.0&accuracy=0.0&batt=$batt",
+          CURLOPT_HTTPHEADER => array(
+            "Content-Type: application/x-www-form-urlencoded",
+            "Postman-Token: 2505c1c8-98ce-4e19-b9e7-8af0f4de7bbd",
+            "cache-control: no-cache"
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+          echo "cURL Error #:" . $err;
+        } else {
+          echo $response;
+        }
+
+    }
+
     public static function deleteDevice($device_id){
         $data='{"id":'.$device_id.'}';
         return self::curl($data, 'DELETE', $device_id);

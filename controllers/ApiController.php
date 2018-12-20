@@ -42,6 +42,7 @@ class ApiController extends Controller
               'getshoppingcart'=>['get'], //Devuelve el carrito de compras de un usuario
               'getorders'=>['get'],
               'setshoppingcart'=>['get'],
+              'transmittotraccar'=>['get'],
           ],
    
           ]
@@ -581,10 +582,19 @@ class ApiController extends Controller
                             'costo_total'=>$item->costo_total
                           ];
             }
+
+            $pedido_info = null;
+
+            if( is_object( $pedido ) ){
+              $pedido_info = $pedido->attributes;
+            }else{
+              $pedido_info = ['id'=>0];
+            }
+
             $this->setHeader(200);
             return [  'status'=>1, 
                       'message'=>'Carrito de compras',
-                      'data'=>[ 'pedido'=>$pedido->attributes, 'items'=>$items, 'total'=>count( $pedido->items ) ],
+                      'data'=>[ 'pedido'=>$pedido_info, 'items'=>$items, 'total'=>count( $pedido->items ) ],
                   ];
           }else{
             $this->setHeader(200);
@@ -711,6 +721,64 @@ class ApiController extends Controller
                 ];
         }
       }
+
+    }
+
+    public function actionSetposition( $token = null, $lat = null, $lon = null, $velocidad = null, $bateria = null, $traccar = true ){
+      if( is_null( $token ) && is_null( $lat ) && is_null( $lon ) ){
+        $this->setHeader(200);
+        return [  'status'=>0, 
+                  'message'=>'Los parámetros token, lat y lon son requeridos',
+              ];
+      }else{
+
+        $usuario = Usuarios::find()->andWhere(['token'=>$token])->one();
+        if( is_object( $usuario ) ){
+          if( is_object( $usuario->dispositivo ) ){
+            $usuario->dispositivo->latitude = $lat;
+            $usuario->dispositivo->longitude = $lon;
+            $usuario->dispositivo->velocidad = $velocidad;
+            $usuario->dispositivo->bateria = (float)$bateria * 100;
+            $usuario->dispositivo->ultima_transmision = date('Y-m-d H:i:s');
+            if( $usuario->dispositivo->save() ){
+
+              if( $traccar ){
+                Traccar::setPosition( $usuario->dispositivo->imei, $lat, $lon );
+              }
+
+              $this->setHeader(200);
+              return [  'status'=>1, 
+                        'message'=>'Posición actualizada exitosamente.',
+                    ];
+            }else{
+              $this->setHeader(200);
+              return [  'status'=>0, 
+                        'message'=>'Hubo un error al actualizar posición',
+                        'data'=>[ 'errores'=>$usuario->getErrors() ],
+                    ];
+            }
+          }else{
+            $this->setHeader(200);
+            return [  'status'=>0, 
+                      'message'=>'Usuario no tiene asignado un dispositivo',
+                  ];
+          }
+        }else{
+          $this->setHeader(200);
+          return [  'status'=>0, 
+                    'message'=>'Usuario no encontrado con token especificado',
+                ];
+        }
+
+      }
+    }
+
+    public function actionTransmittotraccar(){
+
+      $json = file_get_contents('php://input');
+      $data = json_decode($json);
+      // return $data->location->id;
+      Traccar::setPosition( $data->location->id, $data->location->lat, $data->location->lon, 0, (float)$data->location->batt * 100 );
 
     }
 
