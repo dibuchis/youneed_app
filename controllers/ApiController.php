@@ -597,10 +597,11 @@ class ApiController extends Controller
                       'data'=>[ 'pedido'=>$pedido_info, 'items'=>$items, 'total'=>count( $pedido->items ) ],
                   ];
           }else{
+            $pedido_info = ['id'=>0];
             $this->setHeader(200);
             return [  'status'=>1, 
                       'message'=>'Carrito de compras',
-                      'data'=>[ 'total'=>count( $pedido->items ) ],
+                      'data'=>[ 'pedido'=>$pedido_info, 'total'=>count( $pedido->items ) ],
                   ];
           }
 
