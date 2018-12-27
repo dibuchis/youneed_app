@@ -14,6 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php 
   // echo Yii::$app->getSecurity()->generatePasswordHash('admin');
+
+  $numero = '0984640145';
+  echo substr( $numero , 1);
 ?>
     <div class="row-fluid">
       <div class="col-md-4 col-md-offset-4">
