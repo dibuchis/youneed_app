@@ -224,6 +224,14 @@ class ApiController extends Controller
       $model = new Usuarios();
       
       if( $model->load($request->post(), '') ){
+
+        $model->numero_celular = preg_replace('/\s+/', '', $model->numero_celular);
+        $model->numero_celular = str_replace(' ', '', $model->numero_celular);
+
+        $validacion_numero = substr( $model->numero_celular , 0, 1 );
+        if( (int)$validacion_numero == 0 ){
+          $model->numero_celular = '+593'.substr( $model->numero_celular , 1 );
+        }
         
         if( Yii::$app->request->post('tipo') == 'Asociado' ){
           $model->scenario = 'Asociado';
