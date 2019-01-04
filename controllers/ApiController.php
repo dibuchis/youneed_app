@@ -257,6 +257,7 @@ class ApiController extends Controller
             $model->token = Util::getGenerarPermalink( Yii::$app->getSecurity()->generatePasswordHash('YOUAbitmedia'.$model->id.date('Y-m-d H:i:s') ) );
             $model->clave = Yii::$app->getSecurity()->generatePasswordHash( $model->clave );
             $model->imei = rand(pow(10, 4-1), pow(10, 4)-1).time();
+            $model->es_cliente = 1;
             $model->save();
 
             // $response = Traccar::setDevice( $model, 'POST' );
