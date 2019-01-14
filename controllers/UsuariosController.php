@@ -202,11 +202,13 @@ class UsuariosController extends Controller
                 ];         
             }else if($model->load($request->post()) && $model->save()){
 
-                if( Yii::$app->request->post('estado') == 0 ){
+                if( $model->estado == 0 ){
                     $model->fecha_desactivacion = date('Y-m-d H:i:s');
+                    $model->activacion = null;
                     $model->save();
                 }else{
-                    $model->fecha_activacion = date('Y-m-d H:i:s');
+                    $model->fecha_desactivacion = null;
+                    $model->activacion = date('Y-m-d H:i:s');
                     $model->save();
                 }
 

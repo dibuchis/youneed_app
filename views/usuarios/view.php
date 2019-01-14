@@ -82,8 +82,7 @@ use yii\widgets\DetailView;
         <?= DetailView::widget([
         'model' => $model,
             'attributes' => [
-                'categoria_id',
-                'fecha_activacion',
+                'activacion',
                 'fecha_desactivacion',
                 'causas_desactivacion:ntext',
                 'plan_id',

@@ -192,7 +192,6 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
 		    'habilitar_rastreo' => 'Habilitar Rastreo',
 		    'token' => 'Token',
 		    'canton_id' => 'Ciudad',
-		    'categoria_id' => 'Actividad Principal',
             'servicios' => 'Servicios a prestar',
 		    'fecha_creacion' => 'Fecha Creación',
 		    'fecha_activacion' => 'Fecha Activación',

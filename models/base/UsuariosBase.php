@@ -62,6 +62,7 @@ use app\models\UsuariosServicios;
     * @property string $titulo_academico
     * @property integer $pais_id
     * @property integer $ciudad_id
+    * @property string $activacion
     *
             * @property Calificaciones[] $calificaciones
             * @property Documentos[] $documentos
@@ -94,7 +95,7 @@ public function rules()
         return [
             [['tipo_identificacion', 'estado', 'habilitar_rastreo', 'plan_id', 'banco_id', 'preferencias_deposito', 'dias_trabajo', 'horarios_trabajo', 'estado_validacion_documentos', 'traccar_id', 'es_super', 'es_asociado', 'es_cliente', 'es_operador', 'pais_id', 'ciudad_id'], 'integer'],
             [['imagen', 'token_push', 'token', 'causas_desactivacion', 'tipo_cuenta', 'observaciones'], 'string'],
-            [['fecha_creacion', 'fecha_activacion', 'fecha_desactivacion', 'fecha_cambio_plan'], 'safe'],
+            [['fecha_creacion', 'fecha_activacion', 'fecha_desactivacion', 'fecha_cambio_plan', 'activacion'], 'safe'],
             [['identificacion'], 'string', 'max' => 80],
             [['nombres', 'apellidos', 'email', 'clave'], 'string', 'max' => 200],
             [['numero_celular', 'telefono_domicilio'], 'string', 'max' => 45],
@@ -159,6 +160,7 @@ return [
     'titulo_academico' => 'Titulo Academico',
     'pais_id' => 'Pais ID',
     'ciudad_id' => 'Ciudad ID',
+    'activacion' => 'Activacion',
 ];
 }
 

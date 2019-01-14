@@ -100,7 +100,7 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'fecha_activacion',
+        'attribute'=>'activacion',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
