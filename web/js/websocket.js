@@ -115,7 +115,7 @@ function agregaMarcas(data) {
             //     $("#direccion-"+this.deviceId).html( this.address );
             // }
 
-          	var iconMarker = base_url + '/images/iconos/default.png';
+          	var iconMarker = base_url + '/images/iconos/asociado.png';
             if( devices_array_all[ this.deviceId ] == "Roja" ){
                 iconMarker = base_url + '/images/iconos/roja.png';
             }

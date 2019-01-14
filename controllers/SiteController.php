@@ -90,10 +90,10 @@ class SiteController extends Controller
         //     $criteria->addInCondition('flota_id', $flotas);
         //     $dispositivos = Dispositivos::model()->findAll($criteria);
         // }else{
-            $dispositivos = Dispositivos::find()->all();
+            $dispositivos = Usuarios::find()->andWhere(['es_asociado'=>1])->all();
         // }
         foreach ($dispositivos as $dispositivo) {
-            $arrayDispositivos [] = array( 'id'=> $dispositivo->traccar_id, 'tipo'=>$dispositivo->tipo );
+            $arrayDispositivos [] = array( 'id'=> $dispositivo->traccar_id, 'tipo'=>'' );
         }
         return json_encode($arrayDispositivos);
         
@@ -143,26 +143,17 @@ class SiteController extends Controller
     }
 
     public function actionGetdatamarker($traccar_id){
-        $disp = Dispositivos::findOne(['traccar_id'=>$traccar_id]);
         $html = '';
 
-        if( $disp->utim_app_tipo == 'Doctor' ){
-            $usuario = Usuarios::find()->andWhere(['dispositivo_id'=>$disp->id, 'tipo'=>'Doctor'])->one();
+        
+            $usuario = Usuarios::find()->andWhere([ 'traccar_id'=>$traccar_id ])->one();
             if( is_object( $usuario ) ){
-                        $html.= '<h2>Información del Médico</h2>';
+                        $html.= '<h2>Información del Asociado</h2>';
                         $html.= '<table id="" class="detail-view table table-striped table-condensed">
                                 <tbody>
                                     <tr>
-                                        <th>Fotografía</th>
-                                        <td><img width="100px" src="'.$usuario->imagen.'"></td>
-                                    </tr>
-                                    <tr>
                                         <th>Identificación</th>
                                         <td>'.$usuario->identificacion.'</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Registro médico</th>
-                                        <td>'.$usuario->registro_medico.'</td>
                                     </tr>
                                     <tr>
                                         <th>Nombres</th>
@@ -185,92 +176,7 @@ class SiteController extends Controller
             }else{
                 $html.= 'Información no disponible';
             }
-        }else{
         
-            if( is_object( $disp->grupo ) )
-                $grupo = $disp->grupo->nombre;
-            else
-                $grupo = 'No disponible';
-
-            if( is_object( $disp->categoria ) )
-                $categoria = $disp->categoria->nombre;
-            else
-                $categoria = 'No disponible';
-
-            if( is_object( $disp->categoria ) )
-                $placa = $disp->placa;
-            else
-                $placa = 'No disponible';
-
-            
-
-            $html.= '<div class="row">
-                <div class="col-md-6">';
-                    $html.= '<h2>Información de dispositivo</h2>';
-                    $html.= '<table id="" class="detail-view table table-striped table-condensed">
-                            <tbody>
-                                <tr>
-                                    <th>Grupo/Flota</th>
-                                    <td>'.$grupo.'</td>
-                                </tr>
-                                <tr>
-                                    <th>Categoría</th>
-                                    <td>'.$categoria.'</td>
-                                </tr>
-                                <tr>
-                                    <th>tipo</th>
-                                    <td>'.$disp->tipo.'</td>
-                                </tr>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <td>'.$disp->nombre.'</td>
-                                </tr>
-                                <tr>
-                                    <th>Placa</th>
-                                    <td>'.$placa.'</td>
-                                </tr>
-                                <tr>
-                                    <th>Alias</th>
-                                    <td>'.$disp->alias.'</td>
-                                </tr>
-                                <tr>
-                                    <th>IMEI</th>
-                                    <td>'.$disp->imei.'</td>
-                                </tr>
-                            </tbody>
-                        </table>';
-            $html.= '</div>
-                <div class="col-md-6">';
-                $html.= '<h2>Información de conductor(es)</h2>';
-                if( count( $disp->dispositivosConductores ) > 0 ){
-                    foreach ($disp->dispositivosConductores as $conductor) {
-                        $html.= '<table id="" class="detail-view table table-striped table-condensed">
-                            <tbody>
-                                <tr>
-                                    <th>Identificación</th>
-                                    <td>'.$conductor->conductor->identificacion.'</td>
-                                </tr>
-                                <tr>
-                                    <th>Nombres</th>
-                                    <td>'.$conductor->conductor->nombres.'</td>
-                                </tr>
-                                <tr>
-                                    <th>Apellidos</th>
-                                    <td>'.$conductor->conductor->apellidos.'</td>
-                                </tr>
-                                <tr>
-                                    <th>Teléfonos</th>
-                                    <td>'.$conductor->conductor->telefonos.'</td>
-                                </tr>
-                            </tbody>
-                        </table>'; 
-                    }
-                }else{
-                    $html.= 'No tiene conductores asignados';
-                }
-            $html.= '</div>
-            </div>';
-        }
         return $html;
     }
 
@@ -321,7 +227,7 @@ class SiteController extends Controller
                 'positonX' => 'right'
             ]);
             $this->searchModelDispositivos = new UsuariosSearch();
-            $this->dataProviderDispositivos = $this->searchModelDispositivos->search(Yii::$app->request->queryParams);
+            $this->dataProviderDispositivos = $this->searchModelDispositivos->searchAsociados(Yii::$app->request->queryParams);
 
             return $this->render('index', [
                 
