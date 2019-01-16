@@ -133,18 +133,35 @@ class UsuariosController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
-                $model->clave = Yii::$app->getSecurity()->generatePasswordHash( $model->clave );
+            }else if( $model->load( $request->post() ) ){
+
+                $model->numero_celular = preg_replace('/\s+/', '', $model->numero_celular);
+                $model->numero_celular = str_replace(' ', '', $model->numero_celular);
+
                 $model->es_super = 1;
-                $model->save();
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new Usuarios",
-                    'content'=>'<span class="text-success">Create Usuarios success</span>',
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
+                if( $model->save() ){
+                    $model->clave = Yii::$app->getSecurity()->generatePasswordHash( $model->clave );
+                    $model->save();
+                    
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'title'=> "Create new Usuarios",
+                        'content'=>'<span class="text-success">Create Usuarios success</span>',
+                        'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+            
+                    ];
+                }else{
+                    return [
+                        'title'=> "Create new Usuarios",
+                        'content'=>$this->renderAjax('create', [
+                            'model' => $model,
+                        ]),
+                        'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                    Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+            
+                    ];    
+                }
             }else{           
                 return [
                     'title'=> "Create new Usuarios",
