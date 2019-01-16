@@ -7,6 +7,7 @@ use app\models\Usuarios;
 use app\models\UsuariosSearch;
 use app\models\UsuariosServicios;
 use app\models\UsuariosCategorias;
+use app\models\Configuraciones;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -56,6 +57,8 @@ class RegistroController extends Controller
         $model->es_asociado = 1;
         $model->clave = '$2y$13$uBUddTim0vpjWki.zHwcIeYEVEqE1Y6g1hwNueooLMlVqYAnnoy4W';
 
+        $terminos = Configuraciones::findOne(1);
+
         if ($model->load(Yii::$app->request->post())) {
             
             $model->numero_celular = preg_replace('/\s+/', '', $model->numero_celular);
@@ -100,6 +103,7 @@ class RegistroController extends Controller
         }else{
             return $this->render('asociado', [
                 'model' => $model,
+                'terminos' => $terminos->politicas_condiciones,
             ]);
         }
        
