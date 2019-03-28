@@ -24,6 +24,8 @@ use yii\helpers\Url;
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -68,6 +70,17 @@ use yii\helpers\Url;
 <?php if( Yii::$app->controller->id == 'site' ){ ?>
  
 <?php } ?>
+<script src="/js/owl.carousel.min.js"></script>
+<script>	
+
+    jQuery(document).ready(function(){
+        jQuery('.owl-carousel-cat').owlCarousel({
+            items: 6,
+            margin:45,
+            nav:true
+        });
+    });
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>

@@ -119,16 +119,19 @@ class AjaxController extends Controller
         if (isset($_POST['depdrop_parents'])) {
             $parents = $_POST['depdrop_parents'];
             if ($parents != null) {
-                $cat_id = $parents[0];
+                $cat_id = $parents;
 
                 $servicios = CategoriasServicios::find()
-                  ->andWhere(['in', 'categoria_id', $parents[0] ])
+                  ->andWhere(['in', 'categoria_id', $cat_id ])
                   ->all();
 
                 foreach ($servicios as $servicio) {
-                    $out [] = ['id'=>$servicio->servicio_id, 'name'=>strip_tags($servicio->servicio->nombre)]; 
+                    // $out [] = ['id'=>$servicio->servicio_id, 'name'=>strip_tags($servicio->servicio->nombre)]; 
+                    $out [] = ['id'=>$servicio->servicio_id, 'parent'=> $cat_id, 'body'=>'<img src="' . $servicio->servicio->imagen . '"><span>' . strip_tags($servicio->servicio->nombre) . '</span><btn class="btn btn-vermas btn-sm center-block">Conocer más</btn><btn class="btn btn-success btn-sm center-block" data-srv="' . $servicio->servicio_id . '" data-cat="' . $cat_id . '" >Escoger</btn>']; 
+                    // $out [] = ['item'=>'<div class="serv-item" data-id="' . $servicio->servicio_id . '"><img src="' . $servicio->servicio->imagen . '"><span>' . strip_tags($servicio->servicio->nombre) . '</span></div>']; 
                 }
-                return Json::encode(['output'=>$out, 'selected'=>'']);
+                // return Json::encode(['output'=>$out, 'selected'=>'']);
+                return Json::encode(['output'=>$out]);
                 return;
             }
         }
