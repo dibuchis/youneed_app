@@ -44,7 +44,7 @@ use borales\extensions\phoneInput\PhoneInput;
 	    </div>
 	    
 	    <form role="form">
-	        <div class="panel panel-primary setup-content" id="step-1">
+	        <div class="panel panel-primary setup-content panel-default" id="step-1">
 	            <div class="panel-heading">
 	                 <h3 class="panel-title">Información personal</h3>
 	            </div>
@@ -259,11 +259,14 @@ use borales\extensions\phoneInput\PhoneInput;
 							// echo "</pre>";
 							?>
 							</div>
+
 								<div class="col-md-10 col-md-offset-1 col-md-pushed-1">
+									<hr>
 									<h4>Escoger Servicio:</h4>
 								</div>
 							<div class="col-md-10 col-md-offset-1 col-md-pushed-1">
 							<?php
+
 							echo '<div id="servicios-wrapper">';
 								echo '<div class="owl-carousel owl-carousel-serv owl-theme" id="owl-servicios">';
 									// }foreach($lista_servicios as $val){
@@ -277,7 +280,7 @@ use borales\extensions\phoneInput\PhoneInput;
 							echo '<h4>Servicios Agregados:</h4>';
 							
 							echo "<div class='servicios-agregados' id='servicios-agregados'> </div>";
-
+							echo '<hr>';
 							// $items_categorias = \yii\helpers\ArrayHelper::map(\app\models\Categorias::find()->orderBy('nombre')->asArray()->all(), 'id', 
 							// 		function($model, $defaultValue) {
 							// 			return $model["nombre"];

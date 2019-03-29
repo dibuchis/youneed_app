@@ -4,9 +4,18 @@ var selServ;
 var arrServ = [];
 var arrCat = [];
 
-var step = 1;
+var navStep = 1;
+
+function getStep(){
+    return parseInt(navStep);
+}
+function setStep(step){
+    navStep = step;
+}
 
 $(document).ready(function () {
+    
+    
 
     var navListItems = $('div.setup-panel div a'),
         allWells = $('.setup-content'),
@@ -15,7 +24,39 @@ $(document).ready(function () {
     allWells.hide();
 
     navListItems.click(function (e) {
-        e.preventDefault();
+            e.preventDefault();
+
+            var empty = false;
+
+
+            // console.log(getStep());
+
+            tStep = getStep();
+
+            var fields = [];
+
+            $('#step-' + tStep + ' *[aria-required=true], #step-' + tStep + ' #usuarios-numero_celular, #step-' + tStep + ' .required > input').each(function(){
+            if($(this).val()==""){
+                empty =true;
+                fields.push($(this).attr("id"));
+                }
+            });
+
+            var ulFields = '<ul style="text-align:left;">';
+            for(var j=0;j<fields.length;j++){
+                ulFields += '<li>' + fields[j] + '</li>';
+            }
+            ulFields += '</ul>';
+
+            if(empty){
+                Swal.fire({
+                    title:'Alerta!',
+                    html:'Aún tiene campos vacíos por llenar.<br>' + ulFields,
+                    type: 'error'
+                });
+                return 0;
+            }
+
         var $target = $($(this).attr('href')),
             $item = $(this);
 
@@ -26,27 +67,39 @@ $(document).ready(function () {
             $target.show();
             $target.find('input:eq(0)').focus();
         }
+        for(var i = 1; i<=tStep; i++){
+            $("#btn-step-" + i ).removeClass("btn-default");
+            $("#btn-step-" + i ).addClass("btn-success");
+        }
+        
+        setStep($(this).attr("data-step"));
     });
 
     allNextBtn.click(function () {
-        var curStep = $(this).closest(".setup-content"),
-            curStepBtn = curStep.attr("id"),
-            nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
-            curInputs = curStep.find("input[type='text'],input[type='url']"),
-            isValid = true;
+        // var curStep = $(this).closest(".setup-content"),
+        //     curStepBtn = curStep.attr("id"),
+        //     nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+        //     curInputs = curStep.find("input[type='text'],input[type='url']"),
+        //     isValid = true;
 
-        $(".form-group").removeClass("has-error");
-        for (var i = 0; i < curInputs.length; i++) {
-            if (!curInputs[i].validity.valid) {
-                isValid = false;
-                $(curInputs[i]).closest(".form-group").addClass("has-error");
-            }
-        }
+        // $(".form-group").removeClass("has-error");
+        // for (var i = 0; i < curInputs.length; i++) {
+        //     if (!curInputs[i].validity.valid) {
+        //         isValid = false;
+        //         $(curInputs[i]).closest(".form-group").addClass("has-error");
+        //     }
+        // }
 
-        if (isValid) nextStepWizard.removeAttr('disabled').trigger('click');
+        // if (isValid) nextStepWizard.removeAttr('disabled').trigger('click');
+        let nextBtn = getStep();
+        nextBtn++;
+        console.log(nextBtn);
+        $("#btn-step-" + nextBtn).trigger("click");
     });
 
-    $('div.setup-panel div a.btn-success').trigger('click');
+    //$('div.setup-panel div a.btn-success').trigger('click');
+
+    $(".panel-default").show();
 
     $(".seleccion_plan").click(function(){
         $("#usuarios-plan_id").val( $(this).attr("plan-id") );
@@ -95,36 +148,36 @@ $(document).ready(function () {
 
     $(".registro-error-sumary").click(function(){ $( this ).fadeOut(); });
 
-    $(document).ready(function(){
-        $(".btn-step").click(function(e){
+    // $(document).ready(function(){
+    //     $(".btn-step").click(function(e){
             // alert("Hola mundo!");
             // e.preventDefault();
             // e.stopPropagation();
             
-            var empty = true;
+            // var empty = true;
 
-            var num = $(this).attr("data-step");
-            for(var i = 1; i<num; i++){
-                $("#btn-step-" + num ).removeClass("btn-normal");
-                $("#btn-step-" + num ).addClass("btn-success");
-            }
+            // var num = $(this).attr("data-step");
+            // for(var i = 1; i<num; i++){
+            //     $("#btn-step-" + num ).removeClass("btn-normal");
+            //     $("#btn-step-" + num ).addClass("btn-success");
+            // }
 
-            $('#step-' + step + ' input[aria-required=true], #step-' + step + ' select[aria-required=true], step-' + step + ' #usuarios-numero_celular').each(function(){
-            if($(this).val()!=""){
-                empty =false;
-                }
-            });
+            // $('#step-' + navStep + ' input[aria-required=true], #step-' + navStep + ' select[aria-required=true], step-' + navStep + ' #usuarios-numero_celular').each(function(){
+            // if($(this).val()!=""){
+            //     empty =false;
+            //     }
+            // });
 
-            if(empty){
-                Swal.fire(
-                    'Alerta!',
-                    'Aún tiene campos vacíos por llenar.',
-                    'error'
-                );
-                return 0;
-            }
-        });
-    });
+            // if(empty){
+            //     // Swal.fire(
+            //     //     'Alerta!',
+            //     //     'Aún tiene campos vacíos por llenar.',
+            //     //     'error'
+            //     // );
+            //     //throw new Error();
+            // }
+    //     });
+    // });
 
     $("#servicios-wrapper").on("click", ".btn_add_service", function(){
         var srvID = $(this).attr("data-srv");
