@@ -70,9 +70,11 @@ class RegistroController extends Controller
             }else{
                 if( $model->save() ){
 
-                    if( is_array( Yii::$app->request->post()['Usuarios']['categorias'] ) ){
+                    $listado_cateorias = explode(",", Yii::$app->request->post()['Usuarios']['categorias']);
+
+                    if( is_array( $listado_cateorias ) ){
                         UsuariosCategorias::deleteAll('usuario_id = '.$model->id);
-                        foreach ( Yii::$app->request->post()['Usuarios']['categorias'] as $pc ) {
+                        foreach ( $listado_cateorias as $pc ) {
                             $p = new UsuariosCategorias();
                             $p->categoria_id = $pc;
                             $p->usuario_id = $model->id;
@@ -80,9 +82,11 @@ class RegistroController extends Controller
                         }
                     }
 
-                    if( is_array( Yii::$app->request->post()['Usuarios']['servicios'] ) ){
+                    $listado_servicios = explode(",", Yii::$app->request->post()['Usuarios']['servicios']);
+
+                    if( is_array( $listado_servicios ) ){
                         UsuariosServicios::deleteAll('usuario_id = '.$model->id);
-                        foreach ( Yii::$app->request->post()['Usuarios']['servicios'] as $pc ) {
+                        foreach ( $listado_servicios as $pc ) {
                             $p = new UsuariosServicios();
                             $p->servicio_id = $pc;
                             $p->usuario_id = $model->id;

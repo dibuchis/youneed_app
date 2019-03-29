@@ -29,6 +29,8 @@ use yii\helpers\Url;
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <script src="/js/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="/css/sweetalert2.min.css">
 </head>
 <body>
 <?php foreach (Yii::$app->session->getAllFlashes() as $message):; ?>

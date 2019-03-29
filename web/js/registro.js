@@ -1,6 +1,11 @@
 var selCat;
 var selServ;
 
+var arrServ = [];
+var arrCat = [];
+
+var step = 1;
+
 $(document).ready(function () {
 
     var navListItems = $('div.setup-panel div a'),
@@ -90,9 +95,83 @@ $(document).ready(function () {
 
     $(".registro-error-sumary").click(function(){ $( this ).fadeOut(); });
 
-    $(".cat-item").click(function(e){
+    $(document).ready(function(){
+        $(".btn-step").click(function(e){
+            // alert("Hola mundo!");
+            // e.preventDefault();
+            // e.stopPropagation();
+            
+            var empty = true;
+
+            var num = $(this).attr("data-step");
+            for(var i = 1; i<num; i++){
+                $("#btn-step-" + num ).removeClass("btn-normal");
+                $("#btn-step-" + num ).addClass("btn-success");
+            }
+
+            $('#step-' + step + ' input[aria-required=true], #step-' + step + ' select[aria-required=true], step-' + step + ' #usuarios-numero_celular').each(function(){
+            if($(this).val()!=""){
+                empty =false;
+                }
+            });
+
+            if(empty){
+                Swal.fire(
+                    'Alerta!',
+                    'Aún tiene campos vacíos por llenar.',
+                    'error'
+                );
+                return 0;
+            }
+        });
+    });
+
+    $("#servicios-wrapper").on("click", ".btn_add_service", function(){
+        var srvID = $(this).attr("data-srv");
+        var srvName = $(this).attr("data-name");
+        var srvCatID = $(this).attr("data-cat");
+
+        if(!(arrCat.includes(srvCatID))){
+            arrCat.push(srvCatID);
+            $("#usuarios-categorias").val(arrCat);
+        };
+        if(!(arrServ.includes(srvID))){
+            arrServ.push(srvID);
+            $("#usuarios-servicios").val(arrServ);
+            Swal.fire(
+                'Servicio Agregado!',
+                'You clicked the button!',
+                'success'
+            );
+            $("#servicios-agregados").append("<div class='label label-primary label-servicios' data-srv='" + srvID + "'>" + srvName + "<span class='delete-service' data-srv='" + srvID + "'>x</span></div>")
+        }else{
+            Swal.fire(
+                'Información!',
+                'Este servicio ya fue agregado!',
+                'error'
+            );
+        };
+
+
+    });
+
+    $("#servicios-agregados").on("click", ".delete-service", function(){
+        let srvID = $(this).attr("data-srv");
+        $(".label-servicios[data-srv='" + srvID + "']").fadeOut();
+        $(".label-servicios[data-srv='" + srvID + "']").remove();
+        for( var i = 0; i < arrServ.length; i++){ 
+            if ( arrServ[i] === srvID) {
+                arrServ.splice(i, 1); 
+            }
+         }
+         $("#usuarios-servicios").val(arrServ);
+    });
+
+    $(".cat-item").on("click", function(e){
         e.preventDefault();
         e.stopPropagation();
+        $(".cat-item").removeClass("active");
+        $( this ).addClass("active");
         var loader = document.createElement("div");
         loader.className="ajax-loader-obj";
         loader.id="ajax-loader-obj";
@@ -102,9 +181,9 @@ $(document).ready(function () {
             method:"POST",
             url:"/ajax/listadoservicios",
             data:{depdrop_parents: $(this).attr("data-id")},
-            success:function(rs){
+            complete:function(rs){
                 document.getElementById("ajax-loader-obj").remove();
-                var json = JSON.parse(rs);
+                var json = JSON.parse(rs.responseText);
                 var obj = json.output;
                 
                 // console.log(obj);
@@ -120,6 +199,7 @@ $(document).ready(function () {
                         el.className="serv-item";
                         el.setAttribute("data-id", obj[k].id);
                         el.setAttribute("data-parent", obj[k].parent);
+                        el.setAttribute("data-name", obj[k].nombre);
                         el.innerHTML = obj[k].body;
 
                         document.getElementById("owl-servicios").appendChild(el);

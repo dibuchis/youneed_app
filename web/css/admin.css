@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,800');
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700,800,900');
 
 html, body {
     height:100%;
@@ -8,6 +9,7 @@ body {
     background-color: #F6F6F6;
     box-sizing: border-box;
     font-size: 13px;
+    font-family: 'Poppins', sans-serif;
 }
 
 #map_canvas {
@@ -527,10 +529,12 @@ h2{
 }
 .serv-item span{
   margin-bottom: 12px !important;
-  text
 }
 .serv-item .btn{
   margin:13px auto 5px auto;
+}
+.cat-item.active{
+  filter:brightness(1.4);
 }
 
 .ajax-loader-obj{
@@ -546,4 +550,34 @@ h2{
   width:100%;
   height:100%;
   z-index: 1000;
+}
+
+.swal2-popup h2{
+  background: none;
+}
+.swal2-popup .swal2-content {
+  font-size: 1.4em !important;
+}
+.swal2-popup .swal2-styled.swal2-confirm {
+  font-size: 1.3em !important;
+}
+.label-servicios{
+  padding:7px 15px;
+  font-size:12px;
+  margin-bottom:16px;
+  clear:both;
+  font-weight:400;
+  display:table;
+  position:relative;
+}
+.delete-service{
+  width:14px;
+  height:14px;
+  float:right;
+  margin-left:12px;
+  border-radius:50px;
+  background:#e44;
+  margin-top:-1px;
+  font-weight:600;
+  cursor:pointer;
 }

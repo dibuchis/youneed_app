@@ -25,19 +25,19 @@ use borales\extensions\phoneInput\PhoneInput;
 	    <div class="stepwizard">
 	        <div class="stepwizard-row setup-panel">
 	            <div class="stepwizard-step col-xs-3"> 
-	                <a href="#step-1" type="button" class="btn btn-success btn-circle">1</a>
+	                <a href="#step-1" id="btn-step-1" type="button" data-step="1" class="btn btn-success btn-circle btn-step">1</a>
 	                <p><small>Información personal</small></p>
 	            </div>
 	            <div class="stepwizard-step col-xs-3"> 
-	                <a href="#step-2" type="button" class="btn btn-default btn-circle" >2</a>
+	                <a href="#step-2" id="btn-step-2" type="button" data-step="2" class="btn btn-default btn-circle btn-step" >2</a>
 	                <p><small>Servicios</small></p>
 	            </div>
 	            <div class="stepwizard-step col-xs-3"> 
-	                <a href="#step-3" type="button" class="btn btn-default btn-circle" >3</a>
+	                <a href="#step-3" id="btn-step-3" type="button" data-step="3" class="btn btn-default btn-circle btn-step" >3</a>
 	                <p><small>Información para pagos</small></p>
 	            </div>
 	            <div class="stepwizard-step col-xs-3"> 
-	                <a href="#step-4" type="button" class="btn btn-default btn-circle" >4</a>
+	                <a href="#step-4" id="btn-step-4" type="button" data-step="4" class="btn btn-default btn-circle btn-step" >4</a>
 	                <p><small>Planes</small></p>
 	            </div>
 	        </div>
@@ -82,7 +82,7 @@ use borales\extensions\phoneInput\PhoneInput;
 						                                }',
 						        ],
 							]); ?>
-						    <div class="alert alert-info">
+						    <div class="alert alert-info" style="max-width: 200px;">
 						    	Subir una imagen con una foto tamaño carnet, el rostro debe ser visible
 						    </div>
 						</div>
@@ -244,18 +244,6 @@ use borales\extensions\phoneInput\PhoneInput;
 							// var_dump($lista_categorias);
 							// echo "</pre>";
 
-							
-
-			                //echo $form->field($model, 'categorias')->dropDownList($lista_categorias, ['id'=>'cat-id', 'prompt' => 'Seleccione', 'multiple'=>'multiple']);
-			                
-			                // echo $form->field($model, 'categorias')->widget(\kartik\widgets\Select2::classname(), [
-				            //     'data' => $lista_categorias,
-				            //     'options' => ['id'=>'cat-id', 'placeholder' => 'Seleccione categorías'],
-				            //     'pluginOptions' => [
-				            //         'allowClear' => true, 
-				            //         'multiple' => true,
-				            //     ],
-				            // ]);
 
 			                echo Html::hiddenInput('input-type-1', 'Additional value 1', ['id'=>'input-type-1']);
 			                echo Html::hiddenInput('input-type-2', 'Additional value 2', ['id'=>'input-type-2']);
@@ -284,6 +272,38 @@ use borales\extensions\phoneInput\PhoneInput;
 									// }	
 								echo '</div>';
 							echo '</div>';
+							
+							echo '<hr>';
+							echo '<h4>Servicios Agregados:</h4>';
+							
+							echo "<div class='servicios-agregados' id='servicios-agregados'> </div>";
+
+							// $items_categorias = \yii\helpers\ArrayHelper::map(\app\models\Categorias::find()->orderBy('nombre')->asArray()->all(), 'id', 
+							// 		function($model, $defaultValue) {
+							// 			return $model["nombre"];
+							// 		}
+							// );
+
+							// $items_servicios = \yii\helpers\ArrayHelper::map(\app\models\Servicios::find()->orderBy('nombre')->asArray()->all(), 'id', 
+							// 		function($model, $defaultValue) {
+							// 			return $model["nombre"];
+							// 		}
+							// );
+
+							// echo $form->field($model, 'categorias')->dropDownList($items_categorias, ['id'=>'cat-id', 'prompt' => 'Seleccione', 'multiple'=>'multiple']);
+							// echo $form->field($model, 'servicios')->dropDownList($items_servicios, ['id'=>'subcat-id', 'prompt' => 'Seleccione', 'multiple'=>'multiple']);
+							
+							echo $form->field($model, 'categorias')->hiddenInput(['maxlength' => true])->label(false);;
+							echo $form->field($model, 'servicios')->hiddenInput(['maxlength' => true])->label(false);;
+							
+			                // echo $form->field($model, 'categorias')->widget(\kartik\widgets\Select2::classname(), [
+				            //     'data' => $lista_categorias2,
+				            //     'options' => ['id'=>'cat-id', 'placeholder' => 'Seleccione categorías'],
+				            //     'pluginOptions' => [
+				            //         'allowClear' => true, 
+				            //         'multiple' => true,
+				            //     ],
+				            // ]);
 
 			                // echo $form->field($model, 'servicios')->widget(DepDrop::classname(), [
 			                //     'type'=>DepDrop::TYPE_SELECT2,
@@ -299,15 +319,18 @@ use borales\extensions\phoneInput\PhoneInput;
 			            ?>
 
 				    </div>
-				    
-				    	<div class="col-md-6">
-				    		<?= $form->field($model, 'dias_trabajo')->dropDownList([ 1 => 'Lunes a Viernes', 2 => 'Fines de semana', 3 => 'Cualquier día' ], ['prompt' => 'Seleccione']) ?>
-				    	</div>
-				    	<div class="col-md-6">
-				    		<?= $form->field($model, 'horarios_trabajo')->dropDownList([ 1 => '7am a 12 am', 2 => '12am a 7pm', 3 => '7pm a 7 am', 4 => '24 horas' ], ['prompt' => 'Seleccione']) ?>
-				    	</div>
-				    
-	                <button class="btn btn-primary nextBtn pull-right" type="button">Siguiente</button>
+					<div class="row">		
+						<div class="col-md-10 col-md-offset-1 col-md-pushed-1">		
+							<div class="col-md-6">
+								<?= $form->field($model, 'dias_trabajo')->dropDownList([ 1 => 'Lunes a Viernes', 2 => 'Fines de semana', 3 => 'Cualquier día' ], ['prompt' => 'Seleccione']) ?>
+							</div>
+							<div class="col-md-6">
+								<?= $form->field($model, 'horarios_trabajo')->dropDownList([ 1 => '7am a 12 am', 2 => '12am a 7pm', 3 => '7pm a 7 am', 4 => '24 horas' ], ['prompt' => 'Seleccione']) ?>
+							</div>
+						
+							<button class="btn btn-primary nextBtn pull-right" type="button">Siguiente</button>
+						</div>
+	            	</div>
 	            </div>
 	        </div>
 	        
@@ -316,32 +339,38 @@ use borales\extensions\phoneInput\PhoneInput;
 	                 <h3 class="panel-title">Información para pagos</h3>
 	            </div>
 	            <div class="panel-body">
-					
-				<div class="alert alert-success">
-	            		Los datos proporcionados servirán para realizar los pagos por sus servicios realizados
-	            	</div>
-	                <?= $form->field($model, 'banco_id')->widget(\kartik\widgets\Select2::classname(), [
-				        'data' => \yii\helpers\ArrayHelper::map(\app\models\Bancos::find()->orderBy('nombre')->asArray()->all(), 'id', 
-				                function($model, $defaultValue) {
-				                    return $model['nombre'];
-				                }
-				            ),
-				        'options' => ['placeholder' => 'Seleccione'],
-				        'pluginOptions' => [
-				            'allowClear' => true, 
-				            'multiple' => false,
-				        ],
-				    ]); ?>
-
-				    <div class="row">
-				    	<div class="col-md-4">
-				    		<?= $form->field($model, 'nombre_beneficiario')->textInput(['maxlength' => true]) ?>
-				    	</div>
-				    	<div class="col-md-4">
-				    		<?= $form->field($model, 'tipo_cuenta')->dropDownList([ 'Corriente' => 'Corriente', 'Ahorros' => 'Ahorros', ], ['prompt' => '']) ?>
-				    	</div>
-				    	<div class="col-md-4">
-				    		<?= $form->field($model, 'numero_cuenta')->textInput(['maxlength' => true]) ?>
+					<div class="row">		
+						<div class="col-md-8 col-md-offset-2 col-md-pushed-2">
+							<div class="alert alert-success">
+								Los datos proporcionados servirán para realizar los pagos por sus servicios realizados
+							</div>
+							<?= $form->field($model, 'banco_id')->widget(\kartik\widgets\Select2::classname(), [
+								'data' => \yii\helpers\ArrayHelper::map(\app\models\Bancos::find()->orderBy('nombre')->asArray()->all(), 'id', 
+										function($model, $defaultValue) {
+											return $model['nombre'];
+										}
+									),
+								'options' => ['placeholder' => 'Seleccione'],
+								'pluginOptions' => [
+									'allowClear' => true, 
+									'multiple' => false,
+								],
+							]); ?>
+						</div>
+					</div>
+					<div class="row">		
+						<div class="col-md-8 col-md-offset-2 col-md-pushed-2">
+							<div class="row">
+								<div class="col-md-4">
+									<?= $form->field($model, 'nombre_beneficiario')->textInput(['maxlength' => true]) ?>
+								</div>
+								<div class="col-md-4">
+									<?= $form->field($model, 'tipo_cuenta')->dropDownList([ 'Corriente' => 'Corriente', 'Ahorros' => 'Ahorros', ], ['prompt' => '']) ?>
+								</div>
+								<div class="col-md-4">
+									<?= $form->field($model, 'numero_cuenta')->textInput(['maxlength' => true]) ?>
+								</div>
+							</div>
 				    	</div>
 				    </div>
 
