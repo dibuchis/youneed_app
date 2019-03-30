@@ -21,8 +21,7 @@ use borales\extensions\phoneInput\PhoneInput;
 ]); ?>
 
 	<div class="container" id="form-registro-asociado">
-		<?php echo $form->errorSummary( $model, ['class' => 'registro-error-sumary clearfix alert alert-danger'] ); ?>
-	    <div class="stepwizard">
+		<div class="stepwizard">
 	        <div class="stepwizard-row setup-panel">
 	            <div class="stepwizard-step col-xs-3"> 
 	                <a href="#step-1" id="btn-step-1" type="button" data-step="1" class="btn btn-success btn-circle btn-step">1</a>
@@ -456,6 +455,7 @@ use borales\extensions\phoneInput\PhoneInput;
 
 				    </section>
 				     <?= Html::submitButton($model->isNewRecord ? 'Registrarse' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-primary btn-lg center-block' : 'btn btn-primary']) ?>
+					 <?php echo $form->errorSummary( $model, ['class' => 'registro-error-sumary clearfix alert alert-danger'] ); ?>
 				</div>
 	        </div>
 	    </form>

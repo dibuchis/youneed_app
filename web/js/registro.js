@@ -5,6 +5,7 @@ var arrServ = [];
 var arrCat = [];
 
 var navStep = 1;
+var nPanels = 0;
 
 function getStep(){
     return parseInt(navStep);
@@ -15,7 +16,7 @@ function setStep(step){
 
 $(document).ready(function () {
     
-    
+    nPanels  = $(".btn-step");
 
     var navListItems = $('div.setup-panel div a'),
         allWells = $('.setup-content'),
@@ -27,13 +28,8 @@ $(document).ready(function () {
             e.preventDefault();
 
             var empty = false;
-
-
-            // console.log(getStep());
-
-            tStep = getStep();
-
             var fields = [];
+            tStep = getStep();
 
             $('#step-' + tStep + ' *[aria-required=true], #step-' + tStep + ' #usuarios-numero_celular, #step-' + tStep + ' .required > input').each(function(){
             if($(this).val()==""){
@@ -43,9 +39,13 @@ $(document).ready(function () {
             });
 
             var ulFields = '<ul style="text-align:left;">';
-            for(var j=0;j<fields.length;j++){
-                ulFields += '<li>' + fields[j] + '</li>';
-            }
+                for(var j=0;j<fields.length;j++){
+                    var fieldText = fields[j].replace("usuarios-", "");
+                    fieldText = fieldText.replace("_", " ");
+                    fieldText = fieldText.replace("cat1-id", "país");
+                    fieldText = fieldText.replace("subcat11-id", "ciudad");
+                    ulFields += '<li>' + fieldText + '</li>';
+                }
             ulFields += '</ul>';
 
             if(empty){
@@ -61,18 +61,26 @@ $(document).ready(function () {
             $item = $(this);
 
         if (!$item.hasClass('disabled')) {
-            navListItems.removeClass('btn-success').addClass('btn-default');
-            $item.addClass('btn-success');
+            // navListItems.removeClass('btn-success').addClass('btn-default');
+            // $item.addClass('btn-success');
             allWells.hide();
             $target.show();
             $target.find('input:eq(0)').focus();
         }
-        for(var i = 1; i<=tStep; i++){
-            $("#btn-step-" + i ).removeClass("btn-default");
-            $("#btn-step-" + i ).addClass("btn-success");
+
+        var selected = parseInt($(this).attr("data-step"));
+
+        for(var i = 1; i<=nPanels.length; i++){
+            if(i <= selected){
+                $("#btn-step-" + i ).removeClass("btn-default");
+                $("#btn-step-" + i ).addClass("btn-success");
+            }else if(i > selected){
+                $("#btn-step-" + i ).removeClass("btn-success");
+                $("#btn-step-" + i ).addClass("btn-default");
+            }
         }
         
-        setStep($(this).attr("data-step"));
+        setStep(selected);
     });
 
     allNextBtn.click(function () {
@@ -196,7 +204,7 @@ $(document).ready(function () {
                 'You clicked the button!',
                 'success'
             );
-            $("#servicios-agregados").append("<div class='label label-primary label-servicios' data-srv='" + srvID + "'>" + srvName + "<span class='delete-service' data-srv='" + srvID + "'>x</span></div>")
+            $("#servicios-agregados").append("<div class='label label-primary label-servicios' data-cat='" + srvCatID + "' data-srv='" + srvID + "'>" + srvName + "<span class='delete-service' data-srv='" + srvID + "'>x</span></div>")
         }else{
             Swal.fire(
                 'Información!',
@@ -210,6 +218,7 @@ $(document).ready(function () {
 
     $("#servicios-agregados").on("click", ".delete-service", function(){
         let srvID = $(this).attr("data-srv");
+        let newCatArr = [];
         $(".label-servicios[data-srv='" + srvID + "']").fadeOut();
         $(".label-servicios[data-srv='" + srvID + "']").remove();
         for( var i = 0; i < arrServ.length; i++){ 
@@ -217,7 +226,20 @@ $(document).ready(function () {
                 arrServ.splice(i, 1); 
             }
          }
-         $("#usuarios-servicios").val(arrServ);
+        $("#usuarios-servicios").val(arrServ);
+
+        $(".label-servicios").each(function(ind, val){ 
+             newCatArr[ind] = $(val).attr("data-cat");  
+        });
+
+        arrCat = [];
+
+        $.each(newCatArr, function(i, el){
+            if($.inArray(el, arrCat) === -1) arrCat.push(el);
+        });
+
+        $("#usuarios-categorias").val(arrCat);
+
     });
 
     $(".cat-item").on("click", function(e){
