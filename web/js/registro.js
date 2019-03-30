@@ -201,7 +201,7 @@ $(document).ready(function () {
             $("#usuarios-servicios").val(arrServ);
             Swal.fire(
                 'Servicio Agregado!',
-                'You clicked the button!',
+                'Has añadido el servicio a tu lista!',
                 'success'
             );
             $("#servicios-agregados").append("<div class='label label-primary label-servicios' data-cat='" + srvCatID + "' data-srv='" + srvID + "'>" + srvName + "<span class='delete-service' data-srv='" + srvID + "'>x</span></div>")
@@ -247,17 +247,20 @@ $(document).ready(function () {
         e.stopPropagation();
         $(".cat-item").removeClass("active");
         $( this ).addClass("active");
-        var loader = document.createElement("div");
-        loader.className="ajax-loader-obj";
-        loader.id="ajax-loader-obj";
-        document.getElementById("servicios-wrapper").appendChild(loader);
+        // loader.id="ajax-loader-obj";
+        var loaders = document.getElementsByClassName("loader-wrapper");
+        [].forEach.call(loaders, function(loaders){
+            var loader = document.createElement("div");
+            loader.className="ajax-loader-obj";
+            loaders.appendChild(loader);
+        });
         // selCat = $(this).attr("data-id");
         $.ajax({
             method:"POST",
             url:"/ajax/listadoservicios",
             data:{depdrop_parents: $(this).attr("data-id")},
             complete:function(rs){
-                document.getElementById("ajax-loader-obj").remove();
+                $(".ajax-loader-obj").remove();
                 var json = JSON.parse(rs.responseText);
                 var obj = json.output;
                 
@@ -296,6 +299,9 @@ $(document).ready(function () {
                     document.getElementById("servicios-wrapper").appendChild(wrp);
                     // document.getElementById("servicios-wrapper").innerHTML = "";
                 }
+                $('html, body').animate({
+                    scrollTop: $("#seccion-servicios").offset().top
+                }, 1500);
             }
         });
     });

@@ -585,7 +585,7 @@ h2{
   display: block !important;
   position: absolute !important;
   font-size: 100px !important;
-  top: 45px !important;
+  top: 45px;
   left: -65px !important;
   color: #178b89 !important;
 }
@@ -593,7 +593,11 @@ h2{
   display: block !important;
   position: absolute !important;
   font-size: 100px !important;
-  top: 45px !important;
+  top: 45px;
   right: -65px !important;
   color: #178b89 !important;
+}
+#owl-categorias .owl-prev,
+#owl-categorias .owl-next{
+  top: 0px;
 }

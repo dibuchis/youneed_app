@@ -117,7 +117,7 @@ use borales\extensions\phoneInput\PhoneInput;
 											return $model['nombre'];
 						                        }
 						                    ),
-						                'options' => ['placeholder' => Yii::t('app', 'Seleccione una empresa'), 'id'=>'cat1-id'],
+						                'options' => ['placeholder' => Yii::t('app', 'Seleccione un país'), 'id'=>'cat1-id'],
 						                'pluginOptions' => [
 											'allowClear' => true
 						                ],
@@ -223,7 +223,7 @@ use borales\extensions\phoneInput\PhoneInput;
 					<div class="col-md-10 col-md-offset-1 col-md-pushed-1">
 						<h4>Escoger Categoría:</h4>
 					</div>
-	                <div class="col-md-10 col-md-offset-1 col-md-pushed-1">
+	                <div class="col-md-10 col-md-offset-1 col-md-pushed-1 loader-wrapper">
 
 			            <?php 
 			                $lista_categorias = \yii\helpers\ArrayHelper::map(\app\models\Categorias::find()->orderBy('nombre')->asArray()->all(), 'id', 
@@ -259,11 +259,11 @@ use borales\extensions\phoneInput\PhoneInput;
 							?>
 							</div>
 
-								<div class="col-md-10 col-md-offset-1 col-md-pushed-1">
+								<div class="col-md-10 col-md-offset-1 col-md-pushed-1" id="seccion-servicios">
 									<hr>
 									<h4>Escoger Servicio:</h4>
 								</div>
-							<div class="col-md-10 col-md-offset-1 col-md-pushed-1">
+							<div class="col-md-10 col-md-offset-1 col-md-pushed-1 loader-wrapper" >
 							<?php
 
 							echo '<div id="servicios-wrapper">';
@@ -375,8 +375,11 @@ use borales\extensions\phoneInput\PhoneInput;
 							</div>
 				    	</div>
 				    </div>
-
-	                <button class="btn btn-primary nextBtn pull-right" type="button">Siguiente</button>
+					<div class="row">		
+						<div class="col-md-8 col-md-offset-2 col-md-pushed-2">
+							<button class="btn btn-primary nextBtn pull-right" type="button">Siguiente</button>
+						</div>
+				    </div>
 	            </div>
 	        </div>
 	        <div class="panel panel-primary setup-content" id="step-4">
@@ -393,8 +396,7 @@ use borales\extensions\phoneInput\PhoneInput;
 				            		$planes = Planes::find()->all();
 				            	?>
 				                <!-- item -->
-				                <div class="col-md-2"></div>
-				                <div class="col-md-4 text-center">
+				                <div class="col-md-4 col-md-offset-2 text-center">
 				                    <div class="panel panel-success panel-pricing" id="free-plan-panel">
 				                        <div class="panel-heading-plan">
 				                            <i class="fa fa-desktop"></i>
@@ -416,7 +418,7 @@ use borales\extensions\phoneInput\PhoneInput;
 				                <!-- /item -->
 
 				                <!-- item -->
-				                <div class="col-md-4 text-center">
+				                <div class="col-md-4 col-md-pushed-2 text-center">
 				                    <div class="panel panel-success panel-pricing" id="normal-plan-panel">
 				                        <div class="panel-heading-plan">
 				                            <i class="fa fa-desktop"></i>
@@ -436,26 +438,29 @@ use borales\extensions\phoneInput\PhoneInput;
 				                    </div>
 				                </div>
 								<!-- /item -->
-								<div class="col-md-2"></div>
 
-				            </div>
-
-				            <div class="alert alert-success plan_seleccionado" style="display: none;">
-				            	Plan seleccionado:
-				            </div>
+				            </div>		
+							<div class="col-md-8 col-md-offset-2 col-md-pushed-2">
+								<div class="alert alert-success plan_seleccionado" style="display: none;">
+									Plan seleccionado:
+								</div>
 
 				            <?= $form->field($model, 'plan_id')->hiddenInput()->label(false); ?>
 				        
-							<p>Antes de registrarse lea los <a href="terminos-y-condiciones">Términos y condiciones</a> para aceptar su plan.</p>
+							<p>Antes de registrarse lea los <a href="terminos-y-condiciones" target="_blank">Términos y condiciones</a> para aceptar su plan.</p>
 				        	<!-- <div style="height: 200px!important; overflow-y: scroll;" > -->
 								<!-- <?php //echo $terminos; ?> -->
 				        		<!-- </div> -->
 
 				        	<?= $form->field($model, 'terminos_condiciones')->checkbox(['checked' => true]); ?>
 
-				    </section>
+				            </div>
+					</section>
+					
+					<div class="col-md-8 col-md-offset-2 col-md-pushed-2">
 				     <?= Html::submitButton($model->isNewRecord ? 'Registrarse' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-primary btn-lg center-block' : 'btn btn-primary']) ?>
 					 <?php echo $form->errorSummary( $model, ['class' => 'registro-error-sumary clearfix alert alert-danger'] ); ?>
+					</div>
 				</div>
 	        </div>
 	    </form>
