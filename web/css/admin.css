@@ -581,3 +581,19 @@ h2{
   font-weight:600;
   cursor:pointer;
 }
+.owl-prev{
+  display: block;
+  position: absolute;
+  font-size: 100px;
+  top: 45px;
+  left: -65px;
+  color: #178b89;
+}
+.owl-next{
+  display: block;
+  position: absolute;
+  font-size: 100px;
+  top: 45px;
+  right: -65px;
+  color: #178b89;
+}
