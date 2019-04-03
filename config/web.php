@@ -28,6 +28,14 @@ $config = [
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => true,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'mail.youneed.com.ec',
+                'username' => 'noreply@youneed.com.ec',
+                'password' => 'Tn$4r*GsgYUP',
+                'port' => '465',
+                'encryption' => 'tls',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
