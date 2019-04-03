@@ -34,7 +34,7 @@ $config = [
                 'username' => 'noreply@youneed.com.ec',
                 'password' => 'Tn$4r*GsgYUP',
                 'port' => '465',
-                'encryption' => 'tls',
+                'encryption' => 'ssl',
             ],
         ],
         'log' => [

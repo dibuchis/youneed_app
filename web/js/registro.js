@@ -25,8 +25,13 @@ function getServicio(srvID){
 
 $(document).ready(function () {
 
+    // Swal.fire({
+    //     type:"info",
+    //     text:"Antes de continuar asegúrate de disponer en tu teléfono o PC una imagen actualizada de tu perfil o logo si es una empresa, imagen de tu Cédula o RUC o RISE o Pasaporte con permiso de Trabajo, dependiendo del tipo de documento que necesites ingresar"
+    // });
+
     $("#servicios-wrapper").on("click", ".btn-vermas", function(e){
-        console.log($(this).attr("data-srv"));
+        // console.log($(this).attr("data-srv"));
         if(parseInt($(this).attr("data-srv")) >  0){
             var getSrv = getServicio(parseInt($(this).attr("data-srv")));
             getSrv.then(function(data){
@@ -174,14 +179,14 @@ $(document).ready(function () {
         // if (isValid) nextStepWizard.removeAttr('disabled').trigger('click');
         let nextBtn = getStep();
         nextBtn++;
-        console.log(nextBtn);
+        // console.log(nextBtn);
         $("#btn-step-" + nextBtn).trigger("click");
     });
 
     allBackBtn.click(function () {
         let nextBtn = getStep();
         nextBtn--;
-        console.log(nextBtn);
+        // console.log(nextBtn);
         $("#btn-step-" + nextBtn).trigger("click");
     });
 
@@ -201,7 +206,7 @@ $(document).ready(function () {
 });
 
 function saveForm(){
-    var el = document.querySelector("form");
+    var el = document.querySelector("form[action='/registro/asociado']");
     var inputs = el.querySelectorAll("input, select");
 
     for(var i = 1; i<inputs.length; i++){
