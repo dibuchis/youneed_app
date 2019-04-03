@@ -31,10 +31,10 @@ $config = [
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'mail.youneed.com.ec',
-                'username' => 'noreply@youneed.com.ec',
+                'username' => 'notificaciones@youneed.com.ec',
                 'password' => 'Lucas137.',
                 'port' => '465',
-                'encryption' => 'ssl',
+                'encryption' => 'tls',
             ],
         ],
         'log' => [
