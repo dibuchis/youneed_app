@@ -82,7 +82,7 @@ use borales\extensions\phoneInput\PhoneInput;
 						        ],
 							]); ?>
 						    <div class="alert alert-info" style="max-width: 200px;">
-						    	Subir una imagen con una foto tamaño carnet, el rostro debe ser visible
+						    	Subir una imagen con una foto tamaño carnet, el rostro debe ser visible.
 						    </div>
 						</div>
 						<div class="col-md-5 col-md-pushed-2">
@@ -223,7 +223,7 @@ use borales\extensions\phoneInput\PhoneInput;
 	            <div class="panel-body">
 					<div class="col-md-10 col-md-offset-1 col-md-pushed-1">
 						<div class="alert alert-success help-panel">
-							Selecciona una o más categorías de acuerdo a tu experiencia y conocimientos” “Recuerda que algunos servicios requieren presentar certificados que validen tu experiencia y conocimientos
+							Selecciona una o más categorías de acuerdo a tu experiencia y conocimientos” “Recuerda que algunos servicios requieren presentar certificados que validen tu experiencia y conocimientos.
 						</div>
 					</div>
 					<div class="col-md-10 col-md-offset-1 col-md-pushed-1">
@@ -352,7 +352,7 @@ use borales\extensions\phoneInput\PhoneInput;
 						<div class="col-md-8 col-md-offset-2 col-md-pushed-2">
 							<div class="alert alert-success help-panel">
 								<!-- Los datos proporcionados servirán para realizar los pagos por sus servicios realizados -->
-								Registra los datos de tu cuenta bancaria, donde se te depositará los valores que corresponden a la ejecución de tus servicios. Rápido y seguro
+								Registra los datos de tu cuenta bancaria, donde se te depositará los valores que corresponden a la ejecución de tus servicios. Rápido y seguro.
 							</div>
 							<?= $form->field($model, 'banco_id')->widget(\kartik\widgets\Select2::classname(), [
 								'data' => \yii\helpers\ArrayHelper::map(\app\models\Bancos::find()->orderBy('nombre')->asArray()->all(), 'id', 
