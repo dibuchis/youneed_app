@@ -114,6 +114,25 @@ class AjaxController extends Controller
         return '';
     }
 
+    public function actionGetservicio(){
+        $out = [];
+        if (isset($_REQUEST['serviceID'])) {
+            $serviceID = $_REQUEST['serviceID'];
+
+                $cat_id = CategoriasServicios::find()->where(['servicio_id' => $serviceID])->one();
+
+                $servicio =  Servicios::find()->where(['id' => $serviceID])->asArray()->one();
+
+                
+                $out = $servicio;
+                
+                $out["cat_id"] = $cat_id->categoria_id;
+
+                // return Json::encode(['output'=>$out, 'selected'=>'']);
+                return Json::encode(['servicio'=>$out]);
+        }
+    }
+
     public function actionListadoservicios(){
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
@@ -127,7 +146,7 @@ class AjaxController extends Controller
 
                 foreach ($servicios as $servicio) {
                     // $out [] = ['id'=>$servicio->servicio_id, 'name'=>strip_tags($servicio->servicio->nombre)]; 
-                    $out [] = ['id'=>$servicio->servicio_id, 'parent'=> $cat_id, 'body'=>'<img src="' . $servicio->servicio->imagen . '"><span>' . strip_tags($servicio->servicio->nombre) . '</span><btn class="btn btn-vermas btn-sm center-block">Conocer más</btn><btn class="btn btn-success btn-sm center-block btn_add_service" data-srv="' . $servicio->servicio_id . '" data-cat="' . $cat_id . '" data-name="' . strip_tags($servicio->servicio->nombre) . '" >Escoger</btn>']; 
+                    $out [] = ['id'=>$servicio->servicio_id, 'parent'=> $cat_id, 'body'=>'<img src="' . $servicio->servicio->imagen . '"><span>' . strip_tags($servicio->servicio->nombre) . '</span><btn class="btn btn-vermas btn-sm center-block" data-srv="' . $servicio->servicio_id . '">Conocer más</btn><btn class="btn btn-success btn-sm center-block btn_add_service" data-srv="' . $servicio->servicio_id . '" data-cat="' . $cat_id . '" data-name="' . strip_tags($servicio->servicio->nombre) . '" >Escoger</btn>']; 
                     // $out [] = ['item'=>'<div class="serv-item" data-id="' . $servicio->servicio_id . '"><img src="' . $servicio->servicio->imagen . '"><span>' . strip_tags($servicio->servicio->nombre) . '</span></div>']; 
                 }
                 // return Json::encode(['output'=>$out, 'selected'=>'']);

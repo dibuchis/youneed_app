@@ -13,7 +13,7 @@ use borales\extensions\phoneInput\PhoneInput;
 /* @var $model app\models\Usuarios */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<span id="test"></span>
 <?php $form = ActiveForm::begin([
     'enableClientValidation' => true,
     'enableAjaxValidation' => true,
@@ -45,7 +45,7 @@ use borales\extensions\phoneInput\PhoneInput;
 	    <form role="form">
 	        <div class="panel panel-primary setup-content panel-default" id="step-1">
 	            <div class="panel-heading">
-	                 <h3 class="panel-title">Información personal</h3>
+	                 <h3 class="panel-title">Queremos conocerte mejor</h3>
 	            </div>
 	            <div class="panel-body">
 	                
@@ -209,7 +209,8 @@ use borales\extensions\phoneInput\PhoneInput;
 
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 col-md-pushed-2">
-							<button class="btn btn-primary nextBtn pull-right" type="button">Siguiente</button>
+							<button class="btn btn-primary nextBtn pull-right ml-15" type="button">Siguiente</button>
+							<button class="btn btn-warning saveBtn pull-right ml-15" onclick="saveForm()" type="button">Guardar</button>
 						</div>
 					</div>
 	            </div>
@@ -217,14 +218,18 @@ use borales\extensions\phoneInput\PhoneInput;
 	        
 	        <div class="panel panel-primary setup-content" id="step-2">
 	            <div class="panel-heading">
-	                 <h3 class="panel-title">Servicios a brindar</h3>
+	                 <h3 class="panel-title">¿Qué servicios quieres brindar?</h3>
 	            </div>
 	            <div class="panel-body">
+					<div class="col-md-10 col-md-offset-1 col-md-pushed-1">
+						<div class="alert alert-success help-panel">
+							Selecciona una o más categorías de acuerdo a tu experiencia y conocimientos” “Recuerda que algunos servicios requieren presentar certificados que validen tu experiencia y conocimientos
+						</div>
+					</div>
 					<div class="col-md-10 col-md-offset-1 col-md-pushed-1">
 						<h4>Escoger Categoría:</h4>
 					</div>
 	                <div class="col-md-10 col-md-offset-1 col-md-pushed-1 loader-wrapper">
-
 			            <?php 
 			                $lista_categorias = \yii\helpers\ArrayHelper::map(\app\models\Categorias::find()->orderBy('nombre')->asArray()->all(), 'id', 
 				                    function($model, $defaultValue) {
@@ -330,7 +335,9 @@ use borales\extensions\phoneInput\PhoneInput;
 								<?= $form->field($model, 'horarios_trabajo')->dropDownList([ 1 => '7am a 12 am', 2 => '12am a 7pm', 3 => '7pm a 7 am', 4 => '24 horas' ], ['prompt' => 'Seleccione']) ?>
 							</div>
 						
-							<button class="btn btn-primary nextBtn pull-right" type="button">Siguiente</button>
+							<button class="btn btn-primary nextBtn pull-right ml-15" type="button">Siguiente</button>
+							<button class="btn btn-primary backBtn pull-right ml-15" type="button">Anterior</button> 
+							<button class="btn btn-warning saveBtn pull-right ml-15" onclick="saveForm()" type="button">Guardar</button>
 						</div>
 	            	</div>
 	            </div>
@@ -338,13 +345,14 @@ use borales\extensions\phoneInput\PhoneInput;
 	        
 	        <div class="panel panel-primary setup-content" id="step-3">
 	            <div class="panel-heading">
-	                 <h3 class="panel-title">Información para pagos</h3>
+	                 <h3 class="panel-title">¿Dónde recibirás tu pago?</h3>
 	            </div>
 	            <div class="panel-body">
 					<div class="row">		
 						<div class="col-md-8 col-md-offset-2 col-md-pushed-2">
-							<div class="alert alert-success">
-								Los datos proporcionados servirán para realizar los pagos por sus servicios realizados
+							<div class="alert alert-success help-panel">
+								<!-- Los datos proporcionados servirán para realizar los pagos por sus servicios realizados -->
+								Registra los datos de tu cuenta bancaria, donde se te depositará los valores que corresponden a la ejecución de tus servicios. Rápido y seguro
 							</div>
 							<?= $form->field($model, 'banco_id')->widget(\kartik\widgets\Select2::classname(), [
 								'data' => \yii\helpers\ArrayHelper::map(\app\models\Bancos::find()->orderBy('nombre')->asArray()->all(), 'id', 
@@ -377,14 +385,16 @@ use borales\extensions\phoneInput\PhoneInput;
 				    </div>
 					<div class="row">		
 						<div class="col-md-8 col-md-offset-2 col-md-pushed-2">
-							<button class="btn btn-primary nextBtn pull-right" type="button">Siguiente</button>
+						<button class="btn btn-primary nextBtn pull-right ml-15" type="button">Siguiente</button>
+						<button class="btn btn-primary backBtn pull-right ml-15" type="button">Anterior</button> 
+						<button class="btn btn-warning saveBtn pull-right ml-15" onclick="saveForm()" type="button">Guardar</button>
 						</div>
 				    </div>
 	            </div>
 	        </div>
 	        <div class="panel panel-primary setup-content" id="step-4">
 	    		<div class="panel-heading">
-	                 <h3 class="panel-title">Planes</h3>
+	                 <h3 class="panel-title">Escoge tu plan GRATIS para empezar a dar tus servicios</h3>
 	            </div>
 	            <div class="panel-body">
 	            	

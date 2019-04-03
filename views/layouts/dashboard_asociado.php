@@ -24,13 +24,15 @@ use yii\helpers\Url;
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/<?= Url::base(''); ?>/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/<?= Url::base(''); ?>/css/owl.theme.default.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <script src="/<?= Url::base(''); ?>/js/sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="/<?= Url::base(''); ?>/css/sweetalert2.min.css">
+    <script src="/js/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="/css/profile.css">
 </head>
 <body>
 <?php foreach (Yii::$app->session->getAllFlashes() as $message):; ?>
@@ -64,16 +66,37 @@ use yii\helpers\Url;
 
 <?php $this->beginBody() ?>
 
-    <?=$this->render('_partials/_menu_modulos.php')?>
-
-    <?= $content ?>
-
+    <?=$this->render('_partials/_menu_asociados.php')?>
+    <div class="container-fluid p-0 dashboard-asociado">
+    <div class="row p-0">
+        <div class="col-md-2 p-0">
+            <div class="profile-side-bar">
+                <div class="center-block img-profile-container">
+                    <img class="img-responsive img-profile" src="<?= Yii::$app->user->identity->imagen ?>" alt="">
+                </div>
+                <div class="profile-greet">¡Hola <?= Yii::$app->user->identity->nombres ?>!</div>
+                <nav>
+                    <div class="profile-menu active" id="asoc-dash"><a href="<?= Url::to('@web/site/asociadodashboard') ?>"><i class="material-icons">home</i> <span>Dashboard</span></a></div>
+                    <div class="profile-menu" id="asoc-orders"><a href=""><i class="material-icons">star_border</i> <span>Pedidos</span></a></div>
+                    <div class="profile-menu" id="asoc-notif"><a href="<?= Url::to('@web/site/asociadonotificaciones') ?>"><i class="material-icons">inbox</i> <span>Notificaciones</span></a></div>
+                    <div class="profile-menu" id="asoc-hist"><a href=""><i class="material-icons">folder_open</i> <span>Historial</span></a></div>
+                    <div class="profile-menu" id="asoc-prof"><a href="<?= Url::to('@web/site/asociadoperfil') ?>"><i class="material-icons">person_outline</i> <span>Mi Perfil</span></a></div>
+                </nav>
+            </div>
+        </div>
+        <div class="col-md-10 p-0">
+            <div class="profile-dashboard-panel">
+                <?= $content ?>
+            </div>
+        </div>
+    </div>
+</div>
 <?php $this->endBody() ?>
 <?php if( Yii::$app->controller->id == 'site' ){ ?>
  
 <?php } ?>
-<script src="<?= Url::base('');  ?>/js/owl.carousel.min.js"></script>
-<script>	
+<script src="/js/owl.carousel.min.js"></script>
+<!-- <script>	
 
     jQuery(document).ready(function(){
         jQuery('.owl-carousel-cat').owlCarousel({
@@ -82,7 +105,7 @@ use yii\helpers\Url;
             nav:true
         });
     });
-</script>
+</script> -->
 </body>
 </html>
 <?php $this->endPage() ?>

@@ -6,6 +6,7 @@ var arrCat = [];
 
 var navStep = 1;
 var nPanels = 0;
+// var getSrv = null;
 
 function getStep(){
     return parseInt(navStep);
@@ -13,13 +14,90 @@ function getStep(){
 function setStep(step){
     navStep = step;
 }
+function getServicio(srvID){
+    return Promise.resolve($.ajax({
+        method:"GET",
+        url:"/ajax/getservicio",
+        data: {serviceID: parseInt(srvID)}
+    }));
+    // return promise.then(function(value){return JSON.parse(value);});
+}
 
 $(document).ready(function () {
-    
+
+    Swal.fire({
+        type:"info",
+        text:"Antes de continuar asegúrate de disponer en tu teléfono o PC una imagen actualizada de tu perfil o logo si es una empresa, imagen de tu Cédula o RUC o RISE o Pasaporte con permiso de Trabajo, dependiendo del tipo de documento que necesites ingresar"
+    });
+
+    $("#servicios-wrapper").on("click", ".btn-vermas", function(e){
+        console.log($(this).attr("data-srv"));
+        if(parseInt($(this).attr("data-srv")) >  0){
+            var getSrv = getServicio(parseInt($(this).attr("data-srv")));
+            getSrv.then(function(data){
+                var servicioData = JSON.parse(data);
+                servicio = servicioData.servicio;
+                var inHtml = '';
+                if(servicio.nombre!= null){
+                inHtml += "<h4>Nombre del servicio</h4>";
+                inHtml += "<p>" + servicio.nombre +"</p>";
+                }
+                if(servicio.incluye != null){
+                    inHtml += "<h4>Incluye</h4>";
+                    inHtml += "<p>" + servicio.incluye +"</p>";
+                }
+                
+                if(servicio.no_incluye != null){
+                    inHtml += "<h4>No incluye</h4>";
+                    inHtml += "<p>" + servicio.no_incluye +"</p>";
+                }
+                
+                inHtml += "<h4>Precio</h4>";
+                if(servicio.total != null){
+                    inHtml += "<p>" + servicio.total +"</p>";
+                }else{
+                    inHtml += "<p>no disponible</p>";
+                }
+                Swal.fire({
+                    html:inHtml
+                });
+            });
+        }
+    });
+
+    if(sessionStorage.length >= 1){
+        for(var i=1; i<= sessionStorage.length; i++){
+            if(document.getElementById(sessionStorage.key(i)) != null){
+                var el = document.getElementById(sessionStorage.key(i));
+                el.value = sessionStorage.getItem(el.id);
+                if(el.id == "usuarios-categorias"){
+                    var cats = el.value.split(",");
+                    for(var j = 0; j<cats.length; j++){
+                    arrCat.push(cats[j]);
+                    }
+                }
+                if(el.id == "usuarios-servicios"){
+                    var srvs = el.value.split(",");
+                    for(var j = 0; j<srvs.length; j++){
+                        arrServ.push(srvs[j]);
+                        var getSrv = getServicio(parseInt(srvs[j]));
+                        getSrv.then(function(data){
+                            var servicioData = JSON.parse(data);
+                            servicio = servicioData.servicio;
+                            $("#servicios-agregados").append("<div class='label label-primary label-servicios' data-cat='" + parseInt(servicio.cat_id) + "' data-srv='" + parseInt(servicio.id) + "'>" + servicio.nombre + "<span class='delete-service' data-srv='" + parseInt(servicio.id) + "'>x</span></div>")
+                        });
+                    }
+                }
+            }
+        }
+    }
+
     nPanels  = $(".btn-step");
 
     var navListItems = $('div.setup-panel div a'),
         allWells = $('.setup-content'),
+        allSaveBtn = $('.saveBtn'),
+        allBackBtn = $('.backBtn'),
         allNextBtn = $('.nextBtn');
 
     allWells.hide();
@@ -105,6 +183,13 @@ $(document).ready(function () {
         $("#btn-step-" + nextBtn).trigger("click");
     });
 
+    allBackBtn.click(function () {
+        let nextBtn = getStep();
+        nextBtn--;
+        console.log(nextBtn);
+        $("#btn-step-" + nextBtn).trigger("click");
+    });
+
     //$('div.setup-panel div a.btn-success').trigger('click');
 
     $(".panel-default").show();
@@ -114,7 +199,29 @@ $(document).ready(function () {
         $(".plan_seleccionado").html( "Plan seleccionado: " + $(this).attr("plan-nombre") );
         $(".plan_seleccionado").show();
     });
+
+    // $("#usuario-tipo-cuenta").click(function(e)){
+    //     if(e.val() ==)
+    // }
 });
+
+function saveForm(){
+    var el = document.querySelector("form");
+    var inputs = el.querySelectorAll("input, select");
+
+    for(var i = 1; i<inputs.length; i++){
+        if(inputs[i].value != "" && inputs[i] != undefined){
+            sessionStorage.setItem(inputs[i].id, inputs[i].value)
+        }
+    }
+
+    Swal.fire({
+        type: "success",
+        title: "Datos guardados",
+        text: "Tus datos de registro han sido guardados."
+    });
+
+}
 
 (function($){
     $("#usuarios-tipo_identificacion").on("change", function(){ 

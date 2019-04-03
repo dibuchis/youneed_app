@@ -29,7 +29,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'index', 'getdatamarker', 'geodireccion', 'getdispositivosusuario', 'soporteatencion'],
+                'only' => ['logout', 'index', 'getdatamarker', 'geodireccion', 'getdispositivosusuario', 'soporteatencion', 'asociadoperfil', 'asociadodashboard', 'asociadonotificaciones'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -210,13 +210,21 @@ class SiteController extends Controller
     public function actionIndex()
     {
         if( Yii::$app->user->identity->es_asociado == 1 ){
-            // $this->layout = 'main_movil';
-            // return $this->render('index_visitas', [
-            //     // 'searchModel' => $searchModel,
-            //     // 'dataProvider' => $dataProvider,
-            // ]);
-            return $this->redirect(['visitas/index']);
-        }else{
+            $this->layout = 'dashboard_asociado';
+            Yii::$app->getSession()->setFlash('success', [
+                'type' => 'success',
+                'duration' => 5000,
+                'icon' => 'glyphicon glyphicon-ok-sign',
+                'message' => 'Por ahora no tiene notificaciones',
+                'title' => 'Notificaciones',
+                'positonY' => 'top',
+                'positonX' => 'right'
+            ]);
+            return $this->render('asociado_dashboard',[
+
+            ]);
+        }
+        if( Yii::$app->user->identity->es_super == 1 ){
             Yii::$app->getSession()->setFlash('success', [
                 'type' => 'success',
                 'duration' => 5000,
@@ -231,6 +239,52 @@ class SiteController extends Controller
 
             return $this->render('index', [
                 
+            ]);
+        }
+
+    }
+
+        /**
+     * Displays perfil Asociado.
+     *
+     * @return string
+     */
+    public function actionAsociadoperfil()
+    {
+        if( Yii::$app->user->identity->es_asociado == 1 ){
+            $this->layout = 'dashboard_asociado';
+            return $this->render('asociado_perfil',[
+
+            ]);
+        }
+    }
+
+    /**
+     * Displays perfil Asociado.
+     *
+     * @return string
+     */
+    public function actionAsociadonotificaciones()
+    {
+        if( Yii::$app->user->identity->es_asociado == 1 ){
+            $this->layout = 'dashboard_asociado';
+            return $this->render('asociado_notificaciones',[
+
+            ]);
+        }
+    }
+
+            /**
+     * Displays dashboard Asociado.
+     *
+     * @return string
+     */
+    public function actionAsociadodashboard()
+    {
+        if( Yii::$app->user->identity->es_asociado == 1 ){
+            $this->layout = 'dashboard_asociado';
+            return $this->render('asociado_dashboard',[
+
             ]);
         }
     }
