@@ -25,11 +25,6 @@ function getServicio(srvID){
 
 $(document).ready(function () {
 
-    Swal.fire({
-        type:"info",
-        text:"Antes de continuar asegúrate de disponer en tu teléfono o PC una imagen actualizada de tu perfil o logo si es una empresa, imagen de tu Cédula o RUC o RISE o Pasaporte con permiso de Trabajo, dependiendo del tipo de documento que necesites ingresar"
-    });
-
     $("#servicios-wrapper").on("click", ".btn-vermas", function(e){
         console.log($(this).attr("data-srv"));
         if(parseInt($(this).attr("data-srv")) >  0){

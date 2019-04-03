@@ -20,6 +20,13 @@ use borales\extensions\phoneInput\PhoneInput;
     'options'=>['enctype'=>'multipart/form-data'] // important
 ]); ?>
 
+	<script>
+	Swal.fire({
+        type:"info",
+        text:"Antes de continuar asegúrate de disponer en tu teléfono o PC una imagen actualizada de tu perfil o logo si es una empresa, imagen de tu Cédula o RUC o RISE o Pasaporte con permiso de Trabajo, dependiendo del tipo de documento que necesites ingresar"
+    });
+	</script>
+
 	<div class="container" id="form-registro-asociado">
 		<div class="stepwizard">
 	        <div class="stepwizard-row setup-panel">
