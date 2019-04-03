@@ -98,9 +98,9 @@ class RegistroController extends Controller
                     try{
                         Yii::$app->mailer->compose()
                         ->setFrom('noreply@youneed.com.ec')
-                        ->setTo($p->email)
+                        ->setTo($model->email)
                         ->setSubject("PRUEBA YOUNEED EMAIL")
-                        ->setTextBody('<h2><b>' . $p->nombres . ',</b> ¡Bienvenido a Youneed!</h2><p>Estimado Asociado, </p><p>Gracias por unirte a la mayor red de profesionales y clientes que están usando YouNeed para ofrecer sus servicios, nuestro compromiso es brindarte las mejores herramientas para que canalices tu talento hacia la comunidad y obtengas los beneficios que siempre quisiste.</p><p>Por favor, para confirmar tu correo electrónico y poder mantenernos comunicados haz click en el siguiente link: </p>')
+                        ->setTextBody('<h2><b>' . $model->nombres . ',</b> ¡Bienvenido a Youneed!</h2><p>Estimado Asociado, </p><p>Gracias por unirte a la mayor red de profesionales y clientes que están usando YouNeed para ofrecer sus servicios, nuestro compromiso es brindarte las mejores herramientas para que canalices tu talento hacia la comunidad y obtengas los beneficios que siempre quisiste.</p><p>Por favor, para confirmar tu correo electrónico y poder mantenernos comunicados haz click en el siguiente link: </p>')
                         ->send();
                         //echo "<script>console.log('Email enviado existosamente');</script>";
                     }catch(Exception $e){
