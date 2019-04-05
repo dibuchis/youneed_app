@@ -13,8 +13,8 @@ use yii\widgets\DetailView;
             // 'id',
             'nombre',
             'slug',
-            'incluye:ntext',
-            'no_incluye:ntext',
+            'incluye:html',
+            'no_incluye:html',
         ],
     ]) ?>
 
