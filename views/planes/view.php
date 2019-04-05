@@ -12,7 +12,7 @@ use yii\widgets\DetailView;
         'attributes' => [
             'id',
             'nombre',
-            'descripcion:ntext',
+            'descripcion:html',
             'pvp',
             'descuento_1',
             'descuento_2',
