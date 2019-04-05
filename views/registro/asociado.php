@@ -431,11 +431,11 @@ use borales\extensions\phoneInput\PhoneInput;
 				                    <div class="panel panel-success panel-pricing" id="free-plan-panel">
 				                        <div class="panel-heading-plan">
 				                            <i class="fa fa-desktop"></i>
-				                            <h3><span class="plan-name"><?php echo $planes[0]->nombre; ?></span><br/> $<?php echo $planes[0]->sin_descuento; ?> USD</h3>
+				                            <h3><span class="plan-name"><?php echo $planes[0]->nombre; ?></span><br/> $<?php echo $planes[0]->pvp; ?> USD</h3>
 				                        </div>
 				                        <div class="panel-body text-center real-price-panel">
 				                            <p>
-				                            	<strong>Precio sin descuento: <span class="real-price"><?php echo $planes[0]->pvp; ?> USD </span> / anual</strong>
+				                            	<strong>Precio sin descuento: <span class="real-price"><?php echo $planes[0]->sin_descuento; ?> USD </span> / anual</strong>
 				                            	<br>
 				                            	<small>(<?php echo $planes[0]->descuento_1; ?> % de descuento)</small>
 				                            </p>
