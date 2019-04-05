@@ -478,7 +478,7 @@ use borales\extensions\phoneInput\PhoneInput;
 
 				            <?= $form->field($model, 'plan_id')->hiddenInput()->label(false); ?>
 				        
-							<p>Antes de registrarse lea los <a href="terminos-y-condiciones" target="_blank">Términos y condiciones</a> para aceptar su plan.</p>
+							<p>Antes de registrarse lea los <a href="/registro/terminos" target="_blank">Términos y condiciones</a> para aceptar su plan.</p>
 				        	<!-- <div style="height: 200px!important; overflow-y: scroll;" > -->
 								<!-- <?php //echo $terminos; ?> -->
 				        		<!-- </div> -->

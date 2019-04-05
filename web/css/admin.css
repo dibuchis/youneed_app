@@ -607,3 +607,7 @@ h2{
 .modal-dialog{
   transition: all 1.3s ease-in-out;
 }
+.single-page{
+  max-width:968px;
+  margin:25px auto;
+}

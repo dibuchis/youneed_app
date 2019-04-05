@@ -57,6 +57,16 @@ class RegistroController extends Controller
         }
     }
 
+
+    public function actionTerminos(){
+        
+        $terminos = Configuraciones::findOne(1);
+        
+        return $this->render('terminos', [
+            'terminos' => $terminos->politicas_condiciones
+        ]);
+    }
+
     // public function actionTestemail(){
     //     if(isset($_GET['admintest'])){
     //         try{
