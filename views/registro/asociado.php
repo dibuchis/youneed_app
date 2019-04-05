@@ -100,6 +100,7 @@ use borales\extensions\phoneInput\PhoneInput;
 								<div class="col-md-6">
 									<?= $form->field($model, 'apellidos')->textInput(['maxlength' => true]) ?>
 								</div>
+								<div class="col-md-12"></div>
 
 								<div class="col-md-6">
 									<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
@@ -116,6 +117,19 @@ use borales\extensions\phoneInput\PhoneInput;
 												]);
 												?>
 								</div>
+								<div class="col-md-12"></div>
+
+								<div class="col-md-6">
+									<?= $form->field($model, 'clave')->passwordInput() ?>
+								</div>
+								<div class="col-md-6">
+								<div class="form-group field-usuarios-clave required has-success">
+								<label class="control-label" >Confirmar Clave</label>
+									<input type="password" id="confirmar_clave" class="form-control" required>
+								<div class="help-block"></div>
+								</div>
+								</div>
+								<div class="col-md-12"></div>
 
 								<div class="col-md-6">
 								    <?= $form->field($model, 'pais_id')->widget(\kartik\widgets\Select2::classname(), [

@@ -34,7 +34,7 @@ $config = [
                 'username' => 'notificaciones@youneed.com.ec',
                 'password' => 'Lucas137.',
                 'port' => '465',
-                'encryption' => 'tls',
+                'encryption' => 'ssl',
             ],
         ],
         'log' => [

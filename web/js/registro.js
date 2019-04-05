@@ -105,6 +105,7 @@ $(document).ready(function () {
     navListItems.click(function (e) {
             e.preventDefault();
 
+            var badPassword = true;
             var empty = false;
             var fields = [];
             tStep = getStep();
@@ -116,20 +117,30 @@ $(document).ready(function () {
                 }
             });
 
+            var clave = $("#usuarios-clave").val();
+            var confirmaClave = $("#confirmar_clave").val();
+
+            if(clave == confirmaClave){
+                badPassword = false;
+            }
+
             var ulFields = '<ul style="text-align:left;">';
                 for(var j=0;j<fields.length;j++){
                     var fieldText = fields[j].replace("usuarios-", "");
                     fieldText = fieldText.replace("_", " ");
                     fieldText = fieldText.replace("cat1-id", "país");
                     fieldText = fieldText.replace("subcat11-id", "ciudad");
-                    ulFields += '<li>' + fieldText + '</li>';
+                    ulFields += '<li>' + fieldText + ' vacío</li>';
+                }
+                if(!badPassword){
+                    ulFields += '<li>Las contraseñas no coinciden.</li>';
                 }
             ulFields += '</ul>';
 
-            if(empty){
+            if(empty || badPassword){
                 Swal.fire({
                     title:'Alerta!',
-                    html:'Aún tiene campos vacíos por llenar.<br>' + ulFields,
+                    html:'Existen errores o campos vacíos: <br>' + ulFields,
                     type: 'error'
                 });
                 return 0;
@@ -207,7 +218,7 @@ $(document).ready(function () {
 
 function saveForm(){
     var el = document.querySelector("form[action='/registro/asociado']");
-    var inputs = el.querySelectorAll("input, select");
+    var inputs = el.querySelectorAll("input:not(#usuarios-clave):not(#confirmar_clave), select");
 
     for(var i = 1; i<inputs.length; i++){
         if(inputs[i].value != "" && inputs[i] != undefined){
@@ -218,7 +229,7 @@ function saveForm(){
     Swal.fire({
         type: "success",
         title: "Datos guardados",
-        text: "Tus datos de registro han sido guardados."
+        html: "<p>Tus datos de registro han sido guardados.</p><p><b>Recuerda!</b><br/> Por seguridad, las imágenes y claves solo se guardarán cuando llenes todo el registro y estes listo para enviar el formulario.</p>"
     });
 
 }

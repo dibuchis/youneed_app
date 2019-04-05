@@ -30,6 +30,8 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
             ['email', 'email'],
             ['numero_celular', 'unique'],
             ['identificacion', 'unique'],
+            // ['clave', 'validatePassword'],
+            ['clave', 'passwordStrenght'],
             [['numero_celular'], PhoneInputValidator::className(), 'region' => ['EC']],
             [['identificacion'], 'checkIdentification'],
             ['terminos_condiciones', 'required', 'on' => ['Asociado'], 'requiredValue' => 1, 'message' => 'Es necesario que acepte los términos y condiciones'],
@@ -262,6 +264,13 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
     public function validatePassword($password)
     {
         return \Yii::$app->getSecurity()->validatePassword($password, $this->clave);
+    }
+
+    public function passwordStrenght()
+    {
+        if(!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/',$this->clave)){
+            $this->addError('clave','La clave debe contener mínimo 8 dígitos, una mayuscula, una minúscula y al menos un caracter especial !@.#$%&*');
+        }
     }
 
 }
