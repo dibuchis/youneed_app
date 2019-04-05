@@ -18,7 +18,7 @@ class CrudAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'http://fonts.googleapis.com/css?family=Varela+Round',
+        'https://fonts.googleapis.com/css?family=Varela+Round',
         'css/global.css',
         'css/admin.css',
     ];

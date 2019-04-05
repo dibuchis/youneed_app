@@ -18,7 +18,7 @@ class LoginAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'http://fonts.googleapis.com/css?family=Varela+Round',
+        'https://fonts.googleapis.com/css?family=Varela+Round',
         // 'css/loader-style.css',
         // 'js/pace/themes/pace-theme-flat-top.css',
         'css/signin.css',
