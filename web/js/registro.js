@@ -132,7 +132,7 @@ $(document).ready(function () {
                     fieldText = fieldText.replace("subcat11-id", "ciudad");
                     ulFields += '<li>' + fieldText + ' vacío</li>';
                 }
-                if(!badPassword){
+                if(badPassword){
                     ulFields += '<li>Las contraseñas no coinciden.</li>';
                 }
             ulFields += '</ul>';
