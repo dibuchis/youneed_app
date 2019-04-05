@@ -57,26 +57,26 @@ class RegistroController extends Controller
         }
     }
 
-    public function actionTestemail(){
-        if(isset($_GET['admintest'])){
-            try{
-                $send = Yii::$app->mailer->compose()
-                ->setFrom('notificaciones@youneed.com.ec')
-                // ->setTo("zare2303@hotmail.com")
-                ->setTo("dibuchis@gmail.com")
-                // ->setCc("majo.bastidas@gmail.com")
-                ->setSubject("YouNeed - Registro exitoso")
-                ->setHtmlBody('<div style="background:#178b89; width:100%; height:80px; padding:8px;color:white;"><img src="https://app.youneed.com.ec/images/logo-admin.png" style="width:120px; height:auto;margin:12px 25px 12px 12px"></div><div style="padding:25px;"><h2>Nombre Usuario,</h2><h3 style="color:#178b89;">¡Bienvenido a YouNeed!</h3><p>Estimado Asociado, </p><br/><p>Gracias por unirte a la mayor red de profesionales y clientes que están usando YouNeed para ofrecer sus servicios, nuestro compromiso es brindarte las mejores herramientas para que canalices tu talento hacia la comunidad y obtengas los beneficios que siempre quisiste.</p><p>Por favor, para confirmar tu correo electrónico y poder mantenernos comunicados haz click en el siguiente link: </p><p></p><hr></div><div style="height:40px; margin-top:25px; background:#efefef; text-align:center; padding:7px; padding-top:15px;">YouNeed® Todos los derechos reservados.</div>', 'text/html')
-                ->send();
-                var_dump($send);
-                // echo "<pre>";
-                // print_r(get_class_methods($send));
-                // echo "</pre>";
-            }catch(Exception $e){
-                var_dump($e);
-            }
-        }
-    }
+    // public function actionTestemail(){
+    //     if(isset($_GET['admintest'])){
+    //         try{
+    //             $send = Yii::$app->mailer->compose()
+    //             ->setFrom('notificaciones@youneed.com.ec')
+    //             // ->setTo("zare2303@hotmail.com")
+    //             ->setTo("dibuchis@gmail.com")
+    //             // ->setCc("majo.bastidas@gmail.com")
+    //             ->setSubject("YouNeed - Registro exitoso")
+    //             ->setHtmlBody('<div style="background:#178b89; width:100%; height:80px; padding:8px;color:white;"><img src="https://app.youneed.com.ec/images/logo-admin.png" style="width:120px; height:auto;margin:12px 25px 12px 12px"></div><div style="padding:25px;"><h2>Nombre Usuario,</h2><h3 style="color:#178b89;">¡Bienvenido a YouNeed!</h3><p>Estimado Asociado, </p><br/><p>Gracias por unirte a la mayor red de profesionales y clientes que están usando YouNeed para ofrecer sus servicios, nuestro compromiso es brindarte las mejores herramientas para que canalices tu talento hacia la comunidad y obtengas los beneficios que siempre quisiste.</p><p>Por favor, para confirmar tu correo electrónico y poder mantenernos comunicados haz click en el siguiente link: </p><p></p><hr></div><div style="height:40px; margin-top:25px; background:#efefef; text-align:center; padding:7px; padding-top:15px;">YouNeed® Todos los derechos reservados.</div>', 'text/html')
+    //             ->send();
+    //             var_dump($send);
+    //             // echo "<pre>";
+    //             // print_r(get_class_methods($send));
+    //             // echo "</pre>";
+    //         }catch(Exception $e){
+    //             var_dump($e);
+    //         }
+    //     }
+    // }
 
 
     public function actionAsociado()
@@ -114,13 +114,16 @@ class RegistroController extends Controller
             $model->numero_celular = preg_replace('/\s+/', '', $model->numero_celular);
             $model->numero_celular = str_replace(' ', '', $model->numero_celular);
 
-            // $model->validatePassword($model->clave);
-
+            
             if($request->isAjax){
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
             }else{
                 if( $model->save() ){
+                    
+                    $model->clave = Yii::$app->getSecurity()->generatePasswordHash($model->clave);
+
+                    $model->update();
 
                     $listado_cateorias = explode(",", Yii::$app->request->post()['Usuarios']['categorias']);
 
