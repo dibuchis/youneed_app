@@ -35,11 +35,17 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'incluye',
+        'value'=>function ($model, $key, $index, $widget) {
+            return strip_tags($model->incluye);
+        },
         'format'=>'raw'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'no_incluye',
+        'value'=>function ($model, $key, $index, $widget) {
+            return strip_tags($model->no_incluye);
+        },
         'format'=>'raw'
     ],
     // [

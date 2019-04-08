@@ -35,6 +35,9 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'descripcion',
+        'value'=>function ($model, $key, $index, $widget) {
+            return strip_tags($model->descripcion);
+        },
         'format'=>'raw'
     ],
     // [
