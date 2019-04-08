@@ -17,7 +17,7 @@ return [
     [
         'attribute'=>'imagen',
         'value'=>function ($model, $key, $index, $widget) {
-            return '<img width="150px;" src="'.$model->imagen.'">';
+            return '<img width="120px;" src="'.$model->imagen.'">';
         },
         // 'width'=>'10px;',
         // 'filterType'=>GridView::FILTER_SELECT2,
@@ -32,18 +32,19 @@ return [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'slug',
     // ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'descripcion',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'descripcion',
+        'format'=>'raw'
+    ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'imagen',
     // ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'fecha_creacion',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'fecha_creacion',
+    ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,

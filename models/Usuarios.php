@@ -268,7 +268,7 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
 
     public function passwordStrenght()
     {
-        if(!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/',$this->clave)){
+        if(!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\.\$%\^&\*])(?=.{8,})/',$this->clave)){
             $this->addError('clave','La clave debe contener mínimo 8 dígitos, una mayuscula, una minúscula y al menos un caracter especial !@.#$%&*');
         }
     }
