@@ -11,8 +11,8 @@ class Configuraciones extends \app\models\base\ConfiguracionesBase
 	    'politicas_condiciones' => 'Políticas y Condiciones',
 	    'porcentaje_cancelacion_cliente' => 'Porcentaje de Cancelación del Cliente',
 	    'beneficios_ser_asociado' => 'Beneficios de ser Asociado',
-	    'promociones_asociados' => 'Promociones para Asociados',
-	    'ayuda' => 'Ayuda',
+	    'promociones_asociados' => 'Aceptación de Asociados',
+	    'ayuda' => 'Políticas de Privacidad',
 	];
 	}   
 }

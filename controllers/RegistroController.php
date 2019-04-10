@@ -60,10 +60,19 @@ class RegistroController extends Controller
 
     public function actionTerminos(){
         
-        $terminos = Configuraciones::findOne(1);
+        $config = Configuraciones::findOne(1);
         
         return $this->render('terminos', [
-            'terminos' => $terminos->politicas_condiciones
+            'terminos' => $config->politicas_condiciones
+        ]);
+    }
+
+    public function actionAceptacion(){
+        
+        $config = Configuraciones::findOne(1);
+        
+        return $this->render('aceptacion', [
+            'aceptacion' => $config->promociones_asociados
         ]);
     }
 
@@ -165,7 +174,7 @@ class RegistroController extends Controller
                         ->setFrom('noreply@youneed.com.ec')
                         ->setTo($model->email)
                         ->setSubject("YouNeed - Registro exitoso")
-                        ->setHtmlBody('<div style="background:#178b89; width:100%; height:80px; padding:8px;color:white;"><img src="https://app.youneed.com.ec/images/logo-admin.png" style="width:120px; height:auto;margin:12px 25px 12px 12px"></div><div style="padding:25px;"><h2>' . $model->nombres . ',</h2><h3  style="color:#178b89;">¡Bienvenido a YouNeed!</h3><br/><p>Estimado Asociado, </p><p>Gracias por unirte a la mayor red de profesionales y clientes que están usando YouNeed para ofrecer sus servicios, nuestro compromiso es brindarte las mejores herramientas para que canalices tu talento hacia la comunidad y obtengas los beneficios que siempre quisiste.</p><p>Por favor, para confirmar tu correo electrónico y poder mantenernos comunicados haz click en el siguiente link: </p><p></p><hr></div><div style="height:40px; margin-top:25px;background:#efefef; text-align:center; padding:7px; padding-top:15px;">YouNeed® Todos los derechos reservados.</div>', 'text/html')
+                        ->setHtmlBody('<div style="background:#2e8a96; width:100%; height:80px; padding:8px;color:white;"> <img src="https://app.youneed.com.ec/images/logo-admin.png" style="width:120px; height:auto;margin:12px 25px 12px 12px"></div> <div style="padding:25px;"> <h2 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">' . $model->nombres . ',</h2> <h3 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">¡Bienvenido a YouNeed!</h3><br/> <p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">Estimado Asociado, </p> <p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">Gracias por unirte a la mayor red de profesionales y clientes que están usando YouNeed para ofrecer sus servicios, nuestro compromiso es brindarte las mejores herramientas para que canalices tu talento hacia la comunidad y obtengas los beneficios que siempre quisiste.</p> <p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">Por favor, para confirmar tu correo electrónico y poder mantenernos comunicados haz click en el siguiente link: </p> <p></p> <hr></div> <div style="font-family:Arial, Helvetica, sans-serif; height:40px; margin-top:25px;background:#9a999e; text-align:center; padding:7px; padding-top:15px; color:#fff;">YouNeed® Todos los derechos reservados.</div>', 'text/html')
                         ->send();
                         //echo "<script>console.log('" . $send . "');</script>";
                     }catch(Exception $e){

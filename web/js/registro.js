@@ -23,6 +23,17 @@ function getServicio(srvID){
     // return promise.then(function(value){return JSON.parse(value);});
 }
 
+// function getCiudades(paisID){
+//     return Promise.resolve($.ajax({
+//         method:"POST",
+//         url:"/ajax/ciudades",
+//         data: {depdrop_parents: parseInt(paisID)}
+//     }));
+//     // return promise.then(function(value){return JSON.parse(value);});
+// }
+
+
+
 $(document).ready(function () {
 
     // Swal.fire({
@@ -66,15 +77,63 @@ $(document).ready(function () {
     });
 
     if(sessionStorage.length >= 1){
+        var elPais = 1;
+        var laCiudad = 0;
         for(var i=1; i<= sessionStorage.length; i++){
+
             if(document.getElementById(sessionStorage.key(i)) != null){
                 var el = document.getElementById(sessionStorage.key(i));
                 el.value = sessionStorage.getItem(el.id);
+                //console.log("ID: " + el.id + " | Value: " + el.value)
+
+
                 if(el.id == "usuarios-categorias"){
                     var cats = el.value.split(",");
                     for(var j = 0; j<cats.length; j++){
                     arrCat.push(cats[j]);
                     }
+                }
+                if(el.id == "cat1-id"){
+                    elPais = el.value;
+                    // console.log(elPais);
+                }
+                if(el.id == "subcat11-id"){
+                    
+                    // console.log(el);
+
+                    var ciudadesDrop = $('#subcat11-id');
+
+                    $.ajax({
+                    type: 'GET',
+                    url: '/ajax/ciudades?depdrop_parents=' + elPais
+                    }).then(function (data) {
+                    obj = JSON.parse(data);
+                    // create the option and append to Select2
+                    for(var i = 0; i < obj.output.length; i++ ){
+                        var option = new Option(obj.output[i].name, obj.output[i].id, true, true);
+                        ciudadesDrop.append(option).trigger('change');
+
+                        // manually trigger the `select2:select` event
+                        ciudadesDrop.trigger({
+                            type: 'select2:select',
+                            params: {
+                                data: data
+                            }
+                        });
+                    }
+
+                    $('#subcat11-id').val(sessionStorage.getItem("subcat11-id")).trigger('change');
+                    $('#subcat11-id').prop("disabled", false);
+
+                    });
+
+                    
+                    
+                    
+
+                    // console.log(el.value);
+                    
+
                 }
                 if(el.id == "usuarios-servicios"){
                     var srvs = el.value.split(",");
@@ -217,7 +276,7 @@ $(document).ready(function () {
 });
 
 function saveForm(){
-    var el = document.querySelector("form[action='/registro/asociado']");
+    var el = document.getElementById("asociado-register-form");
     var inputs = el.querySelectorAll("input:not(#usuarios-clave):not(#confirmar_clave), select");
 
     for(var i = 1; i<inputs.length; i++){

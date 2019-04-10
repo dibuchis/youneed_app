@@ -18,6 +18,7 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
     public $titulo_academico_upload;
     public $categorias;
     public $terminos_condiciones;
+    public $acuerdos_asociado;
 
     public function rules()
     {
@@ -35,6 +36,7 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
             [['numero_celular'], PhoneInputValidator::className(), 'region' => ['EC']],
             [['identificacion'], 'checkIdentification'],
             ['terminos_condiciones', 'required', 'on' => ['Asociado'], 'requiredValue' => 1, 'message' => 'Es necesario que acepte los términos y condiciones'],
+            ['acuerdos_asociado', 'required', 'on' => ['Asociado'], 'requiredValue' => 1, 'message' => 'Es necesario que acepte los acuerdos de Asociado'],
         ]);
     }
 
@@ -222,6 +224,7 @@ class Usuarios extends \app\models\base\UsuariosBase implements \yii\web\Identit
             'pais_id' => 'País',
             'ciudad_id' => 'Ciudad',
             'terminos_condiciones' => 'Aceptar términos y condiciones',
+            'acuerdos_asociado' => 'Aceptar Acuerdos de los Asociados en el uso de la plataforma',
 		];
 	}
 

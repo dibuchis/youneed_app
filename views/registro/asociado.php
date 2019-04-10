@@ -17,7 +17,7 @@ use borales\extensions\phoneInput\PhoneInput;
 <?php $form = ActiveForm::begin([
     'enableClientValidation' => true,
     'enableAjaxValidation' => true,
-    'options'=>['enctype'=>'multipart/form-data'] // important
+    'options'=>['enctype'=>'multipart/form-data', 'id' => 'asociado-register-form'] // important
 ]); ?>
 
 	<!-- <script>
@@ -415,7 +415,7 @@ use borales\extensions\phoneInput\PhoneInput;
 	        </div>
 	        <div class="panel panel-primary setup-content" id="step-4">
 	    		<div class="panel-heading">
-	                 <h3 class="panel-title">Escoge tu plan GRATIS para empezar a dar tus servicios</h3>
+	                 <h3 class="panel-title">Escoge tu plan para empezar a dar tus servicios</h3>
 	            </div>
 	            <div class="panel-body">
 	            	
@@ -435,7 +435,7 @@ use borales\extensions\phoneInput\PhoneInput;
 				                        </div>
 				                        <div class="panel-body text-center real-price-panel">
 				                            <p>
-				                            	<strong>Precio sin descuento: <span class="real-price"><?php echo $planes[0]->sin_descuento; ?> USD </span> / anual</strong>
+				                            	<strong>Precio sin descuento: <span class="real-price"><?php echo $planes[0]->sin_descuento; ?> USD </span> </strong>
 				                            	<br>
 				                            	<small>(<?php echo $planes[0]->descuento_1; ?> % de descuento)</small>
 				                            </p>
@@ -453,11 +453,11 @@ use borales\extensions\phoneInput\PhoneInput;
 				                    <div class="panel panel-success panel-pricing" id="normal-plan-panel">
 				                        <div class="panel-heading-plan">
 				                            <i class="fa fa-desktop"></i>
-				                            <h3><span class="plan-name"><?php echo $planes[1]->nombre; ?></span><br/> $<?php echo $planes[1]->pvp; ?> / ANUAL </h3>
+				                            <h3><span class="plan-name"><?php echo $planes[1]->nombre; ?></span><br/> $<?php echo $planes[1]->pvp; ?>  </h3>
 				                        </div>
 				                        <div class="panel-body text-center real-price-panel">
 				                            <p>
-				                            	<strong>Precio sin descuento: <span class="real-price"><?php echo $planes[1]->sin_descuento; ?> USD </span> / anual</strong>
+				                            	<strong>Precio sin descuento: <span class="real-price"><?php echo $planes[1]->sin_descuento; ?> USD </span> </strong>
 				                            	<br>
 				                            	<small>(<?php echo $planes[1]->descuento_1; ?> % de descuento)</small>
 				                            </p>
@@ -478,12 +478,15 @@ use borales\extensions\phoneInput\PhoneInput;
 
 				            <?= $form->field($model, 'plan_id')->hiddenInput()->label(false); ?>
 				        
-							<p>Antes de registrarse lea los <a href="/registro/terminos" target="_blank">Términos y condiciones</a> para aceptar su plan.</p>
+							<p>Antes de registrarse lea los <a href="/registro/terminos" target="_blank">Términos y condiciones</a> y <a href="/registro/acuerdos" target="_blank">Acuerdos de Asociado</a> para aceptar su plan.</p>
 				        	<!-- <div style="height: 200px!important; overflow-y: scroll;" > -->
 								<!-- <?php //echo $terminos; ?> -->
 				        		<!-- </div> -->
 
-				        	<?= $form->field($model, 'terminos_condiciones')->checkbox(['checked' => true]); ?>
+							<?= $form->field($model, 'terminos_condiciones')->checkbox(['checked' => true]); ?>
+							<?= $form->field($model, 'acuerdos_asociado')->checkbox(['checked' => true]); ?>
+							
+							
 
 				            </div>
 					</section>
