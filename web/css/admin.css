@@ -589,7 +589,7 @@ h2{
   position: absolute !important;
   font-size: 100px !important;
   top: 45px;
-  left: -65px !important;
+  left: -65px;
   color: #178b89 !important;
 }
 .owl-next{
@@ -597,7 +597,7 @@ h2{
   position: absolute !important;
   font-size: 100px !important;
   top: 45px;
-  right: -65px !important;
+  right: -65px;
   color: #178b89 !important;
 }
 #owl-categorias .owl-prev,
@@ -610,4 +610,18 @@ h2{
 .single-page{
   max-width:968px;
   margin:25px auto;
+}
+
+@media (max-width:768px) and (orientation : portrait){
+  .owl-next {
+    top: 0;
+    right: -31px;
+    bottom: 109px;
+  }
+  .owl-prev {
+    top: 0;
+    left: -34px;
+    bottom: 109px;
+  }
+
 }

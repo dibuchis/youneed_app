@@ -98,21 +98,23 @@
     margin-left: 15px;
 }
 .panel-body .help-panel:after{
-    content:"?";
-    font-size:24px;
-    color:#fff;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    position:relative;
-    width:34px;
-    height:34px;
-    float:right;
-    top:0;
-    margin:-19px -43px 0px 80px !important;
-    background:#43e;
-    border-radius:50px;
-    border:3px solid #99e;
+    content: "?";
+    font-size: 24px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    float: right;
+    top: 18px;
+    left: auto;
+    right: 25px;
+    margin: auto !important;
+    background: #43e;
+    border-radius: 50px;
+    border: 3px solid #99e;
   }
   
   .panel-body .help-panel{
