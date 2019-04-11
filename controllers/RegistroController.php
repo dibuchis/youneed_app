@@ -76,6 +76,15 @@ class RegistroController extends Controller
         ]);
     }
 
+    public function actionBeneficios(){
+        
+        $config = Configuraciones::findOne(1);
+        
+        return $this->render('beneficios', [
+            'beneficios' => $config->beneficios_ser_asociado
+        ]);
+    }
+
     // public function actionTestemail(){
     //     if(isset($_GET['admintest'])){
     //         try{

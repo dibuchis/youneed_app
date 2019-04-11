@@ -243,7 +243,7 @@ use borales\extensions\phoneInput\PhoneInput;
 	            </div>
 	            <div class="panel-body">
 					<div class="col-md-10 col-md-offset-1 col-md-pushed-1">
-						<div class="alert alert-success help-panel">
+						<div class="alert alert-info help-panel">
 							Selecciona una o más categorías de acuerdo a tu experiencia y conocimientos” “Recuerda que algunos servicios requieren presentar certificados que validen tu experiencia y conocimientos.
 						</div>
 					</div>
@@ -371,7 +371,7 @@ use borales\extensions\phoneInput\PhoneInput;
 	            <div class="panel-body">
 					<div class="row">		
 						<div class="col-md-8 col-md-offset-2 col-md-pushed-2">
-							<div class="alert alert-success help-panel">
+							<div class="alert alert-info help-panel">
 								<!-- Los datos proporcionados servirán para realizar los pagos por sus servicios realizados -->
 								Registra los datos de tu cuenta bancaria, donde se te depositará los valores que corresponden a la ejecución de tus servicios. Rápido y seguro.
 							</div>
@@ -418,7 +418,11 @@ use borales\extensions\phoneInput\PhoneInput;
 	                 <h3 class="panel-title">Escoge tu plan para empezar a dar tus servicios</h3>
 	            </div>
 	            <div class="panel-body">
-	            	
+				<div class="col-md-8 col-md-offset-2 col-md-pushed-2">
+						<div class="alert alert-info help-panel">
+							El pago del plan no se efectuará al momento del registro, unicamente se hará por una sola vez cuando tengas tu primer contrato con un cliente y realices el servicio. Si deseas conocer los beneficios de ser Asociado haz click <a href="/registro/beneficios" target="_blank">aquí</a>.
+						</div>
+					</div>
 
 		        	<section id="plans">
 	        
