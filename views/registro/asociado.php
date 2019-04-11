@@ -305,6 +305,7 @@ use borales\extensions\phoneInput\PhoneInput;
 							echo '<h4>Servicios Agregados:</h4>';
 							
 							echo "<div class='servicios-agregados' id='servicios-agregados'> </div>";
+							echo "<div class='alert alert-info'>Los campos marcados con asterisco (<span class='reqCertSrvInfo'>*</span>) requieren certificado</div>";
 							echo '<hr>';
 							// $items_categorias = \yii\helpers\ArrayHelper::map(\app\models\Categorias::find()->orderBy('nombre')->asArray()->all(), 'id', 
 							// 		function($model, $defaultValue) {

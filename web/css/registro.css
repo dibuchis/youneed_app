@@ -120,3 +120,18 @@
   .panel-body .help-panel{
     padding-right:60px !important;
   }
+
+  .reqCertSrv{
+    color: red;
+    font-size: 20px;
+    line-height: 0;
+    margin: 9px 6px 0px 0px;
+    float: left;
+  }
+  .reqCertSrvInfo{
+    color: red; 
+    font-size: 17px;
+    line-height: 1;
+    vertical-align: sub;
+    padding-top: 39px;
+  }

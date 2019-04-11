@@ -572,6 +572,10 @@ h2{
   font-weight:400;
   display:table;
   position:relative;
+  color: #2f3471;
+  background-color: #a5c5e2;
+  font-weight: 700;
+
 }
 .delete-service{
   width:14px;
@@ -583,6 +587,7 @@ h2{
   margin-top:-1px;
   font-weight:600;
   cursor:pointer;
+  color: #fff;
 }
 .owl-prev{
   display: block !important;

@@ -65,7 +65,7 @@ $(document).ready(function () {
                 
                 inHtml += "<h4>Precio</h4>";
                 if(servicio.total != null){
-                    inHtml += "<p>" + servicio.total +"</p>";
+                    inHtml += "<p>" + servicio.proveedor_total +"</p>";
                 }else{
                     inHtml += "<p>no disponible</p>";
                 }
@@ -127,13 +127,6 @@ $(document).ready(function () {
 
                     });
 
-                    
-                    
-                    
-
-                    // console.log(el.value);
-                    
-
                 }
                 if(el.id == "usuarios-servicios"){
                     var srvs = el.value.split(",");
@@ -143,7 +136,11 @@ $(document).ready(function () {
                         getSrv.then(function(data){
                             var servicioData = JSON.parse(data);
                             servicio = servicioData.servicio;
-                            $("#servicios-agregados").append("<div class='label label-primary label-servicios' data-cat='" + parseInt(servicio.cat_id) + "' data-srv='" + parseInt(servicio.id) + "'>" + servicio.nombre + "<span class='delete-service' data-srv='" + parseInt(servicio.id) + "'>x</span></div>")
+                            var certSpan = "";
+                            if(parseInt(servicio.obligatorio_certificado)){
+                                certSpan = "<span class='reqCertSrv'>*</span> "
+                            }
+                            $("#servicios-agregados").append("<div class='label label-primary label-servicios' data-cat='" + parseInt(servicio.cat_id) + "' data-srv='" + parseInt(servicio.id) + "'>" + certSpan + servicio.nombre + "<span class='delete-service' data-srv='" + parseInt(servicio.id) + "'>x</span></div>")
                         });
                     }
                 }
@@ -368,6 +365,11 @@ function saveForm(){
         var srvID = $(this).attr("data-srv");
         var srvName = $(this).attr("data-name");
         var srvCatID = $(this).attr("data-cat");
+        var srvCert = "";
+
+        function setCert(value){
+            srvCert = value;
+        }
 
         if(!(arrCat.includes(srvCatID))){
             arrCat.push(srvCatID);
@@ -381,7 +383,19 @@ function saveForm(){
                 'Has añadido el servicio a tu lista!',
                 'success'
             );
-            $("#servicios-agregados").append("<div class='label label-primary label-servicios' data-cat='" + srvCatID + "' data-srv='" + srvID + "'>" + srvName + "<span class='delete-service' data-srv='" + srvID + "'>x</span></div>")
+            $.ajax({
+                method:"GET",
+                url:"/ajax/getservicio",
+                data: {serviceID: parseInt(srvID)}
+            }).done(function(data){
+                var servicioData = JSON.parse(data);
+                servicio = servicioData.servicio;
+                if(parseInt(servicio.obligatorio_certificado)){
+                    setCert("<span class='reqCertSrv'>*</span> ");
+                }
+                $("#servicios-agregados").append("<div class='label label-primary label-servicios' data-cat='" + srvCatID + "' data-srv='" + srvID + "'>" + srvCert + srvName + "<span class='delete-service' data-srv='" + srvID + "'>x</span></div>")
+            });
+            
         }else{
             Swal.fire(
                 'Información!',
