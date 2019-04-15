@@ -320,7 +320,7 @@ h2{
 }
 
 #img-upload-plus{
-  background-color:#5cb85c;
+  background-color:#117c8f;
   width:26px;
   height:27px;
   padding:6px 7px ;
@@ -330,6 +330,7 @@ h2{
   left:200px;
   overflow:hidden;
   cursor:pointer;
+  color: #fff;
 }
 
 #form-registro-asociado .alert{
@@ -348,6 +349,16 @@ h2{
     color: #fff;
     background-color: #dab265;
     border-color: #dab265;
+}
+
+#form-registro-asociado .has-success .control-label {
+    color: #2e8a96;
+}
+
+#form-registro-asociado .has-success .form-control {
+    border-color: #2e8a96;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 }
 
 .document-input-asociado .form-group{
@@ -501,15 +512,25 @@ h2{
     position: relative;
 }
 
+#form-registro-asociado .panel-primary {
+    border-color: #2e8a96;
+}
 #form-registro-asociado .btn-success {
     color: #fff;
     background-color: #dab265;
-    
+    border-color: #dab265;
 }
 
 #form-registro-asociado .btn-success:hover {
     color: #fff;
     background-color: #dab265;
+    border-color: #dab265;
+}
+
+#form-registro-asociado .panel-body .help-panel:after { 
+    color: #2e8a96;
+    background: #fff;
+    border: 3px solid #fff;
 }
 
 .cat-item{
