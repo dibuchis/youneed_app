@@ -151,8 +151,8 @@ class AjaxController extends Controller
     
     public function actionListadoservicios(){
         $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $parents = $_POST['depdrop_parents'];
+        if (isset($_REQUEST['depdrop_parents'])) {
+            $parents = $_REQUEST['depdrop_parents'];
             if ($parents != null) {
                 $cat_id = $parents;
 
