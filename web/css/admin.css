@@ -10,6 +10,7 @@ body {
     box-sizing: border-box;
     font-size: 13px;
     font-family: 'Poppins', sans-serif;
+    color: #7f7f82;
 }
 .p-0 {
   padding: 0 !important;
@@ -78,7 +79,7 @@ body {
   margin-left: 20px;
 }
 .navbar-inverse{
-    background-color: #178b89!important;
+    background-color: #117c8f!important;
     border-color: transparent!important;
 }
 .navbar-inverse a{
@@ -132,11 +133,12 @@ h1{
     padding: 5px;
 }
 .panel-primary > .panel-heading {
-  background-color: #178b89!important;
+    background-color: #2e8a96!important;
+    border-color: #2e8a96;
 }
 h4{
   font-weight:600;
-  color:#11616E!important;
+  color:#117c8f!important;
   /* text-transform: uppercase; */
 }
 .admin-container{
@@ -334,7 +336,19 @@ h2{
   font-size:12px;
   padding:6px;
   margin:12px 0px;
-}  
+} 
+
+#form-registro-asociado .alert-info{
+    color: #fff;
+    background-color: #2e8a96;
+    border-color: #2e8a96;
+}
+
+#form-registro-asociado .btn-warning {
+    color: #fff;
+    background-color: #dab265;
+    border-color: #dab265;
+}
 
 .document-input-asociado .form-group{
   margin-top:10px !important;
@@ -486,6 +500,18 @@ h2{
     display: block;
     position: relative;
 }
+
+#form-registro-asociado .btn-success {
+    color: #fff;
+    background-color: #dab265;
+    
+}
+
+#form-registro-asociado .btn-success:hover {
+    color: #fff;
+    background-color: #dab265;
+}
+
 .cat-item{
   text-align:center;
   cursor:pointer;
