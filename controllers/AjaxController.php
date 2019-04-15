@@ -133,6 +133,22 @@ class AjaxController extends Controller
         }
     }
 
+    public function actionListadocategorias(){
+        $out = [];
+            $categorias = Categorias::find()
+                ->all();
+
+            foreach ($categorias as $cat) {
+                // $out [] = ['id'=>$servicio->servicio_id, 'name'=>strip_tags($servicio->servicio->nombre)]; 
+                $out [] = ['id'=>$cat->id, 'nombre'=>$cat->nombre, 'imagen'=>$cat->imagen, 'descripcion'=>$cat->descripcion]; 
+                // $out [] = ['item'=>'<div class="serv-item" data-id="' . $servicio->servicio_id . '"><img src="' . $servicio->servicio->imagen . '"><span>' . strip_tags($servicio->servicio->nombre) . '</span></div>']; 
+            }
+            // return Json::encode(['output'=>$out, 'selected'=>'']);
+            return Json::encode(['output'=>$out]);
+            return;
+        return Json::encode(['output'=>'', 'Seleccione'=>'']);
+    }
+    
     public function actionListadoservicios(){
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
