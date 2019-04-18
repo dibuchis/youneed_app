@@ -194,6 +194,8 @@ class ApiController extends Controller
                             'traccar_transmision'=>Yii::$app->params['traccar']['transmision_url'],
                             'imei'=>$usuario->imei,
                             'items_cart'=>$items_cart,
+                            'fecha_creacion'=>$usuarios->fecha_creacion,
+                            'fecha_activacion'=>$usuarios->fecha_activacion,
                           ]
                         ]
                     ];
