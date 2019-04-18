@@ -29,7 +29,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'index', 'getdatamarker', 'geodireccion', 'getdispositivosusuario', 'soporteatencion', 'asociadoperfil', 'asociadodashboard', 'asociadonotificaciones', 'weblogin'],
+                'only' => ['logout', 'index', 'getdatamarker', 'geodireccion', 'getdispositivosusuario', 'soporteatencion', 'asociadoperfil', 'asociadodashboard', 'asociadonotificaciones'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -40,8 +40,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
-                    'weblogin' => ['post'],
+                    'logout' => ['post']
                 ],
             ],
         ];
