@@ -320,10 +320,10 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['login'=>true];
+            echo ['login'=>true];
         }else{
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['login'=>false];
+            echo ['login'=>false];
         }
     }
 
