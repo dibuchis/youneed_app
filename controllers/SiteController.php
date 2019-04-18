@@ -310,23 +310,6 @@ class SiteController extends Controller
         ]);
     }
 
-        /**
-     * Login action.
-     *
-     * @return string
-     */
-    public function actionWeblogin()
-    {
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['login'=>true];
-        }else{
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['login'=>false];
-        }
-    }
-
     /**
      * Logout action.
      *
