@@ -318,18 +318,16 @@ class SiteController extends Controller
      */
     public function actionWeblogin()
     {
-        // $model = new LoginForm();
-        // if ($model->load(Yii::$app->request->post()) && $model->login()) {
-        //     Yii::$app->response->format = Response::FORMAT_JSON;
-        //     return ['login'=>true];
-        //     exit();
-        // }else{
-        //     Yii::$app->response->format = Response::FORMAT_JSON;
-        //     return ['login'=>false];
-        //     exit();
-        // }
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ['login'=>false];
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['login'=>true];
+            exit();
+        }else{
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['login'=>false];
+            exit();
+        }
     }
 
     /**
