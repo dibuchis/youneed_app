@@ -182,7 +182,7 @@ class ApiController extends Controller
               $serviciosUsuario = UsuariosServicios::find()->andwhere( [ 'usuario_id'=>$usuario->id ] )->all();
 
               for($i = 0; count($serviciosUsuario); $i++){
-                $servicio = Atenciones::findOne($serviciosUsuario[$i]);
+                $servicio = Servicios::findOne($serviciosUsuario[$i]);
                 $serviciosLista[$i] = $servicio->nombre;
               }
 
