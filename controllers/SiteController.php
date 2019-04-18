@@ -29,7 +29,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'index', 'getdatamarker', 'geodireccion', 'getdispositivosusuario', 'soporteatencion', 'asociadoperfil', 'asociadodashboard', 'asociadonotificaciones'],
+                'only' => ['logout', 'index', 'getdatamarker', 'geodireccion', 'getdispositivosusuario', 'soporteatencion', 'asociadoperfil', 'asociadodashboard', 'asociadonotificaciones', 'weblogin'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -41,6 +41,7 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'weblogin' => ['post'],
                 ],
             ],
         ];
@@ -308,6 +309,25 @@ class SiteController extends Controller
         return $this->render('login', [
             'model' => $model,
         ]);
+    }
+
+        /**
+     * Login action.
+     *
+     * @return string
+     */
+    public function actionWeblogin()
+    {
+        
+        $out = array('login' => false);
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            $out['login'] = true;
+            return json_decode($out);
+        }else{
+            return json_decode($out);
+        }
     }
 
     /**
