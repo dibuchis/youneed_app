@@ -182,9 +182,9 @@ $(document).ready(function () {
                 badPassword = false;
             }
 
-            var isRuc = $("#usuarios-tipo_identificacion").val();
+            var idType = $("#usuarios-tipo_identificacion").val();
 
-            if(isRuc == 2){
+            if(idType == 2){
                 var rucSize = $("#usuarios-identificacion").val().length;
                 if(rucSize == 13){
                     badRuc = false;
@@ -195,7 +195,7 @@ $(document).ready(function () {
                 badRuc = false;
             }
 
-            if(isCedula == 1){
+            if(idType == 1){
                 var cedulaSize = $("#usuarios-identificacion").val().length;
                 if(cedulaSize == 10){
                     badCedula = false;
