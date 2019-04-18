@@ -196,6 +196,8 @@ class ApiController extends Controller
                             'items_cart'=>$items_cart,
                             'fecha_creacion'=>$usuario->fecha_creacion,
                             'fecha_activacion'=>$usuario->fecha_activacion,
+                            'identificacion'=>$usuario->identificacion,
+                            'numero_cuenta'=>$usuario->numero_cuenta,
                           ]
                         ]
                     ];
