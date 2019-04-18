@@ -10,6 +10,7 @@ use app\models\Traccar;
 use app\models\Configuraciones;
 use app\models\Categorias;
 use app\models\Servicios;
+use app\models\UsuariosServicios;
 use app\models\Pedidos;
 use app\models\Items;
 use yii\data\ActiveDataProvider;
@@ -199,6 +200,7 @@ class ApiController extends Controller
                             'fecha_activacion'=>$usuario->fecha_activacion,
                             'identificacion'=>$usuario->identificacion,
                             'numero_cuenta'=>$usuario->numero_cuenta,
+                            'servicios'=> UsuariosServicios::find()->andwhere( [ 'usuario_id'=>$usuario->id ] )->all(),
                           ]
                         ]
                     ];
