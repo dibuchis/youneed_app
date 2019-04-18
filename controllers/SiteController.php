@@ -41,6 +41,7 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'weblogin' => ['post'],
                 ],
             ],
         ];
