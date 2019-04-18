@@ -162,6 +162,7 @@ $(document).ready(function () {
             e.preventDefault();
 
             var badPassword = true;
+            var badRuc = false;
             var empty = false;
             var fields = [];
             tStep = getStep();
@@ -180,6 +181,19 @@ $(document).ready(function () {
                 badPassword = false;
             }
 
+            var isRuc = $("#usuarios-tipo_identificacion").val();
+
+            if(isRuc == 2){
+                var rucSize = $("#usuarios-identificacion").val().length;
+                if(rucSize == 13){
+                    badRuc = false;
+                }else{
+                    badRuc = true;
+                }
+            }else{
+                badRuc = false;
+            }
+
             var ulFields = '<ul style="text-align:left;">';
                 for(var j=0;j<fields.length;j++){
                     var fieldText = fields[j].replace("usuarios-", "");
@@ -193,7 +207,7 @@ $(document).ready(function () {
                 }
             ulFields += '</ul>';
 
-            if(empty || badPassword){
+            if(empty || badPassword || badRuc){
                 Swal.fire({
                     title:'Alerta!',
                     html:'Existen errores o campos vacíos: <br>' + ulFields,
