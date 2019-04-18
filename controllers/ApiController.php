@@ -177,6 +177,13 @@ class ApiController extends Controller
                           'message'=>'Usuario sin rol definido',
                       ];
               }
+              
+              $serviciosLista = array();
+              $serviciosUsuario = UsuariosServicios::find()->andwhere( [ 'usuario_id'=>$usuario->id ] )->all();
+
+              for($i = 0; count($serviciosUsuario); $i++){
+                $serviciosLista[$i] = $servicio[$i]->nombre;
+              }
 
               $this->setHeader(200);
               return [  'status'=>1, 
@@ -200,7 +207,7 @@ class ApiController extends Controller
                             'fecha_activacion'=>$usuario->fecha_activacion,
                             'identificacion'=>$usuario->identificacion,
                             'numero_cuenta'=>$usuario->numero_cuenta,
-                            'servicios'=> UsuariosServicios::find()->andwhere( [ 'usuario_id'=>$usuario->id ] )->all(),
+                            'servicios'=> $serviciosLista,
                           ]
                         ]
                     ];
