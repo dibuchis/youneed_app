@@ -41,7 +41,6 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
-                    'weblogin' => ['post'],
                 ],
             ],
         ];
@@ -324,9 +323,9 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $out['login'] = true;
-            return json_decode($out);
+            echo json_encode($out);
         }else{
-            return json_decode($out);
+            echo json_encode($out);
         }
     }
 
