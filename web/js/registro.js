@@ -163,6 +163,7 @@ $(document).ready(function () {
 
             var badPassword = true;
             var badRuc = false;
+            var badCedula = false;
             var empty = false;
             var fields = [];
             tStep = getStep();
@@ -194,6 +195,17 @@ $(document).ready(function () {
                 badRuc = false;
             }
 
+            if(isCedula == 1){
+                var cedulaSize = $("#usuarios-identificacion").val().length;
+                if(cedulaSize == 10){
+                    badCedula = false;
+                }else{
+                    badCedula = true;
+                }
+            }else{
+                badCedula = false;
+            }
+
             var ulFields = '<ul style="text-align:left;">';
                 for(var j=0;j<fields.length;j++){
                     var fieldText = fields[j].replace("usuarios-", "");
@@ -207,6 +219,9 @@ $(document).ready(function () {
                 }
                 if(badRuc){
                     ulFields += '<li>Su número de RUC debe contener 13 dígitos.</li>';
+                }
+                if(badCedula){
+                    ulFields += '<li>Su número de RUC debe contener 10 dígitos.</li>';
                 }
             ulFields += '</ul>';
 
