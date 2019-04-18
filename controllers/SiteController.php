@@ -317,15 +317,13 @@ class SiteController extends Controller
      */
     public function actionWeblogin()
     {
-        
-        $out = array('login' => false);
-
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            $out['login'] = true;
-            echo json_encode($out);
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['login'=>true];
         }else{
-            echo json_encode($out);
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['login'=>false];
         }
     }
 
