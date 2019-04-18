@@ -188,6 +188,7 @@ class ApiController extends Controller
                             'apellidos'=>$usuario->apellidos,
                             'email'=>$usuario->email,
                             'numero_celular'=>$usuario->numero_celular,
+                            'telefono_domicilio'=>$usuario->telefono_domicilio,
                             'imagen'=>$usuario->imagen,
                             'token'=>$usuario->token,
                             'traccar_id'=>$usuario->traccar_id,
