@@ -205,6 +205,9 @@ $(document).ready(function () {
                 if(badPassword){
                     ulFields += '<li>Las contraseñas no coinciden.</li>';
                 }
+                if(badRuc){
+                    ulFields += '<li>Su número de RUC debe contener 13 dígitos.</li>';
+                }
             ulFields += '</ul>';
 
             if(empty || badPassword || badRuc){
