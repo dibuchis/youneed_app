@@ -203,14 +203,15 @@ class AjaxController extends Controller
         
         if(isset($_GET['srv_id'])){
             $srv_id = $_GET['srv_id'];
+            $servicio = Servicios::findOne($srv_id);
             $count = (new \yii\db\Query())
             ->from('usuarios_servicios')
             ->where(['servicio_id' => $srv_id])
             ->count();
 
-            return $count;
+            return Json::encode(['count'=>$count, 'nombre_servicio'=>$servicio->nombre]);
         }else{
-            return 0;
+            return Json::encode(['count'=>0, 'nombre_servicio'=>$servicio->nombre]);
         }
     }
 
