@@ -199,6 +199,21 @@ class AjaxController extends Controller
         return Json::encode(['output'=>'', 'Seleccione'=>'']);
     }
 
+    public function actionContarasociados(){
+        
+        if(isset($_GET['srv_id'])){
+            $srv_id = $_GET['srv_id'];
+            $count = (new \yii\db\Query())
+            ->select('COUNT(*) as cuenta')
+            ->from('usuarios_servicios')
+            ->where(['servicio_id' => $srv_id])
+            ->one();
+            return $count;
+        }else{
+            return 0;
+        }
+    }
+
     public function actionSubirfotografia()
     {
         $model = new Usuarios();
