@@ -11,6 +11,7 @@ use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\web\UploadedFile;
 use app\models\Categorias;
+use app\models\Ciudades;
 use app\models\Servicios;
 use app\models\CategoriasServicios;
 use app\models\UsuariosServicios;
