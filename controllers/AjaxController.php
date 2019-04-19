@@ -12,6 +12,7 @@ use yii\helpers\Json;
 use yii\web\UploadedFile;
 use app\models\Categorias;
 use app\models\Servicios;
+use app\models\Usuarios;
 use app\models\CategoriasServicios;
 use app\models\UsuariosServicios;
 use app\models\Util;
