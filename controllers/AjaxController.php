@@ -163,7 +163,7 @@ class AjaxController extends Controller
                 foreach ($usuariosLista as $usuarioItem) {
                     $usuario = Usuarios::findOne($usuarioItem->usuario_id);
                     // $out [] = ['id'=>$servicio->servicio_id, 'name'=>strip_tags($servicio->servicio->nombre)]; 
-                    $out [] = ['id'=>$usuario->id, 'nombre'=> $usuario->nombres, 'imagen'=> $usuarios->imagen]; 
+                    $out [] = ['id'=>$usuario->id, 'nombre'=> $usuario->nombres, 'imagen'=> $usuario->imagen]; 
                     // $out [] = ['item'=>'<div class="serv-item" data-id="' . $servicio->servicio_id . '"><img src="' . $servicio->servicio->imagen . '"><span>' . strip_tags($servicio->servicio->nombre) . '</span></div>']; 
                 }
                 // return Json::encode(['output'=>$out, 'selected'=>'']);
