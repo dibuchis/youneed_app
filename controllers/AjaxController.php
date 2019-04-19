@@ -164,7 +164,7 @@ class AjaxController extends Controller
                     $usuario = Usuarios::findOne($usuarioItem->usuario_id);
                     $ciudad = Ciudades::findOne($usuario->ciudad_id);
                     // $out [] = ['id'=>$servicio->servicio_id, 'name'=>strip_tags($servicio->servicio->nombre)]; 
-                    $out [] = ['id'=>$usuario->id, 'nombre'=> $usuario->nombres, 'imagen'=> $usuario->imagen, 'ciudad' => $ciudad]; 
+                    $out [] = ['id'=>$usuario->id, 'nombre'=> $usuario->nombres, 'ciudad' => $ciudad, 'imagen'=> $usuario->imagen]; 
                     // $out [] = ['item'=>'<div class="serv-item" data-id="' . $servicio->servicio_id . '"><img src="' . $servicio->servicio->imagen . '"><span>' . strip_tags($servicio->servicio->nombre) . '</span></div>']; 
                 }
                 // return Json::encode(['output'=>$out, 'selected'=>'']);
