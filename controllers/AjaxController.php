@@ -151,8 +151,8 @@ class AjaxController extends Controller
 
     public function actionListadoasociados(){
         $out = [];
-        if (isset($_POST['srv_id'])) {
-            $srv_id = $_POST['srv_id'];
+        if (isset($_REQUEST['srv_id'])) {
+            $srv_id = $_REQUEST['srv_id'];
             if ($srv_id != null) {
                 
                 $usuariosLista = UsuariosServicios::find()
