@@ -204,10 +204,10 @@ class AjaxController extends Controller
         if(isset($_GET['srv_id'])){
             $srv_id = $_GET['srv_id'];
             $count = (new \yii\db\Query())
-            ->select('COUNT(*)')
             ->from('usuarios_servicios')
-            ->where(['servicio_id' => $srv_id]);
-            
+            ->where(['servicio_id' => $srv_id])
+            ->count();
+
             return $count;
         }else{
             return 0;
