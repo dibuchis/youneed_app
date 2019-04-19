@@ -148,6 +148,30 @@ class AjaxController extends Controller
             return;
         return Json::encode(['output'=>'', 'Seleccione'=>'']);
     }
+
+    public function actionListadoasociados(){
+        $out = [];
+        if (isset($_REQUEST['srv_id'])) {
+            $srv_id = $_REQUEST['srv_id'];
+            if ($srv_id != null) {
+                
+                $usuariosLista = UsuariosServicios::find()
+                  ->andWhere(['in', 'servicio_id', $srv_id ])
+                  ->all();
+
+                foreach ($usuariosLista as $usuarioItem) {
+                    $usuario = Usuario::findById($usuarioItem->usuario_id);
+                    // $out [] = ['id'=>$servicio->servicio_id, 'name'=>strip_tags($servicio->servicio->nombre)]; 
+                    $out [] = ['id'=>$usuario->id, 'nombre'=> $usuario->nombres, 'imagen'=> $usuarios->imagen]; 
+                    // $out [] = ['item'=>'<div class="serv-item" data-id="' . $servicio->servicio_id . '"><img src="' . $servicio->servicio->imagen . '"><span>' . strip_tags($servicio->servicio->nombre) . '</span></div>']; 
+                }
+                // return Json::encode(['output'=>$out, 'selected'=>'']);
+                return Json::encode(['output'=>$out]);
+                return;
+            }
+        }
+        return Json::encode(['output'=>'', 'Seleccione'=>'']);
+    }
     
     public function actionListadoservicios(){
         $out = [];
