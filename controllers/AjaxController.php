@@ -13,6 +13,7 @@ use yii\web\UploadedFile;
 use app\models\Categorias;
 use app\models\Servicios;
 use app\models\CategoriasServicios;
+use app\models\UsuariosServicios;
 use app\models\Util;
 use yii\imagine\Image;
 use Imagine\Image\Box;
