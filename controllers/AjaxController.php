@@ -11,7 +11,6 @@ use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\web\UploadedFile;
 use app\models\Categorias;
-use app\models\Ciudades;
 use app\models\Servicios;
 use app\models\CategoriasServicios;
 use app\models\UsuariosServicios;
@@ -163,7 +162,7 @@ class AjaxController extends Controller
 
                 foreach ($usuariosLista as $usuarioItem) {
                     $usuario = Usuarios::findOne($usuarioItem->usuario_id);
-                    $ciudad = Ciudades::findOne($usuarioItem->ciudad_id);
+                    $ciudad = Ciudades::findOne($usuario->ciudad_id);
                     // $out [] = ['id'=>$servicio->servicio_id, 'name'=>strip_tags($servicio->servicio->nombre)]; 
                     $out [] = ['id'=>$usuario->id, 'nombre'=> $usuario->nombres, 'imagen'=> $usuario->imagen, 'ciudad' => $ciudad]; 
                     // $out [] = ['item'=>'<div class="serv-item" data-id="' . $servicio->servicio_id . '"><img src="' . $servicio->servicio->imagen . '"><span>' . strip_tags($servicio->servicio->nombre) . '</span></div>']; 
