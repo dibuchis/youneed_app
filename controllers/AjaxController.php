@@ -228,7 +228,7 @@ class AjaxController extends Controller
 
             if(isset($_REQUEST['aso_id']) && $_REQUEST['api_token'] == Yii::$app->params['api_token']){
                 $aso_id = $_REQUEST['aso_id'];
-                $asociado = Usuarios::find()
+                $asociado = \app\models\Usuarios::find()
                     ->where(['id' => $aso_id])
                     ->select(['id','imagen','nombres', 'apellidos', 'estado', 'dias_trabajo', 'horarios_trabajo','observaciones', 'servicios', 'pais_id', 'ciudad_id'])
                     ->asArray()
