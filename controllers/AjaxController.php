@@ -222,7 +222,7 @@ class AjaxController extends Controller
         }
     }
 
-    public function actionversociado(){
+    public function actionVerasociado(){
         
         if(isset($_REQUEST['api_token'])){
 
