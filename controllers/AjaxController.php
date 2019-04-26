@@ -12,7 +12,6 @@ use yii\helpers\Json;
 use yii\web\UploadedFile;
 use app\models\Categorias;
 use app\models\Servicios;
-use app\models\Usuarios;
 use app\models\CategoriasServicios;
 use app\models\UsuariosServicios;
 use app\models\Util;
@@ -20,8 +19,8 @@ use yii\imagine\Image;
 use Imagine\Image\Box;
 use Imagine\Image\Point;
 use app\models\Trazabilidades;
+use app\models\Usuarios;
 use app\models\Traccar;
-use app\models\Paises;
 use app\models\Ciudades;
 
 /**
@@ -163,13 +162,13 @@ class AjaxController extends Controller
             $srv_id = $_REQUEST['srv_id'];
             if ($srv_id != null) {
                 
-                $usuariosLista = \app\Models\UsuariosServicios::find()
+                $usuariosLista = UsuariosServicios::find()
                   ->andWhere(['in', 'servicio_id', $srv_id ])
                   ->all();
 
                 foreach ($usuariosLista as $usuarioItem) {
-                    $usuario = \app\Models\Usuarios::findOne($usuarioItem->usuario_id);
-                    $ciudad = \app\Models\Ciudades::findOne($usuario->ciudad_id);
+                    $usuario = Usuarios::findOne($usuarioItem->usuario_id);
+                    $ciudad = Ciudades::findOne($usuario->ciudad_id);
                     // $out [] = ['id'=>$servicio->servicio_id, 'name'=>strip_tags($servicio->servicio->nombre)]; 
                     $out [] = ['id'=>$usuario->id, 'nombre'=> $usuario->nombres, 'ciudad' => $ciudad, 'imagen'=> $usuario->imagen]; 
                     // $out [] = ['item'=>'<div class="serv-item" data-id="' . $servicio->servicio_id . '"><img src="' . $servicio->servicio->imagen . '"><span>' . strip_tags($servicio->servicio->nombre) . '</span></div>']; 
@@ -189,7 +188,7 @@ class AjaxController extends Controller
             if ($parents != null) {
                 $cat_id = $parents;
 
-                $servicios = \app\Models\CategoriasServicios::find()
+                $servicios = CategoriasServicios::find()
                   ->andWhere(['in', 'categoria_id', $cat_id ])
                   ->all();
 
@@ -210,7 +209,7 @@ class AjaxController extends Controller
         
         if(isset($_GET['srv_id'])){
             $srv_id = $_GET['srv_id'];
-            $servicio = \app\Models\Servicios::findOne($srv_id);
+            $servicio = Servicios::findOne($srv_id);
             $count = (new \yii\db\Query())
             ->from('usuarios_servicios')
             ->where(['servicio_id' => $srv_id])
@@ -219,46 +218,6 @@ class AjaxController extends Controller
             return Json::encode(['count'=>$count, 'nombre_servicio'=>$servicio->nombre]);
         }else{
             return Json::encode(['count'=>0, 'nombre_servicio'=>$servicio->nombre]);
-        }
-    }
-
-
-    public function actionAsociado(){
-        
-        if(isset($_REQUEST['api_token'])){
-
-            if(isset($_REQUEST['aso_id']) && $_REQUEST['api_token'] == Yii::$app->params['api_token']){
-                $aso_id = $_REQUEST['aso_id'];
-                $asociado = \app\models\Usuarios::find()
-                    ->where(['id' => $aso_id])
-                    ->select([
-                        'id',
-                        'imagen',
-                        'nombres', 
-                        'apellidos', 
-                        'estado',
-                        'dias_trabajo', 
-                        'horarios_trabajo',
-                        'observaciones', 
-                        'pais_id', 
-                        'ciudad_id'
-                    ])
-                    ->asArray()
-                    ->one();
-
-                $asociado['estado'] = Yii::$app->params['estados_genericos'][$asociado['estado']];
-
-                $asociado['pais'] = \app\models\Paises::findOne($asociado['pais_id']);
-
-                $asociado['ciudad'] = \app\models\Paises::findOne($asociado['ciudad_id']);
-                // $asociado = Usuarios::findOne()->one();
-                
-                return Json::encode($asociado);
-            }else{
-                return Json::encode(['id'=>null]);
-            }
-        }else{
-            return Json::encode(['id'=>null]);
         }
     }
 
