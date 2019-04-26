@@ -21,6 +21,7 @@ use Imagine\Image\Point;
 use app\models\Trazabilidades;
 use app\models\Usuarios;
 use app\models\Traccar;
+use app\models\Paises;
 use app\models\Ciudades;
 
 /**
@@ -218,6 +219,45 @@ class AjaxController extends Controller
             return Json::encode(['count'=>$count, 'nombre_servicio'=>$servicio->nombre]);
         }else{
             return Json::encode(['count'=>0, 'nombre_servicio'=>$servicio->nombre]);
+        }
+    }
+
+    public function actionversociado(){
+        
+        if(isset($_REQUEST['api_token'])){
+
+            if(isset($_REQUEST['aso_id']) && $_REQUEST['api_token'] == Yii::$app->params['api_token']){
+                $aso_id = $_REQUEST['aso_id'];
+                $asociado = Usuarios::find()
+                    ->where(['id' => $aso_id])
+                    ->select([
+                        'id',
+                        'imagen',
+                        'nombres', 
+                        'apellidos', 
+                        'estado',
+                        'dias_trabajo', 
+                        'horarios_trabajo',
+                        'observaciones', 
+                        'pais_id', 
+                        'ciudad_id'
+                    ])
+                    ->asArray()
+                    ->one();
+
+                $asociado['estado'] = Yii::$app->params['estados_genericos'][$asociado['estado']];
+
+                $asociado['pais'] = Paises::findOne($asociado['pais_id']);
+
+                $asociado['ciudad'] = Paises::findOne($asociado['ciudad_id']);
+                // $asociado = Usuarios::findOne()->one();
+                
+                return Json::encode($asociado);
+            }else{
+                return Json::encode(['id'=>null]);
+            }
+        }else{
+            return Json::encode(['id'=>null]);
         }
     }
 
