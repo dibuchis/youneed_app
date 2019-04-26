@@ -21,6 +21,7 @@ use Imagine\Image\Box;
 use Imagine\Image\Point;
 use app\models\Trazabilidades;
 use app\models\Traccar;
+use app\models\Paises;
 use app\models\Ciudades;
 
 /**
@@ -230,9 +231,26 @@ class AjaxController extends Controller
                 $aso_id = $_REQUEST['aso_id'];
                 $asociado = \app\models\Usuarios::find()
                     ->where(['id' => $aso_id])
-                    ->select(['id','imagen','nombres', 'apellidos', 'estado', 'dias_trabajo', 'horarios_trabajo','observaciones', 'pais_id', 'ciudad_id'])
+                    ->select([
+                        'id',
+                        'imagen',
+                        'nombres', 
+                        'apellidos', 
+                        'estado',
+                        'dias_trabajo', 
+                        'horarios_trabajo',
+                        'observaciones', 
+                        'pais_id', 
+                        'ciudad_id'
+                    ])
                     ->asArray()
                     ->one();
+
+                $asociado['estado'] = Yii::$app->params['estados_genericos'][$asociado['estado']];
+
+                $asociado['pais'] = \app\models\Paises::findOne($asociado['pais_id']);
+
+                $asociado['ciudad'] = \app\models\Paises::findOne($asociado['ciudad_id']);
                 // $asociado = Usuarios::findOne()->one();
                 
                 return Json::encode($asociado);
