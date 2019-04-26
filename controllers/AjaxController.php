@@ -168,8 +168,8 @@ class AjaxController extends Controller
                   ->all();
 
                 foreach ($usuariosLista as $usuarioItem) {
-                    $usuario = Usuarios::findOne($usuarioItem->usuario_id);
-                    $ciudad = Ciudades::findOne($usuario->ciudad_id);
+                    $usuario = \app\Models\Usuarios::findOne($usuarioItem->usuario_id);
+                    $ciudad = \app\Models\Ciudades::findOne($usuario->ciudad_id);
                     // $out [] = ['id'=>$servicio->servicio_id, 'name'=>strip_tags($servicio->servicio->nombre)]; 
                     $out [] = ['id'=>$usuario->id, 'nombre'=> $usuario->nombres, 'ciudad' => $ciudad, 'imagen'=> $usuario->imagen]; 
                     // $out [] = ['item'=>'<div class="serv-item" data-id="' . $servicio->servicio_id . '"><img src="' . $servicio->servicio->imagen . '"><span>' . strip_tags($servicio->servicio->nombre) . '</span></div>']; 
@@ -189,7 +189,7 @@ class AjaxController extends Controller
             if ($parents != null) {
                 $cat_id = $parents;
 
-                $servicios = CategoriasServicios::find()
+                $servicios = \app\Models\CategoriasServicios::find()
                   ->andWhere(['in', 'categoria_id', $cat_id ])
                   ->all();
 
@@ -210,7 +210,7 @@ class AjaxController extends Controller
         
         if(isset($_GET['srv_id'])){
             $srv_id = $_GET['srv_id'];
-            $servicio = Servicios::findOne($srv_id);
+            $servicio = \app\Models\Servicios::findOne($srv_id);
             $count = (new \yii\db\Query())
             ->from('usuarios_servicios')
             ->where(['servicio_id' => $srv_id])
