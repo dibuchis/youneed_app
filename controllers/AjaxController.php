@@ -12,6 +12,7 @@ use yii\helpers\Json;
 use yii\web\UploadedFile;
 use app\models\Categorias;
 use app\models\Servicios;
+use app\Models\Usuarios;
 use app\models\CategoriasServicios;
 use app\models\UsuariosServicios;
 use app\models\Util;
@@ -19,7 +20,6 @@ use yii\imagine\Image;
 use Imagine\Image\Box;
 use Imagine\Image\Point;
 use app\models\Trazabilidades;
-use app\models\Usuarios;
 use app\models\Traccar;
 use app\models\Ciudades;
 
@@ -228,7 +228,11 @@ class AjaxController extends Controller
 
             if(isset($_REQUEST['aso_id']) && $_REQUEST['api_token'] == Yii::$app->params['api_token']){
                 $aso_id = $_REQUEST['aso_id'];
-                $asociado = Asociado::findOne($aso_id)->asArray();
+                $asociado = Asociados::findOne()
+                    ->where(['id' => $aso_id])
+                    ->select(['id','imagen','nombres', 'apellidos', 'estado', 'dias_trabajo', 'horarios_trabajo','observaciones', 'servicios', 'pais_id', 'ciudad_id'])
+                    ->asArray()
+                    ->one();
                 
                 return Json::encode($asociado);
             }else{
