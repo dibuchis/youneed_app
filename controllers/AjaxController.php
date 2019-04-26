@@ -12,7 +12,7 @@ use yii\helpers\Json;
 use yii\web\UploadedFile;
 use app\models\Categorias;
 use app\models\Servicios;
-use app\Models\Usuarios;
+use app\models\Usuarios;
 use app\models\CategoriasServicios;
 use app\models\UsuariosServicios;
 use app\models\Util;
@@ -163,7 +163,7 @@ class AjaxController extends Controller
             $srv_id = $_REQUEST['srv_id'];
             if ($srv_id != null) {
                 
-                $usuariosLista = UsuariosServicios::find()
+                $usuariosLista = \app\Models\UsuariosServicios::find()
                   ->andWhere(['in', 'servicio_id', $srv_id ])
                   ->all();
 
