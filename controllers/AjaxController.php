@@ -224,13 +224,18 @@ class AjaxController extends Controller
 
     public function actionAsociado(){
         
-        if(isset($_REQUEST['aso_id'])){
-            $aso_id = $_REQUEST['aso_id'];
-            $asociado = Asociado::findOne($aso_id)->asArray();
+        if(isset($_REQUEST['api_token'])){
 
-            return Json::encode($asociado);
+            if(isset($_REQUEST['aso_id']) && $_REQUEST['api_token'] == Yii::$app->params['api_token']){
+                $aso_id = $_REQUEST['aso_id'];
+                $asociado = Asociado::findOne($aso_id)->asArray();
+                
+                return Json::encode($asociado);
+            }else{
+                return Json::encode(['id'=>null]);
+            }
         }else{
-            return Json::encode(['result'=>null]);
+            return Json::encode(['id'=>null]);
         }
     }
 
