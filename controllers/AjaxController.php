@@ -230,7 +230,7 @@ class AjaxController extends Controller
                 $aso_id = $_REQUEST['aso_id'];
                 $asociado = \app\models\Usuarios::find()
                     ->where(['id' => $aso_id])
-                    ->select(['id','imagen','nombres', 'apellidos', 'estado', 'dias_trabajo', 'horarios_trabajo','observaciones', 'servicios', 'pais_id', 'ciudad_id'])
+                    ->select(['id','imagen','nombres', 'apellidos', 'estado', 'dias_trabajo', 'horarios_trabajo','observaciones', 'pais_id', 'ciudad_id'])
                     ->asArray()
                     ->one();
                 // $asociado = Usuarios::findOne()->one();
