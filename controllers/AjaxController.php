@@ -249,7 +249,7 @@ class AjaxController extends Controller
 
                 $asociado['pais'] = Paises::findOne($asociado['pais_id']);
 
-                $asociado['ciudad'] = Paises::findOne($asociado['ciudad_id']);
+                $asociado['ciudad'] = Ciudades::findOne($asociado['ciudad_id']);
                 // $asociado = Usuarios::findOne()->one();
                 
                 return Json::encode($asociado);
