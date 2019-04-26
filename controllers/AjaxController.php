@@ -221,6 +221,19 @@ class AjaxController extends Controller
         }
     }
 
+
+    public function actionAsociado(){
+        
+        if(isset($_REQUEST['aso_id'])){
+            $aso_id = $_REQUEST['aso_id'];
+            $asociado = Asociado::findOne($aso_id)->asArray();
+
+            return Json::encode($asociado);
+        }else{
+            return Json::encode(['result'=>null]);
+        }
+    }
+
     public function actionSubirfotografia()
     {
         $model = new Usuarios();
