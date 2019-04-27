@@ -178,6 +178,7 @@ class AjaxController extends Controller
 
                 $usuariosLista = UsuariosServicios::find()
                   ->andWhere(['in', 'servicio_id', $srv_id ])
+                  ->orderBy(['id' => SORT_DESC])
                   ->limit($rows)
                   ->offset($offset)
                   ->all();
