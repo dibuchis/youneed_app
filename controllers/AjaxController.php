@@ -165,7 +165,8 @@ class AjaxController extends Controller
                 
                 $usuariosLista = UsuariosServicios::find()
                   ->andWhere(['in', 'servicio_id', $srv_id ])
-                  ->limit(3)
+                  ->limit(6)
+                  ->offset(2)
                   ->all();
 
                 foreach ($usuariosLista as $usuarioItem) {
