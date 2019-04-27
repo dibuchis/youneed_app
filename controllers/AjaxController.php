@@ -159,7 +159,7 @@ class AjaxController extends Controller
 
     public function actionListadoasociados(){
         $out = [];
-        $rows = 1;
+        $rows = 10;
         $offset = 0;
 
         if (isset($_REQUEST['srv_id'])) {
