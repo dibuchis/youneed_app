@@ -172,7 +172,6 @@ class AjaxController extends Controller
 
                 $total = UsuariosServicios::find()
                   ->andWhere(['in', 'servicio_id', $srv_id ])
-                  ->all()
                   ->count();
 
                 $pages = ceil($total / $rows);
