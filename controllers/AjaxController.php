@@ -191,7 +191,13 @@ class AjaxController extends Controller
                     // $out [] = ['item'=>'<div class="serv-item" data-id="' . $servicio->servicio_id . '"><img src="' . $servicio->servicio->imagen . '"><span>' . strip_tags($servicio->servicio->nombre) . '</span></div>']; 
                 }
                 // return Json::encode(['output'=>$out, 'selected'=>'']);
-                return Json::encode(['output'=>$out, 'total' => $total, 'pages' => $pages]);
+                return Json::encode([
+                    'output'=>$out, 
+                    'total' => $total, 
+                    'pages' => $pages,
+                    'offset' => $offset,
+                    'rows' => $rows
+                ]);
                 return;
             }
         }
