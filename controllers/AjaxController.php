@@ -159,14 +159,28 @@ class AjaxController extends Controller
 
     public function actionListadoasociados(){
         $out = [];
+        $rows = 1;
+        $offset = 0;
+
         if (isset($_REQUEST['srv_id'])) {
             $srv_id = $_REQUEST['srv_id'];
             if ($srv_id != null) {
                 
+                if(isset($_REQUEST['page'])){
+                    $offset = ($_REQUEST['page'] * $rows) - $rows;
+                }
+
+                $total = UsuariosServicios::find()
+                  ->andWhere(['in', 'servicio_id', $srv_id ])
+                  ->all()
+                  ->count();
+
+                $pages = ceil($total / $rows);
+
                 $usuariosLista = UsuariosServicios::find()
                   ->andWhere(['in', 'servicio_id', $srv_id ])
-                  ->limit(6)
-                  ->offset(2)
+                  ->limit($rows)
+                  ->offset($offset)
                   ->all();
 
                 foreach ($usuariosLista as $usuarioItem) {
@@ -177,7 +191,7 @@ class AjaxController extends Controller
                     // $out [] = ['item'=>'<div class="serv-item" data-id="' . $servicio->servicio_id . '"><img src="' . $servicio->servicio->imagen . '"><span>' . strip_tags($servicio->servicio->nombre) . '</span></div>']; 
                 }
                 // return Json::encode(['output'=>$out, 'selected'=>'']);
-                return Json::encode(['output'=>$out]);
+                return Json::encode(['output'=>$out, 'total' => $total, 'pages' => $pages]);
                 return;
             }
         }
