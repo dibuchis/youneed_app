@@ -328,12 +328,75 @@ class ApiController extends Controller
     public function actionContratarasociado(){
       $request = $_POST;
       
-      // $cliente_id = Yii::$app->request->post('cliente_id');
-      // $asociado_id = Yii::$app->request->post('asociado_id');
+      $cliente_id = $_POST['cliente_id'];
+      $asociado_id = $_POST['asociado_id'];
 
-      print_r($request);
-      exit();
+      $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$cliente_id, 'asociado_id'=>$asociado_id, 'estado'=>0] )->one();
+      
+      if( !is_object( $pedido ) ){
+        $pedido = new Pedidos();
 
+        $cliente = Usuarios::find()->andWhere( ['id'=>$_POST['cliente_id']] )->one();
+        $asociado = Usuarios::find()->andWhere( ['id'=>$_POST['asociado_id']] )->one();
+        $servicio = Servicios::find()->andWhere( ['id'=>$_POST['servicio_id']] )->one();
+
+        if( $pedido->load($_POST, '') ){
+          //$pedido->cliente_id = $cliente->id;
+          $pedido->identificacion = $cliente->identificacion;
+          $pedido->razon_social = $cliente->nombres.' '.$cliente->apellidos;
+          $pedido->email = $cliente->email;
+          $pedido->telefono = $cliente->numero_celular;
+          $pedido->fecha_creacion = date('Y-m-d H:i:s');
+          $pedido->estado = 0;
+          $pedido->tipo_atencion = Yii::$app->request->post('tipo_atencion');
+
+          if($pedido->save()){
+
+            //Email al Cliente
+            try{
+                $send = Yii::$app->mailer->compose()
+                ->setFrom('noreply@youneed.com.ec')
+                ->setTo($cliente->email)
+                ->setSubject("YouNeed - Servicio Solicitado")
+                ->setHtmlBody('<h1>Cliente</h1><h2>Nueva Solitud de Contrato</H2><p><a href="https://www.youneed.com.ec/app/login.php">Ver Pedido</a></p>', 'text/html')
+                ->send();
+                //echo "<script>console.log('" . $send . "');</script>";
+            }catch(Exception $e){
+                //echo "<script>console.log('Error de envío de Email');</script>";
+            }
+
+            //Email al Asociado
+            try{
+              $send = Yii::$app->mailer->compose()
+              ->setFrom('noreply@youneed.com.ec')
+              ->setTo($asociado->email)
+              ->setSubject("YouNeed - Servicio Solicitado")
+              ->setHtmlBody('<h1>Asociado</h1><h2>Nueva Solitud de Contrato</H2><p><a href="https://www.youneed.com.ec/app/login.php">Ver Solicitud</a></p>', 'text/html')
+              ->send();
+              //echo "<script>console.log('" . $send . "');</script>";
+          }catch(Exception $e){
+              //echo "<script>console.log('Error de envío de Email');</script>";
+          }
+
+            $notificacionUsuario = new Notificaciones();
+            $notificacionUsuario->create($notificacionUsuario->id, 5);
+
+            $notificacionAsociado = new Notificaciones();
+            $notificacionAsociado->create($notificacionAsociado->id, 6);
+
+            $this->setHeader(200);
+            return [  'status'=>1, 
+                'message'=>'Contrato Realizado'
+            ];
+
+          }else{
+            $this->setHeader(200);
+            return [  'status'=>0, 
+                'message'=>'Error de Sistema'
+            ];
+          }
+        } 
+      }
       
     }
 
