@@ -494,7 +494,7 @@ class ApiController extends Controller
         $asociado = Usuarios::find()->andWhere( ['id'=>Yii::$app->request->post('asociado_id')] )->one();
         $servicio = Servicios::find()->andWhere( ['id'=>Yii::$app->request->post('servicio_id')] )->one();
 
-        if( $model->load($request->post(), '') ){
+        if( $pedido->load($request->post(), '') ){
           $pedido->cliente_id = $cliente->id;
           $pedido->identificacion = $cliente->identificacion;
           $pedido->razon_social = $cliente->nombres.' '.$cliente->apellidos;
@@ -551,10 +551,10 @@ class ApiController extends Controller
           }
 
             $notificacionUsuario = new Notificacion();
-            $notificacionUsuario::create($model->id, 5);
+            $notificacionUsuario::create($notificacionUsuario->id, 5);
 
             $notificacionAsociado = new Notificacion();
-            $notificacionAsociado::create($model->id, 6);
+            $notificacionAsociado::create($notificacionAsociado->id, 6);
 
             $this->setHeader(200);
             return [  'status'=>1, 
