@@ -45,9 +45,7 @@ class ApiController extends Controller
               'getorders'=>['get'],
               'setshoppingcart'=>['get'],
               'transmittotraccar'=>['get'],
-          ],
-
-   
+          ]
         ],
         'corsFilter' => [
           'class' => \yii\filters\Cors::className(),
@@ -64,6 +62,8 @@ class ApiController extends Controller
               'Access-Control-Max-Age' => 3600,
               // Allow the X-Pagination-Current-Page header to be exposed to the browser.
               'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
+          ]
+        ]
       ];
     }
  
