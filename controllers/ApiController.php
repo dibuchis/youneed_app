@@ -193,6 +193,7 @@ class ApiController extends Controller
                         'message'=>'Bienvenid@: '.$usuario->nombres,
                         'data'=>[
                           'usuario'=>[
+                            'id'=>$usuario->id,
                             'tipo'=>$tipo,
                             'display_name'=>$usuario->nombres.' '.$usuario->apellidos,
                             'nombres'=>$usuario->nombres,
