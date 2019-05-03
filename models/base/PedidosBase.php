@@ -8,6 +8,7 @@ use app\models\Items;
 use app\models\Ciudades;
 use app\models\Tarjetas;
 use app\models\Usuarios;
+use app\models\Servicios;
 
 /**
  * This is the model class for table "pedidos".
