@@ -12,11 +12,7 @@ use app\models\Categorias;
 use app\models\Servicios;
 use app\models\UsuariosServicios;
 use app\models\Pedidos;
-use app\models\Items;
-use yii\data\ActiveDataProvider;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use app\models\Notificaciones;
 use yii\db\Query;
 use yii\helpers\Url;
 use \yii\web\Response;
@@ -33,7 +29,7 @@ class ApiController extends Controller
               'getinfoapp'=>['get'], //Información global de la plataforma para rastreo y variables internas
               'login'=>['post'], //Ingreso de usuarios
               'register'=>['post'], //Registro de usuarios
-              'contratarasociado'=>['post'], //Registro de usuarios
+              'contratarasociado'=>['post'], //Contratar Asociado
               'recoverpassword'=>['get'], //Recuperar la clave de la cuenta
               'termsconditions'=>['get'], //Información de terminos y condiciones
               'getcategories'=>['get'], //Listado de categorias
