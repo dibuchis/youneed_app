@@ -14,6 +14,7 @@ use app\models\Categorias;
 use app\models\Servicios;
 use app\models\CategoriasServicios;
 use app\models\UsuariosServicios;
+use app\models\Notificaciones;
 use app\models\Util;
 use yii\imagine\Image;
 use Imagine\Image\Box;
@@ -139,6 +140,14 @@ class AjaxController extends Controller
                 // return Json::encode(['output'=>$out, 'selected'=>'']);
                 return Json::encode(['servicio'=>$out]);
         }
+    }
+
+    
+    public function actionGetnotificaciones(){
+        $uid = $_GET['uid'];
+
+        $notif = Notificaciones::find()->andWhere(['usuario_id'=> $uid])->orderBy(['fecha_notificacion' => SORT_DESC])->all();
+        return Json::encode(['notificaciones'=>$notif]);
     }
 
     public function actionListadocategorias(){
