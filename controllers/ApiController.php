@@ -23,6 +23,8 @@ use \yii\web\Response;
 
 class ApiController extends Controller
 {
+
+    public $enableCsrfValidation = false;
  
     public function behaviors()
     {
