@@ -44,6 +44,7 @@ use app\models\Usuarios;
     * @property string $valores_cancelacion_servicio_cliente
     * @property integer $tiempo_aproximado_llegada
     * @property integer $ciudad_id
+    * @property integer $servicio_id
     *
             * @property Calificaciones[] $calificaciones
             * @property Items[] $items
@@ -51,6 +52,7 @@ use app\models\Usuarios;
             * @property Tarjetas $tarjeta
             * @property Usuarios $cliente
             * @property Usuarios $asociado
+            * @property Servicios $servicio
     */
 class PedidosBase extends \yii\db\ActiveRecord
 {
@@ -80,6 +82,7 @@ public function rules()
             [['tarjeta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tarjetas::className(), 'targetAttribute' => ['tarjeta_id' => 'id']],
             [['cliente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['cliente_id' => 'id']],
             [['asociado_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['asociado_id' => 'id']],
+            [['servicio_id'], 'exist', 'skipOnError' => true, 'targetClass' => Servicios::className(), 'targetAttribute' => ['servicio_id' => 'id']],
         ];
 }
 
@@ -121,6 +124,7 @@ return [
     'valores_cancelacion_servicio_cliente' => 'Valores Cancelacion Servicio Cliente',
     'tiempo_aproximado_llegada' => 'Tiempo Aproximado Llegada',
     'ciudad_id' => 'Ciudad ID',
+    'servicio_id' => 'Servicio ID',
 ];
 }
 

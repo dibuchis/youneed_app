@@ -22,6 +22,7 @@ class Pedidos extends \app\models\base\PedidosBase
 	    'direccion_completa' => 'Dirección Completa',
 	    'observaciones_adicionales' => 'Observaciones Adicionales',
 	    'ciudad_id' => 'Ciudad',
+	    'servicio_id' => 'Servicio',
 	    'forma_pago' => 'Forma de Pago',
 	    'tarjeta_id' => 'Tarjeta',
 	    'codigo_postal' => 'Código Postal',

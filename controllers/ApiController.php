@@ -183,7 +183,7 @@ class ApiController extends Controller
 
               for($i = 0; $i < count($serviciosUsuario); $i++){
                 $servicio = Servicios::findOne($serviciosUsuario[$i]);
-                $serviciosLista[$i] = $servicio->nombre;
+                $serviciosLista[$i] = [ "servicio_id"=>$servicio->id, "servicio_nombre" => $servicio->nombre ];
               }
 
               $this->setHeader(200);
@@ -191,6 +191,7 @@ class ApiController extends Controller
                         'message'=>'Bienvenid@: '.$usuario->nombres,
                         'data'=>[
                           'usuario'=>[
+                            'id'=>$usuario->id,
                             'tipo'=>$tipo,
                             'display_name'=>$usuario->nombres.' '.$usuario->apellidos,
                             'nombres'=>$usuario->nombres,
@@ -274,6 +275,21 @@ class ApiController extends Controller
             $model->imei = rand(pow(10, 4-1), pow(10, 4)-1).time();
             $model->es_cliente = 1;
             $model->save();
+
+            try{
+              $send = Yii::$app->mailer->compose()
+              ->setFrom('noreply@youneed.com.ec')
+              ->setTo($model->email)
+              ->setSubject("YouNeed - Registro exitoso")
+              ->setHtmlBody('<div style="background:#2e8a96; margin:0px auto; max-width:650px; height:80px; padding:8px;color:white;"> <img src="https://app.youneed.com.ec/images/logo-admin.png" style="width:156px; height:auto;margin:12px 25px 12px 12px"></div> <div style="padding:25px; margin:0px auto; max-width:650px;"> <h2 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">' . $model->nombres . ',</h2> <h3 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">¡Bienvenido a YouNeed!</h3> </div> <div style="margin:25px auto; max-width:650px;"><p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">Gracias por unirte a la mayor red de profesionales y clientes que están usando YouNeed para ofrecer y contratar servicios, nuestro compromiso es brindarte la mejor plataforma para unir clientes con profesionales en el país.</p> <p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">Por favor, ingresa a tu perfil para ver tus datos y pedidos: </p> <p><a style="background-color: #178b89!important; border-color: #178b89!important; line-height: 1.42857143; text-align: center; white-space: nowrap; font-size: 14px; padding: 6px 12px; color: #fff; margin: 35px auto 10px; width: 180px; display: block;" href="https://www.youneed.com.ec/app/login.php">Mi Perfil</a> </p> </div> </div> <div style="font-family:Arial, Helvetica, sans-serif; height:40px; margin:25px auto 0px; max-width:650px; background:#9a999e; text-align:center; padding:7px; padding-top:15px; color:#fff;">YouNeed® Todos los derechos reservados.</div>', 'text/html')
+              ->send();
+              //echo "<script>console.log('" . $send . "');</script>";
+          }catch(Exception $e){
+              //echo "<script>console.log('Error de envío de Email');</script>";
+          }
+
+          $notificacion = new Notificacion();
+          $notificacion::create($model->id, 1);
 
             // $response = Traccar::setDevice( $model, 'POST' );
             // $model->traccar_id = $response['id'];
@@ -460,6 +476,95 @@ class ApiController extends Controller
                 'data'=>[ 'servicios'=>$array_servicios, 'total'=>count( $array_servicios ) ],
             ];
       
+    }
+
+    public function actionContratarasociado(){
+      $request = Yii::$app->request;
+      
+      $cliente_id = Yii::$app->request->post('cliente_id');
+      $asociado_id = Yii::$app->request->post('cliente_id');
+
+      $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$cliente_id, 'asociado_id'=>$cliente_id, 'estado'=>0] )->one();
+      if( !is_object( $pedido ) ){
+        $pedido = new Pedidos();
+
+        $cliente = Usuarios::find()->andWhere( ['id'=>Yii::$app->request->post('cliente_id')] )->one();
+        $asociado = Usuarios::find()->andWhere( ['id'=>Yii::$app->request->post('asociado_id')] )->one();
+        $servicio = Servicios::find()->andWhere( ['id'=>Yii::$app->request->post('servicio_id')] )->one();
+
+        if( $model->load($request->post(), '') ){
+          $pedido->cliente_id = $cliente->id;
+          $pedido->identificacion = $cliente->identificacion;
+          $pedido->razon_social = $cliente->nombres.' '.$cliente->apellidos;
+          $pedido->email = $cliente->email;
+          $pedido->telefono = $cliente->numero_celular;
+          $pedido->fecha_creacion = date('Y-m-d H:i:s');
+          $pedido->estado = 0;
+          $pedido->tipo_atencion = Yii::$app->request->post('tipo_atencion');
+
+          if($pedido->save()){
+
+            //Email al Cliente
+            try{
+                $send = Yii::$app->mailer->compose()
+                ->setFrom('noreply@youneed.com.ec')
+                ->setTo($cliente->email)
+                ->setSubject("YouNeed - Servicio Solicitado")
+                ->setHtmlBody('<div style="background:#2e8a96; margin:0px auto; max-width:650px; height:80px; padding:8px;color:white;"> <img src="https://app.youneed.com.ec/images/logo-admin.png" style="width:156px; height:auto;margin:12px 25px 12px 12px"></div> <div style="padding:25px; margin:0px auto; max-width:650px;"> <h2 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">' . $cliente->nombres . ',</h2> <h3 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">Solicitud de Servicio</h3> </div> <div style="margin:25px auto; max-width:650px;"><p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">' .
+                'Has solicitado el servicio ' . $servicio->nombre . ' del asociado ' . $asociado->nombres . " " . $asociado->apellidos . ' en breve tendras detalle de tu solicitud.'.            
+                '</p> <p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">Por favor, ingresa a tu perfil para ver los datos de tu solicitud: </p> <p><a style="background-color: #178b89!important; border-color: #178b89!important; line-height: 1.42857143; text-align: center; white-space: nowrap; font-size: 14px; padding: 6px 12px; color: #fff; margin: 35px auto 10px; width: 180px; display: block;" href="https://www.youneed.com.ec/app/login.php">Mi Perfil</a> </p> </div> </div> <div style="font-family:Arial, Helvetica, sans-serif; height:40px; margin:25px auto 0px; max-width:650px; background:#9a999e; text-align:center; padding:7px; padding-top:15px; color:#fff;">YouNeed® Todos los derechos reservados.</div>', 'text/html')
+                ->send();
+                //echo "<script>console.log('" . $send . "');</script>";
+            }catch(Exception $e){
+                //echo "<script>console.log('Error de envío de Email');</script>";
+            }
+
+            //Email al Asociado
+            try{
+              $send = Yii::$app->mailer->compose()
+              ->setFrom('noreply@youneed.com.ec')
+              ->setTo($asociado->email)
+              ->setSubject("YouNeed - Servicio Solicitado")
+              ->setHtmlBody('<div style="background:#2e8a96; margin:0px auto; max-width:650px; height:80px; padding:8px;color:white;"> <img src="https://app.youneed.com.ec/images/logo-admin.png" style="width:156px; height:auto;margin:12px 25px 12px 12px"></div> <div style="padding:25px; margin:0px auto; max-width:650px;"> <h2 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">' . $cliente->nombres . ',</h2> <h3 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">Solicitud de Servicio</h3> </div> <div style="margin:25px auto; max-width:650px; font-family:Arial, Helvetica, sans-serif; color:#9a999e;">' .
+              '<h3>Datos de la Solicitud:</h3>' .
+              '<table style="border-color:#e3e3e3;">' .            
+              '<tr>' .
+                '<td>Nombre</td>' .
+                '<td>' . $cliente->nombres . " " . $cliente->apellidos . '</td>' .
+              '</tr>' .
+              '<tr>' .
+                '<td>Servicio</td>' .
+                '<td>' . $servicio->nombre . '</td>' .
+              '</tr>' .
+              '<tr>' .
+                '<td>Fecha de solicitud</td>' .
+                '<td>' . date('Y/m/d H:i:s') . '</td>' .
+              '</tr>' .
+              '</table>' .            
+              '<p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">Por favor, ingresa a tu perfil para ver los datos de tu solicitud: </p> <p><a style="background-color: #178b89!important; border-color: #178b89!important; line-height: 1.42857143; text-align: center; white-space: nowrap; font-size: 14px; padding: 6px 12px; color: #fff; margin: 35px auto 10px; width: 180px; display: block;" href="https://www.youneed.com.ec/app/login.php">Mi Perfil</a> </p> </div> </div> <div style="font-family:Arial, Helvetica, sans-serif; height:40px; margin:25px auto 0px; max-width:650px; background:#9a999e; text-align:center; padding:7px; padding-top:15px; color:#fff;">YouNeed® Todos los derechos reservados.</div>', 'text/html')
+              ->send();
+              //echo "<script>console.log('" . $send . "');</script>";
+          }catch(Exception $e){
+              //echo "<script>console.log('Error de envío de Email');</script>";
+          }
+
+            $notificacionUsuario = new Notificacion();
+            $notificacionUsuario::create($model->id, 5);
+
+            $notificacionAsociado = new Notificacion();
+            $notificacionAsociado::create($model->id, 6);
+
+            return [  'status'=>1, 
+                'message'=>'Contrato Realizado'
+            ];
+
+          }else{
+            return [  'status'=>0, 
+                'message'=>'Error de Sistema'
+            ];
+          }
+        } 
+      }
     }
 
     public function actionSetitemcart(){
