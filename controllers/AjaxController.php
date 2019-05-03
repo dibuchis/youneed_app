@@ -14,6 +14,7 @@ use app\models\Categorias;
 use app\models\Servicios;
 use app\models\CategoriasServicios;
 use app\models\UsuariosServicios;
+use app\models\Pedidos;
 use app\models\Notificaciones;
 use app\models\Util;
 use yii\imagine\Image;
