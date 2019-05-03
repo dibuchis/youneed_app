@@ -33,7 +33,7 @@ class ApiController extends Controller
               'getinfoapp'=>['get'], //Información global de la plataforma para rastreo y variables internas
               'login'=>['post'], //Ingreso de usuarios
               'register'=>['post'], //Registro de usuarios
-              'contratarasociado'=>['get'], //Registro de usuarios
+              'contratarasociado'=>['post'], //Registro de usuarios
               'recoverpassword'=>['get'], //Recuperar la clave de la cuenta
               'termsconditions'=>['get'], //Información de terminos y condiciones
               'getcategories'=>['get'], //Listado de categorias
