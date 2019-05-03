@@ -24,8 +24,6 @@ use \yii\web\Response;
 class ApiController extends Controller
 {
 
-    public $enableCsrfValidation = false;
- 
     public function behaviors()
     {
       return [
@@ -76,6 +74,9 @@ class ApiController extends Controller
     {
       \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
       $action = $event->id;
+      if (in_array($action->id, ['contratarasociado'])) {
+        $this->enableCsrfValidation = false;
+      }
       if (isset($this->actions[$action])) {
           $verbs = $this->actions[$action];
       } elseif (isset($this->actions['*'])) {
