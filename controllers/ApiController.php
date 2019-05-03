@@ -326,10 +326,10 @@ class ApiController extends Controller
     // CONTRATAR
 
     public function actionContratarasociado(){
-      $request = Yii::$app->request;
+      $request = $_POST;
       
-      $cliente_id = Yii::$app->request->post('cliente_id');
-      $asociado_id = Yii::$app->request->post('asociado_id');
+      // $cliente_id = Yii::$app->request->post('cliente_id');
+      // $asociado_id = Yii::$app->request->post('asociado_id');
 
       print_r($request);
       exit();
