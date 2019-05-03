@@ -359,7 +359,9 @@ class ApiController extends Controller
                 ->setFrom('noreply@youneed.com.ec')
                 ->setTo($cliente->email)
                 ->setSubject("YouNeed - Servicio Solicitado")
-                ->setHtmlBody('<h1>Cliente</h1><h2>Nueva Solitud de Contrato</H2><p><a href="https://www.youneed.com.ec/app/login.php">Ver Pedido</a></p>', 'text/html')
+                ->setHtmlBody('<div style="background:#2e8a96; margin:0px auto; max-width:650px; height:80px; padding:8px;color:white;"> <img src="https://app.youneed.com.ec/images/logo-admin.png" style="width:156px; height:auto;margin:12px 25px 12px 12px"></div> <div style="padding:25px; margin:0px auto; max-width:650px;"> <h2 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">' . $cliente->nombres . ',</h2> <h3 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">Solicitud de Servicio</h3> </div> <div style="margin:25px auto; max-width:650px;"><p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">' .
+                'Has solicitado el servicio ' . $servicio->nombre . ' del asociado ' . $asociado->nombres . " " . $asociado->apellidos . ' en breve tendras detalle de tu solicitud.'.            
+                '</p> <p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">Por favor, ingresa a tu perfil para ver los datos de tu solicitud: </p> <p><a style="background-color: #178b89!important; border-color: #178b89!important; line-height: 1.42857143; text-align: center; white-space: nowrap; font-size: 14px; padding: 6px 12px; color: #fff; margin: 35px auto 10px; width: 180px; display: block;" href="https://www.youneed.com.ec/app/login.php">Mi Perfil</a> </p> </div> </div> <div style="font-family:Arial, Helvetica, sans-serif; height:40px; margin:25px auto 0px; max-width:650px; background:#9a999e; text-align:center; padding:7px; padding-top:15px; color:#fff;">YouNeed® Todos los derechos reservados.</div>', 'text/html')
                 ->send();
                 //echo "<script>console.log('" . $send . "');</script>";
             }catch(Exception $e){
@@ -372,7 +374,23 @@ class ApiController extends Controller
               ->setFrom('noreply@youneed.com.ec')
               ->setTo($asociado->email)
               ->setSubject("YouNeed - Servicio Solicitado")
-              ->setHtmlBody('<h1>Asociado</h1><h2>Nueva Solitud de Contrato</H2><p><a href="https://www.youneed.com.ec/app/login.php">Ver Solicitud</a></p>', 'text/html')
+              ->setHtmlBody('<div style="background:#2e8a96; margin:0px auto; max-width:650px; height:80px; padding:8px;color:white;"> <img src="https://app.youneed.com.ec/images/logo-admin.png" style="width:156px; height:auto;margin:12px 25px 12px 12px"></div> <div style="padding:25px; margin:0px auto; max-width:650px;"> <h2 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">' . $cliente->nombres . ',</h2> <h3 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">Solicitud de Servicio</h3> </div> <div style="margin:25px auto; max-width:650px; font-family:Arial, Helvetica, sans-serif; color:#9a999e;">' .
+              '<h3>Datos de la Solicitud:</h3>' .
+              '<table style="border-color:#e3e3e3;">' .            
+              '<tr>' .
+                '<td>Nombre</td>' .
+                '<td>' . $cliente->nombres . " " . $cliente->apellidos . '</td>' .
+              '</tr>' .
+              '<tr>' .
+                '<td>Servicio</td>' .
+                '<td>' . $servicio->nombre . '</td>' .
+              '</tr>' .
+              '<tr>' .
+                '<td>Fecha de solicitud</td>' .
+                '<td>' . date('Y/m/d H:i:s') . '</td>' .
+              '</tr>' .
+              '</table>' .            
+              '<p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">Por favor, ingresa a tu perfil para ver los datos de tu solicitud: </p> <p><a style="background-color: #178b89!important; border-color: #178b89!important; line-height: 1.42857143; text-align: center; white-space: nowrap; font-size: 14px; padding: 6px 12px; color: #fff; margin: 35px auto 10px; width: 180px; display: block;" href="https://www.youneed.com.ec/app/login.php">Mi Perfil</a> </p> </div> </div> <div style="font-family:Arial, Helvetica, sans-serif; height:40px; margin:25px auto 0px; max-width:650px; background:#9a999e; text-align:center; padding:7px; padding-top:15px; color:#fff;">YouNeed® Todos los derechos reservados.</div>', 'text/html')
               ->send();
               //echo "<script>console.log('" . $send . "');</script>";
           }catch(Exception $e){
