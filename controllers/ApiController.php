@@ -567,10 +567,10 @@ class ApiController extends Controller
               //echo "<script>console.log('Error de envío de Email');</script>";
           }
 
-            $notificacionUsuario = new Notificacion();
+            $notificacionUsuario = new Notificaciones();
             $notificacionUsuario::create($notificacionUsuario->id, 5);
 
-            $notificacionAsociado = new Notificacion();
+            $notificacionAsociado = new Notificaciones();
             $notificacionAsociado::create($notificacionAsociado->id, 6);
 
             $this->setHeader(200);
