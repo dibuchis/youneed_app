@@ -33,7 +33,7 @@ class ApiController extends Controller
               'getinfoapp'=>['get'], //Información global de la plataforma para rastreo y variables internas
               'login'=>['post'], //Ingreso de usuarios
               'register'=>['post'], //Registro de usuarios
-              'contratarasociado'=>['post'], //Registro de usuarios
+              'contratarasociado'=>['get'], //Registro de usuarios
               'recoverpassword'=>['get'], //Recuperar la clave de la cuenta
               'termsconditions'=>['get'], //Información de terminos y condiciones
               'getcategories'=>['get'], //Listado de categorias
@@ -46,25 +46,27 @@ class ApiController extends Controller
               'setshoppingcart'=>['get'],
               'transmittotraccar'=>['get'],
           ]
-        ],
-        'corsFilter' => [
-          'class' => \yii\filters\Cors::className(),
-          'cors' => [
-              // restrict access to
-              'Origin' => ['https://youneed.com.ec', 'https://www.youneed.com.ec'],
-              // Allow only POST and PUT methods
-              'Access-Control-Request-Method' => ['POST', 'PUT', 'GET'],
-              // Allow only headers 'X-Wsse'
-              'Access-Control-Request-Headers' => ['X-Wsse'],
-              // Allow credentials (cookies, authorization headers, etc.) to be exposed to the browser
-              'Access-Control-Allow-Credentials' => true,
-              // Allow OPTIONS caching
-              'Access-Control-Max-Age' => 3600,
-              // Allow the X-Pagination-Current-Page header to be exposed to the browser.
-              'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
-          ]
         ]
       ];
+        // ],
+        // 'corsFilter' => [
+        //   'class' => \yii\filters\Cors::className(),
+        //   'cors' => [
+        //       // restrict access to
+        //       'Origin' => ['https://youneed.com.ec', 'https://www.youneed.com.ec'],
+        //       // Allow only POST and PUT methods
+        //       'Access-Control-Request-Method' => ['POST', 'PUT', 'GET'],
+        //       // Allow only headers 'X-Wsse'
+        //       'Access-Control-Request-Headers' => ['X-Wsse'],
+        //       // Allow credentials (cookies, authorization headers, etc.) to be exposed to the browser
+        //       'Access-Control-Allow-Credentials' => true,
+        //       // Allow OPTIONS caching
+        //       'Access-Control-Max-Age' => 3600,
+        //       // Allow the X-Pagination-Current-Page header to be exposed to the browser.
+        //       'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
+        //   ]
+        // ]
+      // ];
     }
  
  
