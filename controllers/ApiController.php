@@ -74,9 +74,6 @@ class ApiController extends Controller
     {
       \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
       $action = $event->id;
-      if (in_array($action, ['contratarasociado'])) {
-        $this->enableCsrfValidation = false;
-      }
       if (isset($this->actions[$action])) {
           $verbs = $this->actions[$action];
       } elseif (isset($this->actions['*'])) {
