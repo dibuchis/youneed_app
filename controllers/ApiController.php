@@ -398,10 +398,10 @@ class ApiController extends Controller
           }
 
             $notificacionUsuario = new Notificaciones();
-            $notificacionUsuario->create($notificacionUsuario->id, 5);
+            $notificacionUsuario::create($notificacionUsuario->id, 5);
 
             $notificacionAsociado = new Notificaciones();
-            $notificacionAsociado->create($notificacionAsociado->id, 6);
+            $notificacionAsociado::create($notificacionAsociado->id, 6);
 
             $this->setHeader(200);
             return [  'status'=>1, 
