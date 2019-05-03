@@ -554,11 +554,13 @@ class ApiController extends Controller
             $notificacionAsociado = new Notificacion();
             $notificacionAsociado::create($model->id, 6);
 
+            $this->setHeader(200);
             return [  'status'=>1, 
                 'message'=>'Contrato Realizado'
             ];
 
           }else{
+            $this->setHeader(200);
             return [  'status'=>0, 
                 'message'=>'Error de Sistema'
             ];
