@@ -33,6 +33,7 @@ class ApiController extends Controller
               'getinfoapp'=>['get'], //Información global de la plataforma para rastreo y variables internas
               'login'=>['post'], //Ingreso de usuarios
               'register'=>['post'], //Registro de usuarios
+              'contratarasociado'=>['post'], //Registro de usuarios
               'recoverpassword'=>['get'], //Recuperar la clave de la cuenta
               'termsconditions'=>['get'], //Información de terminos y condiciones
               'getcategories'=>['get'], //Listado de categorias
@@ -482,9 +483,10 @@ class ApiController extends Controller
       $request = Yii::$app->request;
       
       $cliente_id = Yii::$app->request->post('cliente_id');
-      $asociado_id = Yii::$app->request->post('cliente_id');
+      $asociado_id = Yii::$app->request->post('asociado_id');
 
-      $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$cliente_id, 'asociado_id'=>$cliente_id, 'estado'=>0] )->one();
+      $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$cliente_id, 'asociado_id'=>$asociado_id, 'estado'=>0] )->one();
+      
       if( !is_object( $pedido ) ){
         $pedido = new Pedidos();
 
