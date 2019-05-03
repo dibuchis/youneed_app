@@ -485,7 +485,7 @@ class ApiController extends Controller
       $cliente_id = Yii::$app->request->post('cliente_id');
       $asociado_id = Yii::$app->request->post('asociado_id');
 
-      echo $request;
+      print_r($request);
       exit();
 
       $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$cliente_id, 'asociado_id'=>$asociado_id, 'estado'=>0] )->one();
