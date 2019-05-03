@@ -485,6 +485,9 @@ class ApiController extends Controller
       $cliente_id = Yii::$app->request->post('cliente_id');
       $asociado_id = Yii::$app->request->post('asociado_id');
 
+      echo $request;
+      exit();
+
       $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$cliente_id, 'asociado_id'=>$asociado_id, 'estado'=>0] )->one();
       
       if( !is_object( $pedido ) ){
@@ -495,7 +498,7 @@ class ApiController extends Controller
         $servicio = Servicios::find()->andWhere( ['id'=>Yii::$app->request->post('servicio_id')] )->one();
 
         if( $pedido->load($request->post(), '') ){
-          $pedido->cliente_id = $cliente->id;
+          //$pedido->cliente_id = $cliente->id;
           $pedido->identificacion = $cliente->identificacion;
           $pedido->razon_social = $cliente->nombres.' '.$cliente->apellidos;
           $pedido->email = $cliente->email;
