@@ -151,18 +151,19 @@ class AjaxController extends Controller
         return Json::encode(['notificaciones'=>$notif]);
     }
     
-    public function actionGetpedidosasociado(){
+    public function actionGetpedidos(){
         $uid = $_GET['uid'];
 
-        $pedidos = Pedidos::find()->andWhere( ['asociado_id'=>$uid, 'es_asociado' => 1] )->limit(10)->all();
-        return Json::encode(['pedidos'=>$pedidos]);
-    }
+        $usuario = $Usuarios::find()->andWhere(['id' => $uid , 'es_asociado' => 1])->one();
 
-    public function actionGetpedidoscliente(){
-        $uid = $_GET['uid'];
-
-        $pedidos = Pedidos::find()->andWhere( ['cliente_id'=>$uid, 'es_cliente' => 1] )->limit(10)->all();
-        return Json::encode(['pedidos'=>$pedidos]);
+        if($usuario){
+            if($usuario->es_asociado){
+                $pedidos = Pedidos::find()->andWhere( ['asociado_id'=>$usuario->id] )->limit(10)->all();
+                return Json::encode(['pedidos'=>$pedidos]);
+            }
+        }else{
+            return Json::encode(['pedidos'=>0]);
+        }
     }
 
     public function actionListadocategorias(){
