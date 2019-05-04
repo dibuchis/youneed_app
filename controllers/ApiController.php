@@ -151,6 +151,27 @@ class ApiController extends Controller
             
             if( $usuario->save() ){
 
+              $data = [
+                'id'=>$usuario->id,
+                'tipo'=>$tipo,
+                'estado'=>$usuario->estado,
+                'display_name'=>$usuario->nombres.' '.$usuario->apellidos,
+                'nombres'=>$usuario->nombres,
+                'apellidos'=>$usuario->apellidos,
+                'email'=>$usuario->email,
+                'numero_celular'=>$usuario->numero_celular,
+                'telefono_domicilio'=>$usuario->telefono_domicilio,
+                'imagen'=>$usuario->imagen,
+                'token'=>$usuario->token,
+                'traccar_id'=>$usuario->traccar_id,
+                'traccar_transmision'=>Yii::$app->params['traccar']['transmision_url'],
+                'imei'=>$usuario->imei,
+                'items_cart'=>$items_cart,
+                'fecha_creacion'=>$usuario->fecha_creacion,
+                'fecha_activacion'=>$usuario->fecha_activacion,
+                'identificacion'=>$usuario->identificacion,
+              ];
+
               $items_cart = 0;
               $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$usuario->id, 'estado'=>0] )->one();
               
@@ -166,11 +187,29 @@ class ApiController extends Controller
               }
 
               $tipo = '';
+              
+              $serviciosLista = array();
+              $serviciosUsuario = UsuariosServicios::find()->andwhere( [ 'usuario_id'=>$usuario->id ] )->all();
 
+              for($i = 0; $i < count($serviciosUsuario); $i++){
+                $servicio = Servicios::findOne($serviciosUsuario[$i]);
+                $serviciosLista[$i] = [ "servicio_id"=>$servicio->id, "servicio_nombre" => $servicio->nombre ];
+              }
+              
               if( $usuario->es_asociado == 1 && $usuario->es_cliente == 1 ){
                 $tipo = 'asociado_cliente';
+                $data = ['numero_cuenta'] = $usuario->numero_cuenta;
+                $data = ['pais'] = $usuario->pais->nombre;
+                $data = ['ciudad'] = $usuario->ciudad->nombre;
+                $data = ['plan'] = $usuario->plan->nombre;
+                $data = ['servicios'] =  $serviciosLista;
               }elseif( $usuario->es_asociado == 1 ){
                 $tipo = 'asociado';
+                $data = ['numero_cuenta'] = $usuario->numero_cuenta;
+                $data = ['pais'] = $usuario->pais->nombre;
+                $data = ['ciudad'] = $usuario->ciudad->nombre;
+                $data = ['plan'] = $usuario->plan->nombre;
+                $data = ['servicios'] =  $serviciosLista;
               }elseif( $usuario->es_cliente == 1 ){
                 $tipo = 'cliente';
               }else{
@@ -180,41 +219,12 @@ class ApiController extends Controller
                       ];
               }
               
-              $serviciosLista = array();
-              $serviciosUsuario = UsuariosServicios::find()->andwhere( [ 'usuario_id'=>$usuario->id ] )->all();
-
-              for($i = 0; $i < count($serviciosUsuario); $i++){
-                $servicio = Servicios::findOne($serviciosUsuario[$i]);
-                $serviciosLista[$i] = [ "servicio_id"=>$servicio->id, "servicio_nombre" => $servicio->nombre ];
-              }
 
               $this->setHeader(200);
               return [  'status'=>1, 
                         'message'=>'Bienvenid@: '.$usuario->nombres,
                         'data'=>[
-                          'usuario'=>[
-                            'id'=>$usuario->id,
-                            'tipo'=>$tipo,
-                            'estado'=>$usuario->estado,
-                            'display_name'=>$usuario->nombres.' '.$usuario->apellidos,
-                            'nombres'=>$usuario->nombres,
-                            'apellidos'=>$usuario->apellidos,
-                            'email'=>$usuario->email,
-                            'numero_celular'=>$usuario->numero_celular,
-                            'telefono_domicilio'=>$usuario->telefono_domicilio,
-                            'imagen'=>$usuario->imagen,
-                            'token'=>$usuario->token,
-                            'plan'=>$usuario->plan->nombre,
-                            'traccar_id'=>$usuario->traccar_id,
-                            'traccar_transmision'=>Yii::$app->params['traccar']['transmision_url'],
-                            'imei'=>$usuario->imei,
-                            'items_cart'=>$items_cart,
-                            'fecha_creacion'=>$usuario->fecha_creacion,
-                            'fecha_activacion'=>$usuario->fecha_activacion,
-                            'identificacion'=>$usuario->identificacion,
-                            'numero_cuenta'=>$usuario->numero_cuenta,
-                            'servicios'=> $serviciosLista,
-                          ]
+                          'usuario'=> $data
                         ]
                     ];
             }else{
