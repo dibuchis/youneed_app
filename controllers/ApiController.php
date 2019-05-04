@@ -350,6 +350,9 @@ class ApiController extends Controller
           $pedido->fecha_creacion = date('Y-m-d H:i:s');
           $pedido->estado = 0;
           $pedido->tipo_atencion = Yii::$app->request->post('tipo_atencion');
+          $pedido->subtotal = $servicio->subtotal;
+          $pedido->iva = $servicio->iva;
+          $pedido->total = $servicio->total;
 
           if($pedido->save()){
 
