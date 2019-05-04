@@ -153,7 +153,6 @@ class ApiController extends Controller
 
               $data = [
                 'id'=>$usuario->id,
-                'tipo'=>$tipo,
                 'estado'=>$usuario->estado,
                 'display_name'=>$usuario->nombres.' '.$usuario->apellidos,
                 'nombres'=>$usuario->nombres,
@@ -198,6 +197,7 @@ class ApiController extends Controller
               
               if( $usuario->es_asociado == 1 && $usuario->es_cliente == 1 ){
                 $tipo = 'asociado_cliente';
+                $data['tipo'] = 'asociado_cliente';
                 $data['numero_cuenta'] = $usuario->numero_cuenta;
                 $data['pais'] = $usuario->pais->nombre;
                 $data['ciudad'] = $usuario->ciudad->nombre;
@@ -205,6 +205,7 @@ class ApiController extends Controller
                 $data['servicios'] =  $serviciosLista;
               }elseif( $usuario->es_asociado == 1 ){
                 $tipo = 'asociado';
+                $data['tipo'] = 'asociado';
                 $data['numero_cuenta'] = $usuario->numero_cuenta;
                 $data['pais'] = $usuario->pais->nombre;
                 $data['ciudad'] = $usuario->ciudad->nombre;
@@ -212,6 +213,7 @@ class ApiController extends Controller
                 $data['servicios'] =  $serviciosLista;
               }elseif( $usuario->es_cliente == 1 ){
                 $tipo = 'cliente';
+                $data['tipo'] = 'cliente';
               }else{
                 $this->setHeader(200);
                 return [  'status'=>0, 
