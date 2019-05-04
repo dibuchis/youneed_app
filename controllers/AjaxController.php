@@ -147,7 +147,7 @@ class AjaxController extends Controller
     public function actionGetnotificaciones(){
         $uid = $_GET['uid'];
 
-        $notif = Notificaciones::find()->andWhere(['usuario_id'=> $uid])->orderBy(['fecha_notificacion' => SORT_DESC])->all();
+        $notif = Notificaciones::find()->andWhere(['usuario_id'=> $uid])->orderBy(['fecha_notificacion' => SORT_DESC, 'id' => SORT_DESC])->all();
         return Json::encode(['notificaciones'=>$notif]);
     }
     
