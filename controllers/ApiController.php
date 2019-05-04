@@ -195,6 +195,7 @@ class ApiController extends Controller
                           'usuario'=>[
                             'id'=>$usuario->id,
                             'tipo'=>$tipo,
+                            'estado'=>$usuario->estado,
                             'display_name'=>$usuario->nombres.' '.$usuario->apellidos,
                             'nombres'=>$usuario->nombres,
                             'apellidos'=>$usuario->apellidos,
