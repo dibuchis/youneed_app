@@ -366,7 +366,7 @@ class ApiController extends Controller
             //Email al Cliente
             try{
                 $send = Yii::$app->mailer->compose()
-                ->setFrom('noreply@youneed.com.ec')
+                ->setFrom('noreply@youneed.com.ec', 'Youneed')
                 ->setTo($cliente->email)
                 ->setSubject("YouNeed - Solicitud de Servicio")
                 ->setHtmlBody('<div style="background:#2e8a96; margin:0px auto; max-width:650px; height:80px; padding:8px;color:white;"> <img src="https://app.youneed.com.ec/images/logo-admin.png" style="width:156px; height:auto;margin:12px 25px 12px 12px"></div> <div style="padding:25px; margin:0px auto; max-width:650px;"> <h2 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">' . $cliente->nombres . ',</h2> <h3 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">Solicitud de Servicio</h3> </div> <div style="margin:25px auto; max-width:650px;"><p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">' .
@@ -381,7 +381,7 @@ class ApiController extends Controller
             //Email al Asociado
             try{
               $send = Yii::$app->mailer->compose()
-              ->setFrom('noreply@youneed.com.ec')
+              ->setFrom('noreply@youneed.com.ec', 'Youneed')
               ->setTo($asociado->email)
               ->setSubject("YouNeed - Nueva Solicitud de Contrato por Servicios")
               ->setHtmlBody('<div style="background:#2e8a96; margin:0px auto; max-width:650px; height:80px; padding:8px;color:white;"> <img src="https://app.youneed.com.ec/images/logo-admin.png" style="width:156px; height:auto;margin:12px 25px 12px 12px"></div> <div style="padding:25px; margin:0px auto; max-width:650px;"> <h2 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">' . $asociado->nombres . ',</h2> <h3 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">Solicitud de Servicio</h3> </div> <div style="margin:25px auto; max-width:650px; font-family:Arial, Helvetica, sans-serif; color:#9a999e;">' .
