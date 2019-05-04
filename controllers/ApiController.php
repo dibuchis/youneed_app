@@ -151,39 +151,40 @@ class ApiController extends Controller
             
             if( $usuario->save() ){
 
-              $data = [
-                'id'=>$usuario->id,
-                'estado'=>$usuario->estado,
-                'display_name'=>$usuario->nombres.' '.$usuario->apellidos,
-                'nombres'=>$usuario->nombres,
-                'apellidos'=>$usuario->apellidos,
-                'email'=>$usuario->email,
-                'numero_celular'=>$usuario->numero_celular,
-                'telefono_domicilio'=>$usuario->telefono_domicilio,
-                'imagen'=>$usuario->imagen,
-                'token'=>$usuario->token,
-                'traccar_id'=>$usuario->traccar_id,
-                'traccar_transmision'=>Yii::$app->params['traccar']['transmision_url'],
-                'imei'=>$usuario->imei,
-                'items_cart'=>$items_cart,
-                'fecha_creacion'=>$usuario->fecha_creacion,
-                'fecha_activacion'=>$usuario->fecha_activacion,
-                'identificacion'=>$usuario->identificacion,
-              ];
-
+              
               $items_cart = 0;
               $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$usuario->id, 'estado'=>0] )->one();
               
               if( is_object( $pedido ) ){
                 $items_cart = count( $pedido->items );
               }
-
+              
               if( $usuario->es_super == 1 ){
                 $this->setHeader(200);
                 return [  'status'=>0, 
-                          'message'=>'Usuario válido en ambiente web solamente'
-                      ];
-              }
+                'message'=>'Usuario válido en ambiente web solamente'
+              ];
+            }
+            
+            $data = [
+              'id'=>$usuario->id,
+              'estado'=>$usuario->estado,
+              'display_name'=>$usuario->nombres.' '.$usuario->apellidos,
+              'nombres'=>$usuario->nombres,
+              'apellidos'=>$usuario->apellidos,
+              'email'=>$usuario->email,
+              'numero_celular'=>$usuario->numero_celular,
+              'telefono_domicilio'=>$usuario->telefono_domicilio,
+              'imagen'=>$usuario->imagen,
+              'token'=>$usuario->token,
+              'traccar_id'=>$usuario->traccar_id,
+              'traccar_transmision'=>Yii::$app->params['traccar']['transmision_url'],
+              'imei'=>$usuario->imei,
+              'items_cart'=>$items_cart,
+              'fecha_creacion'=>$usuario->fecha_creacion,
+              'fecha_activacion'=>$usuario->fecha_activacion,
+              'identificacion'=>$usuario->identificacion,
+              ];
 
               $tipo = '';
               
