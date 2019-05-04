@@ -198,18 +198,18 @@ class ApiController extends Controller
               
               if( $usuario->es_asociado == 1 && $usuario->es_cliente == 1 ){
                 $tipo = 'asociado_cliente';
-                $data = ['numero_cuenta'] = $usuario->numero_cuenta;
-                $data = ['pais'] = $usuario->pais->nombre;
-                $data = ['ciudad'] = $usuario->ciudad->nombre;
-                $data = ['plan'] = $usuario->plan->nombre;
-                $data = ['servicios'] =  $serviciosLista;
+                $data['numero_cuenta'] = $usuario->numero_cuenta;
+                $data['pais'] = $usuario->pais->nombre;
+                $data['ciudad'] = $usuario->ciudad->nombre;
+                $data['plan'] = $usuario->plan->nombre;
+                $data['servicios'] =  $serviciosLista;
               }elseif( $usuario->es_asociado == 1 ){
                 $tipo = 'asociado';
-                $data = ['numero_cuenta'] = $usuario->numero_cuenta;
-                $data = ['pais'] = $usuario->pais->nombre;
-                $data = ['ciudad'] = $usuario->ciudad->nombre;
-                $data = ['plan'] = $usuario->plan->nombre;
-                $data = ['servicios'] =  $serviciosLista;
+                $data['numero_cuenta'] = $usuario->numero_cuenta;
+                $data['pais'] = $usuario->pais->nombre;
+                $data['ciudad'] = $usuario->ciudad->nombre;
+                $data['plan'] = $usuario->plan->nombre;
+                $data['servicios'] =  $serviciosLista;
               }elseif( $usuario->es_cliente == 1 ){
                 $tipo = 'cliente';
               }else{
