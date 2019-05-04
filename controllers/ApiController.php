@@ -332,6 +332,13 @@ class ApiController extends Controller
       $cliente_id = $_POST['cliente_id'];
       $asociado_id = $_POST['asociado_id'];
 
+      if($cliente_id == $asociado_id){
+        $this->setHeader(200);
+        return [  'status'=>0, 
+            'message'=>'Lo sentimos, no puedes contratarte a ti mismo.'
+        ];
+      }
+
       $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$cliente_id, 'asociado_id'=>$asociado_id, 'estado'=>0] )->one();
       
       if( !is_object( $pedido ) ){
