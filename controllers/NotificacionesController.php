@@ -62,22 +62,17 @@ class NotificacionesController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id_usuario, $id_tipo_notificacion)
+    public function actionCreate()
     {
         $model = new Notificaciones();
 
-        $model->usuario_id = $id_usuario;
-        $model->tipo_notificacion_id = $id_tipo_notificacion;
-
-        if ($model->save()) {
-            return [  'status'=>1, 
-                      'message'=>'Notificación creada',
-                  ];
-        }else{
-            return [  'status'=>1, 
-                      'message'=>'Notificación no creada',
-                  ];
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**

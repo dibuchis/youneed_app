@@ -149,6 +149,20 @@ class AjaxController extends Controller
         $notif = Notificaciones::find()->andWhere(['usuario_id'=> $uid])->orderBy(['fecha_notificacion' => SORT_DESC])->all();
         return Json::encode(['notificaciones'=>$notif]);
     }
+    
+    public function actionGetpedidosasociado(){
+        $uid = $_GET['uid'];
+
+        $pedidos = Pedidos::find()->andWhere( ['asociado_id'=>$uid, 'es_asociado' => 1] )->limit(10)->all();
+        return Json::encode(['pedidos'=>$pedidos]);
+    }
+
+    public function actionGetpedidoscliente(){
+        $uid = $_GET['uid'];
+
+        $pedidos = Pedidos::find()->andWhere( ['cliente_id'=>$uid, 'es_cliente' => 1] )->limit(10)->all();
+        return Json::encode(['pedidos'=>$pedidos]);
+    }
 
     public function actionListadocategorias(){
         $out = [];
