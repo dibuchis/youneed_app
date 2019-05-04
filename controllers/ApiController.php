@@ -425,7 +425,7 @@ class ApiController extends Controller
       }else{
         $this->setHeader(200);
         return [  'status'=>2, 
-            'message'=>'Actualmente tiene una solicitud pendiente con este Asociado.'
+            'message'=>'Actualmente tienes una solicitud pendiente con este Asociado.'
         ];
       }
       
