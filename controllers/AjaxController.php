@@ -154,7 +154,7 @@ class AjaxController extends Controller
     public function actionGetpedidos(){
         $uid = $_GET['uid'];
 
-        $usuario = $Usuarios::find()->andWhere(['id' => $uid , 'es_asociado' => 1])->one();
+        $usuario = Usuarios::find()->andWhere(['id' => $uid , 'es_asociado' => 1])->one();
 
         if($usuario){
             if($usuario->es_asociado){
