@@ -203,6 +203,7 @@ class ApiController extends Controller
                             'telefono_domicilio'=>$usuario->telefono_domicilio,
                             'imagen'=>$usuario->imagen,
                             'token'=>$usuario->token,
+                            'plan'=>$usuario->plan->nombre,
                             'traccar_id'=>$usuario->traccar_id,
                             'traccar_transmision'=>Yii::$app->params['traccar']['transmision_url'],
                             'imei'=>$usuario->imei,
