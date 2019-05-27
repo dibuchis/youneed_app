@@ -48,13 +48,29 @@ return [
         },
         'format'=>'raw'
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'subtotal',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'iva',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'total',
+    ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'tarifa_base',
+    //     'attribute'=>'proveedor_subtotal',
     // ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'tarifa_dinamica',
+    //     'attribute'=>'iva',
+    // ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'total',
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
