@@ -125,7 +125,7 @@ class AjaxController extends Controller
     }
 
     public function actionGetservicio(){
-        $servicio = [];
+        $out = [];
         if (isset($_REQUEST['serviceID'])) {
             $serviceID = $_REQUEST['serviceID'];
 
@@ -133,6 +133,9 @@ class AjaxController extends Controller
 
                 $servicio =  Servicios::find()->where(['id' => $serviceID])->asArray()->one();
 
+                
+                $out = $servicio;
+                
                 $out["cat_id"] = $cat_id->categoria_id;
 
                 // return Json::encode(['output'=>$out, 'selected'=>'']);
