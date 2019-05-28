@@ -172,7 +172,7 @@ class AjaxController extends Controller
             $categorias = Categorias::find()
                 ->all();
 
-            if(isset($_GET['ordenado'])){
+            if(isset($_REQUEST['ordenado'])){
                 $categorias = Categorias::find()
                 ->orderBy('nombre ASC')
                 ->all();
