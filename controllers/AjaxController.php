@@ -248,12 +248,7 @@ class AjaxController extends Controller
                   ->all();
 
                 if(isset($_REQUEST['ordenado'])){
-                   $servicios = CategoriasServicios::find()
-                    ->select(['categorias_servicios.id', 'categorias_servicios.categoria_id', 'categorias_servicios.servicio_id'])
-                    ->from(['categorias_servicios','servicios'])
-                    ->andWhere(['in', 'categorias_servicios..categoria_id', $cat_id ])
-                    ->andWhere(['servicios.id' => 'categorias_servicios..servicio_id' ])
-                    ->orderBy('servicios.nombre ASC')
+                   $servicios = CategoriasServicios::findBySql('SELECT cs.id, cs.categoria_id, cs.servicio_id FROM categorias_servicios cs, servicios s WHERE cs.categoria_id in(' . $cat_id . ') AND s.id = cs.servicio_id ORDER BY s.nombre')
                     ->all();
                 }
 
