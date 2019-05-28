@@ -252,7 +252,7 @@ class AjaxController extends Controller
                     ->select(['cs.id', 'cs.categoria_id', 'cs.servicio_id'])
                     ->from(['categorias_servicios cs', 'servicios s'])
                     ->andWhere(['in', 'cs.categoria_id', $cat_id ])
-                    ->andWhere(['s.id = cs.servicio_id' ])
+                    ->andWhere(['s.id' => 'cs.servicio_id' ])
                     ->orderBy('s.nombre ASC')
                     ->all();
                 }
