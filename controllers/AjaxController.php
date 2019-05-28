@@ -168,8 +168,15 @@ class AjaxController extends Controller
 
     public function actionListadocategorias(){
         $out = [];
+        
             $categorias = Categorias::find()
                 ->all();
+
+            if(isset($_GET['ordenado'])){
+                $categorias = Categorias::find()
+                ->orderBy('nombre ASC')
+                ->all();
+            }
 
             foreach ($categorias as $cat) {
                 // $out [] = ['id'=>$servicio->servicio_id, 'name'=>strip_tags($servicio->servicio->nombre)]; 
