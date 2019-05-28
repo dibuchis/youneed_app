@@ -242,10 +242,17 @@ class AjaxController extends Controller
             $parents = $_REQUEST['depdrop_parents'];
             if ($parents != null) {
                 $cat_id = $parents;
-
+                
                 $servicios = CategoriasServicios::find()
                   ->andWhere(['in', 'categoria_id', $cat_id ])
                   ->all();
+
+                if(isset($_REQUEST['ordenado'])){
+                   $servicios = CategoriasServicios::find()
+                    ->andWhere(['in', 'categoria_id', $cat_id ])
+                    ->orderBy('nombre ASC')
+                    ->all();
+                }
 
                 foreach ($servicios as $servicio) {
                     // $out [] = ['id'=>$servicio->servicio_id, 'name'=>strip_tags($servicio->servicio->nombre)]; 
