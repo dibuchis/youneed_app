@@ -249,8 +249,9 @@ class AjaxController extends Controller
 
                 if(isset($_REQUEST['ordenado'])){
                    $servicios = CategoriasServicios::find()
-                    ->andWhere(['in', 'categoria_id', $cat_id ])
-                    ->orderBy('nombre ASC')
+                    ->from(['categorias_servicios cs', 'servicios s'])
+                    ->andWhere(['in', 'cs.categoria_id', $cat_id ])
+                    ->orderBy('s.nombre ASC')
                     ->all();
                 }
 
