@@ -349,7 +349,7 @@ class ApiController extends Controller
 
       $this->setHeader(200);
         return [  'status'=>0, 
-            'message'=> $_POST
+            'message'=> $request
         ];
 
       if($cliente_id == $asociado_id){
