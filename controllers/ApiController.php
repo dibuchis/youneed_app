@@ -347,6 +347,11 @@ class ApiController extends Controller
       $cliente_id = $request['cliente_id'];
       $asociado_id = $request['asociado_id'];
 
+      $this->setHeader(200);
+        return [  'status'=>0, 
+            'message'=> $_POST
+        ];
+
       if($cliente_id == $asociado_id){
         $this->setHeader(200);
         return [  'status'=>0, 
