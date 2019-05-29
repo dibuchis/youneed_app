@@ -342,7 +342,7 @@ class ApiController extends Controller
     // CONTRATAR
 
     public function actionContratarasociado(){
-      $request = $_POST['data'];
+      $request = unserialize($_POST['data']);
       
       //$cliente_id = $request['cliente_id'];
       //$asociado_id = $request['asociado_id'];
