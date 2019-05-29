@@ -344,8 +344,8 @@ class ApiController extends Controller
     public function actionContratarasociado(){
       $request = $_POST['data'];
       
-      $cliente_id = $request['Pedido']['cliente_id'];
-      $asociado_id = $request['Pedido']['asociado_id'];
+      $cliente_id = $request['cliente_id'];
+      $asociado_id = $request['asociado_id'];
 
       if($cliente_id == $asociado_id){
         $this->setHeader(200);
@@ -359,11 +359,11 @@ class ApiController extends Controller
       if( !is_object( $pedido ) ){
         $pedido = new Pedidos();
 
-        $cliente = Usuarios::find()->andWhere( ['id'=>$request['Pedido']['cliente_id']] )->one();
-        $asociado = Usuarios::find()->andWhere( ['id'=>$request['Pedido']['asociado_id']] )->one();
-        $servicio = Servicios::find()->andWhere( ['id'=>$request['Pedido']['servicio_id']] )->one();
+        $cliente = Usuarios::find()->andWhere( ['id'=>$request['cliente_id']] )->one();
+        $asociado = Usuarios::find()->andWhere( ['id'=>$request['asociado_id']] )->one();
+        $servicio = Servicios::find()->andWhere( ['id'=>$request['servicio_id']] )->one();
 
-        if( $pedido->load($request['Pedido'], '') ){
+        if( $pedido->load($request, '') ){
           //$pedido->cliente_id = $cliente->id;
           $pedido->identificacion = $cliente->identificacion;
           $pedido->razon_social = $cliente->nombres.' '.$cliente->apellidos;
