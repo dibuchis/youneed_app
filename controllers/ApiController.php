@@ -376,6 +376,14 @@ class ApiController extends Controller
           $pedido->iva = $servicio->iva;
           $pedido->total = $servicio->total;
 
+          $_date = $_POST['fecha_para_servicio'];
+
+          $aDate = explode("_",$_date);
+          
+          $fixDate = $aDate[0] . "-" . $aDate[1] . "-" . $aDate[2] . " " . $aDate[3] . ":" . $aDate[4] . ":" . $aDate[5];
+
+          $pedido->fecha_para_servicio = $fixDate;
+
           if($pedido->save()){
 
             //Email al Cliente
