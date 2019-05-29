@@ -344,8 +344,8 @@ class ApiController extends Controller
     public function actionContratarasociado(){
       $request = $_POST['data'];
       
-      $cliente_id = $request['cliente_id'];
-      $asociado_id = $request['asociado_id'];
+      //$cliente_id = $request['cliente_id'];
+      //$asociado_id = $request['asociado_id'];
 
       $this->setHeader(200);
         return [  'status'=>0, 
