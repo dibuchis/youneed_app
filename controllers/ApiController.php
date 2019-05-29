@@ -420,7 +420,11 @@ class ApiController extends Controller
               '</tr>' .
               '<tr>' .
                 '<td>Fecha de solicitud</td>' .
-                '<td>' . date('Y/m/d H:i:s') . '</td>' .
+                '<td>' . $pedido->fecha_creacion . '</td>' .
+              '</tr>' .
+              '<tr>' .
+                '<td>Fecha para dar Servicio</td>' .
+                '<td>' . $pedido->fecha_para_servicio . '</td>' .
               '</tr>' .
               '</table>' .            
               '<p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">Por favor, ingresa a tu perfil para ver los datos de tu solicitud: </p> <p><a style="background-color: #178b89!important; border-color: #178b89!important; line-height: 1.42857143; text-align: center; white-space: nowrap; font-size: 14px; padding: 6px 12px; color: #fff; margin: 35px auto 10px; width: 180px; display: block;" href="https://www.youneed.com.ec/app/login.php">Mi Perfil</a> </p> </div> </div> <div style="font-family:Arial, Helvetica, sans-serif; height:40px; margin:25px auto 0px; max-width:650px; background:#9a999e; text-align:center; padding:7px; padding-top:15px; color:#fff;">YouNeed® Todos los derechos reservados.</div>', 'text/html')
