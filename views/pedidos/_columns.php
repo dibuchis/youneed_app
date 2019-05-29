@@ -54,10 +54,10 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'telefono',
     // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'fecha_para_servicio',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'fecha_para_servicio',
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'direccion_completa',
@@ -70,10 +70,10 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'ciudad_id',
     // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'forma_pago',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'forma_pago',
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'tarjeta_id',
