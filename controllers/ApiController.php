@@ -965,7 +965,7 @@ class ApiController extends Controller
       $uid = $_GET['uid'];
 
       $notif = Notificaciones::find()->andWhere(['usuario_id'=> $uid])->orderBy(['fecha_notificacion' => SORT_DESC, 'id' => SORT_DESC])->all();
-      return Json::encode(['notificaciones'=>$notif]);
+      return ['notificaciones'=>$notif];
   }
   
   public function actionGetpedidos(){
@@ -976,10 +976,10 @@ class ApiController extends Controller
       if($usuario){
           if($usuario->es_asociado){
               $pedidos = Pedidos::find()->andWhere( ['asociado_id'=>$usuario->id] )->limit(10)->all();
-              return Json::encode(['pedidos'=>$pedidos]);
+              return ['pedidos'=>$pedidos];
           }
       }else{
-          return Json::encode(['pedidos'=>0]);
+          return ['pedidos'=>0];
       }
   }
 
