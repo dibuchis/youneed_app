@@ -21,6 +21,8 @@ use yii\filters\VerbFilter;
 use yii\db\Query;
 use yii\helpers\Url;
 use \yii\web\Response;
+use yii\helpers\Html;
+use yii\helpers\Json;
 
 class ApiController extends Controller
 {
