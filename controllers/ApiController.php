@@ -48,8 +48,8 @@ class ApiController extends Controller
               'getorders'=>['get'],
               'setshoppingcart'=>['get'],
               'transmittotraccar'=>['get'],
-              'getnotificaciones'=>['get'],
-              'getpedidos'=>['get'],
+              'getnotificaciones'=>['post'],
+              'getpedidos'=>['post'],
           ],
    
           ]
@@ -962,14 +962,14 @@ class ApiController extends Controller
     }
 
     public function actionGetnotificaciones(){
-      $uid = $_GET['uid'];
+      $uid = $_POST['uid'];
 
       $notif = Notificaciones::find()->andWhere(['usuario_id'=> $uid])->orderBy(['fecha_notificacion' => SORT_DESC, 'id' => SORT_DESC])->all();
       return ['notificaciones'=>$notif];
   }
   
   public function actionGetpedidos(){
-      $uid = $_GET['uid'];
+      $uid = $_POST['uid'];
 
       $usuario = Usuarios::find()->andWhere(['id' => $uid , 'es_asociado' => 1])->one();
 
