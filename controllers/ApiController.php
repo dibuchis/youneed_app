@@ -962,6 +962,9 @@ class ApiController extends Controller
     }
 
     public function actionGetnotificaciones(){
+      if(!isset($_POST['uid'])){
+        return ['staus'=>null];
+      }
       $uid = $_POST['uid'];
 
       $notif = Notificaciones::find()->andWhere(['usuario_id'=> $uid])->orderBy(['fecha_notificacion' => SORT_DESC, 'id' => SORT_DESC])->all();
@@ -969,6 +972,9 @@ class ApiController extends Controller
   }
   
   public function actionGetpedidos(){
+      if(!isset($_POST['uid'])){
+        return ['staus'=>null];
+      }
       $uid = $_POST['uid'];
 
       $usuario = Usuarios::find()->andWhere(['id' => $uid , 'es_asociado' => 1])->one();
