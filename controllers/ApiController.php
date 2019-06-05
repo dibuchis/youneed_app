@@ -962,29 +962,34 @@ class ApiController extends Controller
     }
 
     public function actionGetnotificaciones(){
+      
       if(!isset($_POST['uid'])){
         return ['staus'=>null];
       }
-      $uid = $_POST['uid'];
 
+      $uid = Yii::$app->request->post('uid');
       $notif = Notificaciones::find()->andWhere(['usuario_id'=> $uid])->orderBy(['fecha_notificacion' => SORT_DESC, 'id' => SORT_DESC])->all();
+      $this->setHeader(200);
       return ['notificaciones'=>$notif];
   }
   
   public function actionGetpedidos(){
+
       if(!isset($_POST['uid'])){
         return ['staus'=>null];
       }
-      $uid = $_POST['uid'];
 
+      $uid = Yii::$app->request->post('uid');
       $usuario = Usuarios::find()->andWhere(['id' => $uid , 'es_asociado' => 1])->one();
 
       if($usuario){
           if($usuario->es_asociado){
               $pedidos = Pedidos::find()->andWhere( ['asociado_id'=>$usuario->id] )->limit(10)->all();
+              $this->setHeader(200);
               return ['pedidos'=>$pedidos];
           }
       }else{
+          $this->setHeader(200);
           return ['pedidos'=>0];
       }
   }
