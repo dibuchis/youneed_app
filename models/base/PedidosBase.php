@@ -176,4 +176,12 @@ return [
     {
     return $this->hasOne(Usuarios::className(), ['id' => 'asociado_id']);
     }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getServicio()
+    {
+    return $this->hasOne(Servicios::className(), ['id' => 'servicio_id']);
+    }
 }
