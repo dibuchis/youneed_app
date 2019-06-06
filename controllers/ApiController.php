@@ -1024,7 +1024,7 @@ class ApiController extends Controller
                 '<p>Su solicitud de servicio ha sido Aceptada y reservada en la hora especificada.' . '</p>' .
                 '<p><b>Nombre del Asociado: </b>' . $pedido->asociado->nombres . " " . $pedido->asociado->apellidos . '</p>'.            
                 '<p><b>Fecha y Hora: </b>' . $pedido->fecha_para_servicio . '</p>'.            
-                '<p><b>Servicio solicitado: </b>' . $pedido->servicio_id->nombre . '</p>'.            
+                '<p><b>Servicio solicitado: </b>' . $pedido->servicio->nombre . '</p>'.            
                 '</p> <p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">Por favor, ingresa a tu perfil para ver el estado de tu solicitud: </p> <p><a style="background-color: #178b89!important; border-color: #178b89!important; line-height: 1.42857143; text-align: center; white-space: nowrap; font-size: 14px; padding: 6px 12px; color: #fff; margin: 35px auto 10px; width: 180px; display: block;" href="https://www.youneed.com.ec/app/login.php">Mi Perfil</a> </p> </div> </div> <div style="font-family:Arial, Helvetica, sans-serif; height:40px; margin:25px auto 0px; max-width:650px; background:#9a999e; text-align:center; padding:7px; padding-top:15px; color:#fff;">YouNeed® Todos los derechos reservados.</div>', 'text/html')
                 ->send();
                 //echo "<script>console.log('" . $send . "');</script>";
