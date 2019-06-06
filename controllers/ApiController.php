@@ -50,6 +50,8 @@ class ApiController extends Controller
               'transmittotraccar'=>['get'],
               'getnotificaciones'=>['post'],
               'getpedidos'=>['post'],
+              'aceptarpedido'=>['post'],
+              'cancelarpedido'=>['post'],
           ],
    
           ]
@@ -964,6 +966,7 @@ class ApiController extends Controller
     public function actionGetnotificaciones(){
       
       if(!isset($_POST['uid'])){
+        $this->setHeader(200);
         return ['staus'=>null];
       }
 
@@ -976,6 +979,7 @@ class ApiController extends Controller
   public function actionGetpedidos(){
 
       if(!isset($_POST['uid'])){
+        $this->setHeader(200);
         return ['staus'=>null];
       }
 
@@ -992,6 +996,108 @@ class ApiController extends Controller
           $this->setHeader(200);
           return ['pedidos'=>0];
       }
+  }
+
+  public function actionAceptarpedido(){
+
+    if(!isset($_POST['pid'])){
+      $this->setHeader(200);
+      return ['staus'=>null];
+    }
+
+    $pid = Yii::$app->request->post('pid');
+
+    if($pid){
+        $pedido = Pedidos::find()->andWhere( ['id' => $pid, 'estado' => 0] )->one();
+        
+        if($pedido){
+          $pedido->estado = 1;
+          if($pedido->update()){
+
+            //Email al Cliente
+            try{
+                $send = Yii::$app->mailer->compose()
+                ->setFrom('noreply@youneed.com.ec', 'Youneed')
+                ->setTo($pedido->cliente->email)
+                ->setSubject("YouNeed - Servicio Reservado")
+                ->setHtmlBody('<div style="background:#2e8a96; margin:0px auto; max-width:650px; height:80px; padding:8px;color:white;"> <img src="https://app.youneed.com.ec/images/logo-admin.png" style="width:156px; height:auto;margin:12px 25px 12px 12px"></div> <div style="padding:25px; margin:0px auto; max-width:650px;"> <h2 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">' . $cliente->nombres . ',</h2> <h3 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">Servicio Reservado</h3> </div> <div style="margin:25px auto; max-width:650px;"><p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">' .
+                '<p>Su solicitud de servicio ha sido Aceptada y reservada en la hora especificada.' . '</p>' .
+                '<p><b>Nombre del Asociado: </b>' . $pedido->asociado->nombres . " " . $pedido->asociado->apellidos . '</p>'.            
+                '<p><b>Fecha y Hora: </b>' . $pedido->fecha_para_servicio . '</p>'.            
+                '<p><b>Servicio solicitado: </b>' . $pedido->servicio_id->nombre . '</p>'.            
+                '</p> <p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">Por favor, ingresa a tu perfil para ver el estado de tu solicitud: </p> <p><a style="background-color: #178b89!important; border-color: #178b89!important; line-height: 1.42857143; text-align: center; white-space: nowrap; font-size: 14px; padding: 6px 12px; color: #fff; margin: 35px auto 10px; width: 180px; display: block;" href="https://www.youneed.com.ec/app/login.php">Mi Perfil</a> </p> </div> </div> <div style="font-family:Arial, Helvetica, sans-serif; height:40px; margin:25px auto 0px; max-width:650px; background:#9a999e; text-align:center; padding:7px; padding-top:15px; color:#fff;">YouNeed® Todos los derechos reservados.</div>', 'text/html')
+                ->send();
+                //echo "<script>console.log('" . $send . "');</script>";
+            }catch(Exception $e){
+                //echo "<script>console.log('Error de envío de Email');</script>";
+            }
+
+            $this->setHeader(200);
+            return ['status'=> 1];
+          }else{
+            $this->setHeader(200);
+            return ['status'=> null];
+          }
+
+        }else{
+          $this->setHeader(200);
+          return ['status'=> null];
+        }
+    }else{
+        $this->setHeader(200);
+        return ['status'=>null];
+    }
+  }
+
+  public function actionCancelarpedido(){
+
+    if(!isset($_POST['pid'])){
+      $this->setHeader(200);
+      return ['staus'=>null];
+    }
+
+    $pid = Yii::$app->request->post('pid');
+
+    if($pid){
+        $pedido = Pedidos::find()->andWhere( ['id' => $pid] )->one();
+        
+        if($pedido){
+          $pedido->estado = 4;
+          if($pedido->update()){
+
+            //Email al Cliente
+            try{
+                $send = Yii::$app->mailer->compose()
+                ->setFrom('noreply@youneed.com.ec', 'Youneed')
+                ->setTo($pedido->cliente->email)
+                ->setSubject("YouNeed - Servicio Cancelado")
+                ->setHtmlBody('<div style="background:#2e8a96; margin:0px auto; max-width:650px; height:80px; padding:8px;color:white;"> <img src="https://app.youneed.com.ec/images/logo-admin.png" style="width:156px; height:auto;margin:12px 25px 12px 12px"></div> <div style="padding:25px; margin:0px auto; max-width:650px;"> <h2 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">' . $cliente->nombres . ',</h2> <h3 style="font-family:Arial, Helvetica, sans-serif; color:#117c8f;">Servicio Reservado</h3> </div> <div style="margin:25px auto; max-width:650px;"><p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">' .
+                '<p>Su solicitud de servicio ha sido Rechazada por el Asociado' . '</p>' .
+                '<p><b>Nombre del Asociado: </b>' . $pedido->asociado->nombres . " " . $pedido->asociado->apellidos . '</p>'.            
+                '<p><b>Fecha y Hora: </b>' . $pedido->fecha_para_servicio . '</p>'.            
+                '<p><b>Servicio solicitado: </b>' . $pedido->servicio_id->nombre . '</p>'.            
+                '</p> <p style="font-family:Arial, Helvetica, sans-serif; color:#9a999e;">Por favor, ingresa a tu perfil para ver el estado de tu solicitud: </p> <p><a style="background-color: #178b89!important; border-color: #178b89!important; line-height: 1.42857143; text-align: center; white-space: nowrap; font-size: 14px; padding: 6px 12px; color: #fff; margin: 35px auto 10px; width: 180px; display: block;" href="https://www.youneed.com.ec/app/login.php">Mi Perfil</a> </p> </div> </div> <div style="font-family:Arial, Helvetica, sans-serif; height:40px; margin:25px auto 0px; max-width:650px; background:#9a999e; text-align:center; padding:7px; padding-top:15px; color:#fff;">YouNeed® Todos los derechos reservados.</div>', 'text/html')
+                ->send();
+                //echo "<script>console.log('" . $send . "');</script>";
+            }catch(Exception $e){
+                //echo "<script>console.log('Error de envío de Email');</script>";
+            }
+
+            $this->setHeader(200);
+            return ['status'=> 4];
+          }else{
+            $this->setHeader(200);
+            return ['status'=> null];
+          }
+
+        }else{
+          $this->setHeader(200);
+          return ['status'=> null];
+        }
+    }else{
+        $this->setHeader(200);
+        return ['status'=>null];
+    }
   }
 
 }
