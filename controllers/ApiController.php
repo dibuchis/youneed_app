@@ -981,12 +981,14 @@ class ApiController extends Controller
       }
 
       $uid = Yii::$app->request->post('uid');
-      $notif = Notificaciones::find()
-        ->andWhere(['usuario_id'=> $uid])
-        ->limit($limit)
-        ->offset($offset)
-        ->orderBy(['fecha_notificacion' => SORT_DESC, 'id' => SORT_DESC])
-        ->all();
+      $notif = Notificaciones::findBySql('SELECT n.id, n.usuario_id, n.tipo_notificacion_id, n.fecha_notificacion, t.categoria, t.descripcion , t.mensaje FROM notificaciones n, tipos_notificaciones t WHERE t.id = n.tipo_notificacion_id AND n.usuario_id = ' . $uid . ' ORDER BY n.fecha_notificacion DESC, id DESC');
+        // ->select()
+        // ->leftJoin(['fecha_notificacion', 'tipos_notificaciones'])
+        // ->andWhere(['usuario_id'=> $uid])
+        // ->limit($limit)
+        // ->offset($offset)
+        // ->orderBy(['fecha_notificacion' => SORT_DESC, 'id' => SORT_DESC])
+        // ->all();
       $this->setHeader(200);
       return ['notificaciones'=>$notif];
   }
