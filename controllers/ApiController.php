@@ -975,7 +975,7 @@ class ApiController extends Controller
         return ['staus'=>null];
       }
 
-      if(!isset($_POST['page'])){
+      if(isset($_POST['page'])){
         $page = $_POST['page'];
         $offset = $page * $limit;
       }
@@ -1003,7 +1003,7 @@ class ApiController extends Controller
         return ['staus'=>null];
       }
 
-      if(!isset($_POST['page'])){
+      if(isset($_POST['page'])){
         $page = $_POST['page'];
         $offset = $page * $limit;
       }
