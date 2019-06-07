@@ -965,22 +965,47 @@ class ApiController extends Controller
 
     public function actionGetnotificaciones(){
       
+      $limit = 5;
+
+      $page = 0;
+      $offset = 0;
+
       if(!isset($_POST['uid'])){
         $this->setHeader(200);
         return ['staus'=>null];
       }
 
+      if(!isset($_POST['page'])){
+        $page = $_POST['page'];
+        $offset = $page * $limit;
+      }
+
       $uid = Yii::$app->request->post('uid');
-      $notif = Notificaciones::find()->andWhere(['usuario_id'=> $uid])->orderBy(['fecha_notificacion' => SORT_DESC, 'id' => SORT_DESC])->all();
+      $notif = Notificaciones::find()
+        ->andWhere(['usuario_id'=> $uid])
+        ->limit($limit)
+        ->offset($offset)
+        ->orderBy(['fecha_notificacion' => SORT_DESC, 'id' => SORT_DESC])
+        ->all();
       $this->setHeader(200);
       return ['notificaciones'=>$notif];
   }
   
   public function actionGetpedidos(){
 
+      $limit = 5;
+
+      $page = 0;
+      $offset = 0;
+
       if(!isset($_POST['uid'])){
         $this->setHeader(200);
         return ['staus'=>null];
+      }
+
+      if(!isset($_POST['page'])){
+        $page = $_POST['page'];
+        $offset = $page * $limit;
       }
 
       $uid = Yii::$app->request->post('uid');
@@ -988,7 +1013,12 @@ class ApiController extends Controller
 
       if($usuario){
           if($usuario->es_asociado){
-              $pedidos = Pedidos::find()->andWhere( ['asociado_id'=>$usuario->id] )->limit(10)->all();
+              $pedidos = Pedidos::find()
+                ->andWhere( ['asociado_id'=>$usuario->id] )
+                ->orderBy(['tipo_atencion' => SORT_ASC, 'fecha_creacion' => SORT_DESC])
+                ->limit($limit)
+                ->offset($offset)
+                ->all();
               $this->setHeader(200);
               return ['pedidos'=>$pedidos];
           }

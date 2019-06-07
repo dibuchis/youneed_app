@@ -36,5 +36,11 @@ return [
         2 => 'En ejecución',
         3 => 'Pagada',
         4 => 'Cancelada',
+    ],
+    'tipo_atencion' => [
+        0 => 'Urgente',
+        1 => 'Alta',
+        2 => 'Normal',
+        3 => 'Baja',
     ]
 ];
