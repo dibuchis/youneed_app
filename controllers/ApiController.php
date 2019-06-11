@@ -352,6 +352,7 @@ class ApiController extends Controller
       
       $cliente_id = $_POST['cliente_id'];
       $asociado_id = $_POST['asociado_id'];
+      $servicio_id = $_POST['servicio_id'];
 
       if($cliente_id == $asociado_id){
         $this->setHeader(200);
@@ -360,7 +361,7 @@ class ApiController extends Controller
         ];
       }
 
-      $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$cliente_id, 'asociado_id'=>$asociado_id, 'estado'=>0] )->one();
+      $pedido = Pedidos::find()->andWhere( ['cliente_id'=>$cliente_id, 'asociado_id'=>$asociado_id, 'servicio_id'=> $servicio_id, 'estado'=>0] )->one();
       
       if( !is_object( $pedido ) ){
         $pedido = new Pedidos();
