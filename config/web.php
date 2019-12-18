@@ -34,12 +34,7 @@ $config = [
                 'username' => 'notificaciones@youneed.com.ec',
                 'password' => 'Lucas137.',
                 'port' => '465',
-                'encryption' => 'ssl',
-                // 'host' => 'smtp.gmail.com',
-                // 'username' => 'dibuchis@gmail.com',
-                // 'password' => 'PatoLoco256*',
-                // 'port' => '465',
-                // 'encryption' => 'ssl',
+                'encryption' => 'ssl'
             ],
         ],
         'log' => [
